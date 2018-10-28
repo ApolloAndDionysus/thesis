@@ -1,0 +1,78 @@
+%\begin{table*} % switch to normal table for referee mode
+\begin{sidewaystable}
+\label{tbl-eff}
+%\renewcommand{\tabcolsep}{1c.m}
+%\begin{center}
+%\begin{longtable}{lccccccc|cccccc}
+%\begin{supertabular}{lccccccc|cccccc}
+\caption{Efficacy under MTD constraint results}
+\centering
+\begin{tabular}{lccccccc|cccccc}
+%
+\toprule
+    Algorithm &  E-Stop 
+    &\multicolumn{6}{c}{ Recommended} & \multicolumn{6}{c}{Allocated} \\
+    \midrule
+    & & 1 & 2 &  3 & 4 & 5 & 6 & 1 & 2 & 3 &  4 &  5 &  6 \\
+\midrule
+%\endfirsthead
+%
+%&\multicolumn{12}{c}%
+%{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+%\toprule
+%    Algorithm &  E-Stop 
+%    &\multicolumn{6}{c}{ Recommended} & \multicolumn{6}{c}{Allocated} \\
+%    \midrule
+%    & &   1 &   2 & 3 &   4 &   5 &   6 &  1 &  2 & 3 &  4 &  5 &  6 \\
+%    \midrule
+%\endhead
+%
+%&\multicolumn{12}{c}{Scenario 1} & \\
+%\midrule
+\multicolumn{2}{l}{\textbf{Sc. 1:} Toxicity probabilities} & 0.01  & 0.05 & \underline{0.15} & 0.2 & 0.45 & 0.6  &  0.01  & 0.05 & \underline{0.15} & 0.2 & \dash{0.45} & \dash{0.6} \\ 
+\multicolumn{2}{l}{\textbf{Sc. 1:} Efficacy probabilities}  & 0.1 & 0.35 & \underline{0.6} & 0.6 & 0.6 & 0.6 &  0.1 & 0.35 & \underline{0.6} & 0.6 & 0.6 & 0.6 \\ 
+\midrule     
+       $\mathrm{MTA}$-$\mathrm{RA}$ &      0.4 &  0.4 &  7.0 &  \tblopt{54.9} &  29.1 &  7.4 &  0.7 &   7.1 &   14.2 &  \tblopt{37.9} &   24.9 &   \dash{12.9} &   \dash{2.5} \\
+       $\mathrm{TS}$ &      0.9 &  0.1 &  9.7 &  \tblwinrec{\tblopt{57.7}} &  27.0 &  4.2 &  0.4 &   10.6 &   18.4 &  \tblopt{31.9} &   23.8 &   10.0 &   4.4 \\
+     $\mathrm{TS}\_\mathrm{A}$ &      0.9 &  0.3 &  9.6 &  \tblwinrec{\tblopt{59.4}} &  26.1 &  3.5 &  0.3 &   10.7 &   20.7 &  \tblopt{35.7} &   23.9 &   \dash{7.3} &   \dash{0.9} \\
+\midrule
+%&\multicolumn{12}{c}{Scenario 5 (plateau occuring for large toxicities)} & \\
+%\midrule
+\multicolumn{2}{l}{\textbf{Sc. 2:} Toxicity probabilities} & 0.1  & 0.2 & \underline{0.25} & 0.4 & 0.5 & 0.6 & 0.1  & 0.2 & 0.25 & \dash{0.4} & \dash{0.5} & \dash{0.6} \\ 
+\multicolumn{2}{l}{\textbf{Sc. 2:} Efficacy probabilities} &   0.3  & 0.4 & \underline{0.5} & 0.7 & 0.7 & 0.7 & 0.3  & 0.4 & 0.5 & 0.7 & 0.7 & 0.7 \\ 
+\midrule
+       $\mathrm{MTA}$-$\mathrm{RA}$ &      1.4 &  \underline{9.0} &  13.3 &  25.9 &  40.6 &  8.3 &  1.5 &   15.5 &   19.1 &  24.9 &   \dash{26.7} &   \dash{9.9} &   \dash{2.4} \\
+       $\mathrm{TS}$ &      5.8 &  8.4 &  24.4 &  \tblwinrec{\underline{40.0}} &  18.9 &  2.4 &  0.3 &   20.8 &   27.3 &  24.4 &   13.0 &   5.5 &   3.3 \\
+    $\mathrm{TS}\_\mathrm{A}$ &      6.9 &  16.7 &  30.6 &  \tblwinrec{\underline{30.6}} &  14.4 &  0.8 &  0.0 &   25.9 &   33.8 &  22.8 &   \dash{8.6} &   \dash{1.8} &   \dash{0.2} \\
+\midrule
+\multicolumn{2}{l}{\textbf{Sc. 3:} Toxicity probabilities} & 0.02  & 0.07 & \underline{0.13} & 0.17 & 0.25 & 0.3 & 0.02  & 0.07 & \underline{0.13} & 0.17 & 0.25 & 0.3\\ 
+\multicolumn{2}{l}{\textbf{Sc. 3:} Efficacy probabilities}  & 0.3  & 0.5 & \underline{0.7} & 0.73 & 0.76 & 0.77 & 0.3  & 0.5 & \underline{0.7} & 0.73 & 0.76 & 0.77 \\
+      \midrule
+       $\mathrm{MTA}$-$\mathrm{RA}$ &      0.1 &  1.1 &  10.2 &  \tblopt{39.0} &  24.4 &  16.8 &  8.4 &   9.3 &   15.8 &  \tblopt{28.8} &   22.6 &   15.7 &   7.8 \\
+       $\mathrm{TS}$ &      0.3 &  1.3 &  11.1 &  \tblopt{36.8} &  24.2 &  16.1 &  10.2 &   12.1 &   17.4 &  \tblopt{24.1} &   21.9 &   15.0 &   9.1 \\
+    $\mathrm{TS}\_\mathrm{A}$ &      0.3 &  1.8 &  13.2 &  \tblwinrec{\tblopt{45.6}} &  24.1 &  11.4 &  3.7 &   14.2 &   22.2 &  \tblopt{28.6} &   21.0 &   10.3 &   3.4 \\
+\midrule
+%&\multicolumn{12}{c}{Scenario 9 (no plateau, one acceptable dose with low efficacy)} & \\
+%\midrule
+\multicolumn{2}{l}{\textbf{Sc. 4:} Toxicity probabilities} & 0.25  & 0.43 & 0.50 & 0.58 & 0.64 & 0.75 & \underline{0.25}  & \dash{0.43} & \dash{0.50} & \dash{0.58} & \dash{0.64} & \dash{0.75} \\ 
+\multicolumn{2}{l}{\textbf{Sc. 4:} Efficacy probabilities}  & 0.3  & 0.4 & 0.5 & 0.6 & 0.61 & 0.63 & 0.3  & \underline{0.4} & 0.5 & 0.6 & 0.61 & 0.63 \\ 
+\midrule
+       $\mathrm{MTA}$-$\mathrm{RA}$ &      18.8 &  40.0 &  33.2 &  7.0 &  0.9 &  0.1 &  0.1 &  {32.0} &   \dash{30.3} &   \dash{13.6} &  \dash{4.3} &   \dash{1.0} &   \dash{0.1} \\
+       $\mathrm{TS}$ &      \tblwinrec{49.0} &  \tblwinrec{{37.3}} &  12.4 &  1.1 &  0.2 &  0.0 &  0.0 &  {29.0} &   13.7 &   4.5 &   1.9 &   1.1 &   0.8 \\
+    $\mathrm{TS}\_\mathrm{A}$ &      \tblwinrec{50.5} &  \tblwinrec{{39.8}} &  9.1 &  0.5 &  0.1 &  0.0 &  0.0 &  {31.2} &   \dash{14.6} &   \dash{3.3} &   \dash{0.4} &   \dash{0.0} &   \dash{0.0} \\
+\midrule
+\multicolumn{2}{l}{\textbf{Sc. 5:} Toxicity probabilities} & 0.5  & 0.6 & 0.69 & 0.76 & 0.82 & 0.89 & \dash{0.5}  & \dash{0.6} & \dash{0.69} & \dash{0.76} & \dash{0.82} & \dash{0.89} \\ 
+\multicolumn{2}{l}{\textbf{Sc. 5:} Efficacy probabilities} & 0.4  & 0.55 & 0.65 & 0.65 & 0.65 & 0.65 & 0.4  & 0.55 & 0.65 & 0.65 & 0.65 & 0.65 \\ 
+\midrule
+       $\mathrm{MTA}$-$\mathrm{RA}$ &      90.1 &  9.6 &  0.3 &  0.1 &  0.0 &  0.0 &  0.0 &   \dash{7.2} &   \dash{2.0} &   \dash{0.5} &   \dash{0.1} &   \dash{0.0} &   \dash{0.0} \\
+       $\mathrm{TS}$ &      \tblwinrec{99.8} &  0.2 &  0.0 &  0.0 &  0.0 &  0.0 &  0.0 &   0.1 &   0.1 &   0.0 &   0.0 &   0.0 &   0.0 \\
+    $\mathrm{TS}\_\mathrm{A}$ &      \tblwinrec{99.5} &  0.5 &  0.0 &  0.0 &  0.0 &  0.0 &  0.0 &   \dash{0.4} &   \dash{0.1} &   \dash{0.0} &   \dash{0.0} &   \dash{0.0} &   \dash{0.0} \\
+
+\bottomrule
+\end{tabular}
+%%\end{longtable}
+%\end{supertabular}
+%\end{center}
+\vspace{0.5em}
+%\end{table*}				
+\end{sidewaystable}

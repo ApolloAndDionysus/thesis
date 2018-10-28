@@ -1,0 +1,395 @@
+\usepackage{natbib}
+%\usepackage[utf8]{inputenc} % allow utf-8 input
+%\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{algorithm2e}
+
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{filecontents}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{bm}
+\usepackage{color}
+
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+%\newcommand*{\qed}{\hfill\ensuremath{\square}}%
+
+% Standard math operations and sets
+\newcommand{\diff}{\mathop{}\!\mathrm{d}}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\newcommand{\PrNone}{\mathbb{P}}
+\renewcommand{\Pr}[1]{\PrNone\left( #1 \right)}
+\newcommand{\ENone}{\mathds{E}}
+\newcommand{\EIN}[1]{\ENone\left[ #1 \right]}
+\newcommand{\KL}[2]{\operatorname{KL}\left( #1 \| #2 \right)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\1}[1]{\mathds{1}_{\left( #1 \right)}}
+\newcommand{\Set}[1]{\mathchoice%
+{\left\{ #1 \right\}}{\{ #1 \}}{\{ #1 \}}{\{ #1 \}}}
+
+% Symbols used in the paper
+\newcommand{\BernKL}[2]{\operatorname{kl}\left( #1, #2 \right)} % Bernoulli KL divergence
+
+% Problem \ Lower bound symbols
+\newcommand{\historyRV}{H}
+\newcommand{\armRV}{W}
+\newcommand{\rewardRV}{Z}
+
+\newcommand{\Arms}{\mathcal{W}}
+\newcommand{\arm}{w}
+\newcommand{\ArmEvents}{\mathcal{F}_\Arms}
+\newcommand{\ArmMeasure}{M}
+\newcommand{\ArmMean}{\mu}
+\newcommand{\ArmMeanAlt}{\lambda}
+\newcommand{\ArmGrp}[1]{\mathcal{S}^{#1}}
+\newcommand{\ArmGrpEmp}[1]{\mathcal{S}_{#1}}
+\newcommand{\ArmKLNone}{\operatorname{d}}
+\newcommand{\ArmKL}[2]{\ArmKLNone\hspace{-.1em}\left( #1, #2 \right)}
+\newcommand{\ArmCI}[2]{\operatorname{d^*}\hspace{-.2em}\left( #1, #2 \right)}
+
+\newcommand{\ExpRewards}{\Theta}
+\newcommand{\expReward}{\theta}
+\newcommand{\ExpRewardEvents}{\mathcal{F}_\ExpRewards}
+\newcommand{\ExpRewardMeasure}{M_\ExpRewards}
+\newcommand{\ExpRewardDensity}{g}
+\newcommand{\ExpRewardCDF}{G}
+\newcommand{\ExpRewardInvCDF}{G^{-1}}
+
+\newcommand{\GTargetEps}{\mathcal{G}_{\ArmMeasure,\ArmMean}^{\alpha,\epsilon}}
+\newcommand{\GTargetZeroEps}{\mathcal{G}_{\ArmMeasure,\ArmMean}^{\alpha,0}}
+\newcommand{\GTargetNoEps}{\mathcal{G}_{\ArmMeasure,\ArmMean}^{\alpha}}
+\newcommand{\GTargetNoEpsAlt}{\mathcal{G}_{\ArmMeasure,\ArmMeanAlt^i}^{\alpha}}
+\newcommand{\GTargetNoEpsAltOne}{\mathcal{G}_{\ArmMeasure,\ArmMeanAlt^1}^{\alpha}}
+
+\newcommand{\PrTrueModelNone}{\PrNone_{\ArmMean}^\ArmMeasure}
+\newcommand{\PrTrueModel}[1]{\PrNone_{\ArmMean}^\ArmMeasure\left( #1 \right)}
+\newcommand{\PrAltModel}[1]{\PrNone_{\ArmMeanAlt}^\ArmMeasure\left( #1 \right)}
+\newcommand{\PrAltModelI}[1]{\PrNone_{\ArmMeanAlt^i}^\ArmMeasure\left( #1 \right)}
+\newcommand{\PrAltModelOne}[1]{\PrNone_{\ArmMeanAlt^1}^\ArmMeasure\left( #1 \right)}
+
+\newcommand{\ETrueModelNone}{\ENone_{\ArmMean}^\ArmMeasure}
+\newcommand{\ETrueModel}[1]{\ENone_{\ArmMean}^\ArmMeasure\left[ #1 \right]}
+\newcommand{\EAltModel}[1]{\ENone_{\ArmMeanAlt}^\ArmMeasure\left[ #1 \right]}
+
+% Algorithm \ Upper bound symbols
+\newcommand{\ArmInterval}{\mathcal{I}_{a}(t)}
+
+% Upper bound proof symbols
+\newcommand{\EpsCheapArms}{\mathcal{A}_{\epsilon}}
+%\newcommand{\cE}{\mathcal{E}}
+%\newcommand{\cF}{\mathcal{F}}
+%\newcommand{\cR}{\mathcal{R}}
+
+
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\renewcommand{\algorithmiccomment}[1]{// #1}
+
+\usepackage{bm}
+
+%%
+%% This is Jay's ``implication array'' format.
+% %%
+
+\catcode`@=11
+
+%%%  Implication arrays
+%
+% Usage:
+%
+% \begin{imparray}
+% (implication) & (left side) & (comparator) & (right side) \\
+% ...
+% \end{imparray}
+
+\def\imparray{\stepcounter{equation}\let\@currentlabel=\theequation
+\global\@eqnswtrue
+\global\@eqcnt\z@\tabskip\@centering\let\\=\@eqncr
+$$\halign to \displaywidth\bgroup\llap{${##}$\hskip 4\arraycolsep}\tabskip\z@&
+  \@eqnsel\hskip\@centering
+  $\displaystyle\tabskip\z@{##}$&\global\@eqcnt\@ne 
+  \hskip 2\arraycolsep \hfil${##}$\hfil
+  &\global\@eqcnt\tw@ \hskip 2\arraycolsep $\displaystyle\tabskip\z@{##}$\hfil 
+   \tabskip\@centering&\llap{##}\tabskip\z@\cr}
+
+\def\endimparray{\@@eqncr\egroup
+      \global\advance\c@equation\m@ne$$\global\@ignoretrue}
+
+\@namedef{imparray*}{\def\@eqncr{\nonumber\@seqncr}\imparray}
+\@namedef{endimparray*}{\nonumber\endimparray}
+
+\catcode`@=12
+
+
+% from fixed buddget paper
+
+%\usepackage[margin=1.5in]{geometry}
+
+% \usepackage{algorithm2e}
+% \usepackage{enumitem}
+% \usepackage{filecontents}
+% \usepackage{todonotes}
+% \usepackage{graphicx}
+%\usepackage{subcaption}
+% \usepackage{longtable}
+% \usepackage{booktabs}
+%\usepackage{wrapfig}
+% \usepackage[numbers]{natbib}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+
+%\usepackage[margin=1in]{geometry}
+\newcommand{\kevin}[1]{{\textcolor{red}{#1}}}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\polylog}{{\rm polylog}}
+
+\def\calD{\mathcal{D}}
+\def\calE{\mathcal{E}}
+\def\H{\mathcal{H}}
+\def\calS{\mathcal{S}}
+\def\calI{\mathcal{I}}
+\def\S{\mathcal{S}}
+\def\A{\mathcal{A}}
+\def\E{\mathbb{E}}
+\def\1{\mathbf{1}}
+\def\P{\mathbb{P}}
+\def\R{\mathbb{R}}
+\def\mualpha{\mu^{(\alpha)}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\mbf}[1]{\mathbf{#1}}
+
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{remark}{Remark}
+%\newtheorem{assumption}{Assumption}
+%\newtheorem{definition}{Definition}
+
+
+%from dosefinding paper
+
+\def\bSig\mathbf{\Sigma}
+
+\usepackage{rotating}
+%\usepackage{dosefinding/macrosArticle}
+%\usepackage{ulem}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+
+\newcommand{\MTD}{\mathrm{MTD}}
+\newcommand{\Opt}{\mathrm{Opt}}
+
+%\usepackage[figuresright]{rotating}
+\newcommand{\limInf}{\underline{\lim}}
+\newcommand{\eff}{\text{eff}}
+\newcommand{\tox}{\text{tox}}
+\newcommand{\acrm}{\hat{a}_{\mathrm{CRM}}(t)}
+\newcommand{\aTS}{\tilde{a}_{\mathrm{TS}}(t)}
+\newcommand{\TSOne}{\mathrm{TS}\_\mathrm{V1}}
+\newcommand{\TSTwo}{\mathrm{TS}\_\mathrm{V2}}
+%\newcommand{\Set}[1]{\mathchoice%
+%{\left\{ #1 \right\}}{\{ #1 \}}{\{ #1 \}}{\{ #1 \}}}
+%\newcommand{\E}{\mathds{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\kl}{\mathrm{kl}}
+\newcommand{\ymid}{y_{\mathrm{mid}}}
+
+\newcommand{\tblopt}[1]{\underline{#1}} % Mark optimal dose in table
+\newcommand{\tblwinrec}[1]{\textbf{#1}} % Mark when opt dose recommended more than baseline
+
+\usepackage{tikz}
+
+\newcommand{\dash}[1]{%
+    \tikz[baseline=(todotted.base)]{
+        \node[inner sep=1pt,outer sep=0pt] (todotted) {#1};
+        \draw[dashed] ([yshift=-2pt]todotted.south west) -- ([yshift=-2pt]todotted.south east);
+    }%
+}%
+
+% Define numbers used for Web Appendices and Web Tables
+\def \refWAProofSH {Web Appendix A}
+\def \refWAProofTS {Web Appendix B}
+\def \refWAResults {Web Appendix C}
+\def \refWTTox {Web Table 1}
+\def \refWTEffa {Web Table 2}
+\def \refWTEffb {Web Table 3}
+\def \refWTEffs {Web Tables 2 and 3}
+
+
+
+%% Language
+%\usepackage[utf8]{inputenc}
+%\usepackage[english]{babel}
+%\usepackage{dsfont}
+
+%% Other useful packages
+%\usepackage{algorithm}
+%\usepackage{algorithmicx}
+%\usepackage[noend]{algpseudocode}
+
+%%\usepackage{algorithm2e}
+%\usepackage{xcolor}
+%%\usepackage{subfigure}
+%\usepackage{verbatim}
+%\usepackage{times}
+%\usepackage{graphicx}
+%\DeclareGraphicsExtensions{.jpg,.pdf,.mps,.eps,.png}
+%%\usepackage{amsthm,amscd}
+%\usepackage{amsmath,amssymb}
+%\usepackage{pdfpages}
+%\usepackage{bm}%bold maths symbols
+%\usepackage{amsfonts}
+%%\usepackage{MnSymbol}
+%\usepackage{todonotes}
+
+%% Margins
+%\oddsidemargin=0pt
+%\textwidth=455pt
+%\textheight=620pt
+%\voffset=-20pt
+%\marginparwidth=0pt
+%\marginparpush=0pt
+%\marginparsep=0pt
+%\evensidemargin=0pt
+
+
+%% Color definition
+%\usepackage{xcolor}
+%\definecolor{Bleu}{RGB}{0,0,204}
+%\definecolor{Violet}{RGB}{102,0,204}
+%\definecolor{Rouge}{RGB}{204,0,0}
+%\definecolor{Highlight}{RGB}{251,0,0}
+
+
+%% Bibliography and references
+%\bibliographystyle{apalike}
+
+%\usepackage{hyperref}
+%\hypersetup{
+%colorlinks,
+%  citecolor=Bleu,
+%  linkcolor=Rouge,
+%  urlcolor=Violet} 
+
+\usepackage{breakcites} % repare pb de mise à la ligne des references
+
+  
+ 
+  
+  
+%% Theorem English
+%\newtheorem{theorem}{Theorem}%[section]
+%\newtheorem{assumption}[theorem]{Assumption}
+%\newtheorem{claim}[theorem]{Claim}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{example}[theorem]{Example}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{notation}[theorem]{Notation}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{remark}[theorem]{Remark}
+
+
+%Calligraphic Shorthands
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+%Blackboard Bold Shorthands
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\bP}{\mathbb{P}}
+%\newcommand{\N}{\mathbb{N}}
+%\newcommand{\R}{\mathbb{R}}
+%\newcommand{\C}{\mathbb{C}}
+%\newcommand{\Z}{\mathbb{Z}}
+
+%Probability Shorthands
+\def \ind{\mathds{1}}
+\newcommand{\norm}[2]{\mathcal{N}\left(#1,#2\right)}
+\newcommand{\BetaD}[2]{\text{Beta}\left(#1,#2 \right)}
+\newcommand{\muhat}{\hat{\mu}}
+
+
+% Bandit specific shorthands
+\newcommand{\reg}{\text{R}}
+\newcommand{\regfull}{\reg_{\bm{\theta}}(T,\cA)}
+\newcommand{\br}{\text{BR}}
+\newcommand{\Kinf}{\cK_{\text{inf}}\,}
+\newcommand{\muA}{\hat{\mu}_a(t)}%moyenne empirique dans l'algorithme 
+\newcommand{\muS}{\hat{\mu}_{a,s}}
+\newcommand{\thetaU}{\underline{\theta}}
+
+% Statistical Shorthands
+\newcommand{\K}{\mathrm{K}}
+\newcommand{\Kb}{\mathrm{K}}
+
+
+% Misc Math Operations Shorthands
+\newcommand{\argminin}[1]{\underset{#1}{\text{argmin }}}
+\newcommand{\argmaxin}[1]{\underset{#1}{\text{argmax }}}
+\newcommand{\ngoesto}{\underset{n\rightarrow \infty}{\rightarrow}}
+\newcommand{\Tgoesto}{\underset{T\rightarrow \infty}{\longrightarrow}}
+\newcommand{\isequT}{\underset{T\rightarrow \infty}{\sim}}
+
+%\def \qed {\begin{flushright} $\qquad \Box $
+%  \end{flushright}}
+
+
+
+% Coloring and working together
+\def \red{\color{red}}
+\def \black{\color{black}}
+
+
+

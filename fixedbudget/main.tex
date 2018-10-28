@@ -1,0 +1,108 @@
+
+%%\usepackage[margin=1.5in]{geometry}
+%
+%% \usepackage{algorithm2e}
+%% \usepackage{enumitem}
+%% \usepackage{filecontents}
+%% \usepackage{todonotes}
+%% \usepackage{graphicx}
+%\usepackage{subcaption}
+%% \usepackage{longtable}
+%% \usepackage{booktabs}
+%\usepackage{wrapfig}
+%% \usepackage[numbers]{natbib}
+%%\usepackage{algorithm}
+%%\usepackage{algorithmic}
+%
+%\usepackage{amsmath,amssymb,amsfonts,bm,url,dsfont,hyperref,color}
+%%\usepackage[margin=1in]{geometry}
+%\newcommand{\kevin}[1]{{\textcolor{red}{#1}}}
+%\newcommand\tab[1][1cm]{\hspace*{#1}}
+%\newcommand{\polylog}{{\rm polylog}}
+%
+%\def\calD{\mathcal{D}}
+%\def\calE{\mathcal{E}}
+%\def\H{\mathcal{H}}
+%\def\calS{\mathcal{S}}
+%\def\calI{\mathcal{I}}
+%\def\S{\mathcal{S}}
+%\def\A{\mathcal{A}}
+%\def\E{\mathbb{E}}
+%\def\1{\mathbf{1}}
+%\def\P{\mathbb{P}}
+%\def\R{\mathbb{R}}
+%\def\mualpha{\mu^{(\alpha)}}
+%\newcommand{\mc}[1]{\mathcal{#1}}
+%\newcommand{\mbb}[1]{\mathbb{#1}}
+%\newcommand{\mbf}[1]{\mathbf{#1}}
+%
+%%\newtheorem{theorem}{Theorem}
+%%\newtheorem{lemma}{Lemma}
+%%\newtheorem{remark}{Remark}
+%\newtheorem{assumption}{Assumption}
+%%\newtheorem{definition}{Definition}
+
+%\setlength{\parindent}{0in}
+%\setlength{\parskip}{.5em}
+
+% Heading arguments are {volume}{year}{pages}{date submitted}{date published}{paper id}{author-full-names}
+
+%\jmlrheading{1}{2000}{1-48}{9/18}{10/00}{aziz18a}{Maryam Aziz and Kevin Jamieson and Javed Aslam}
+%
+%% Short headings should be running head and authors last names
+%
+%\ShortHeadings{Pure-Exploration for Infinite-Armed Bandits with General Reservoirs}{Aziz, Jamieson, Aslam}
+%\firstpageno{1}
+
+%\usepackage[utf8]{inputenc}
+
+%\begin{document}
+
+%\title{Pure-Exploration for Infinite-Armed Bandits with General Arm Reservoirs}
+
+%\author{\name Maryam Aziz \email azizm@ccs.neu.edu \\
+%\addr College of Computer and Information Sciences \\
+%Northeastern University \\
+%Boston, MA 02115, USA
+%\AND
+%\name Kevin Jamieson \email jamieson@cs.washington.edu \\
+%\addr Paul G. Allen School of Computer Science \& Engineering \\
+%University of Washington \\
+%Seattle, WA 98195, USA
+%\AND
+%\name Javed Aslam \email jaa@ccs.neu.edu \\
+%\addr College of Computer and Information Sciences \\
+%Northeastern University \\
+%Boston, MA 02115, USA 
+%}
+%
+%\editor{}
+%
+%
+%\maketitle
+
+%\begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
+We consider a muti-armed bandit game where the number of arms is much larger than the maximum budget and is effectively infinite.
+We characterize necessary and sufficient conditions on the total budget for an algorithm to return an $\epsilon$-good arm with probability at least $1-\delta$.
+In such situations, the sample complexity depends on $\epsilon, \delta$ and the so-called reservoir distribution $\nu$ from which the means of the arms are drawn iid. 
+While a substantial literature has developed around analyzing specific cases of $\nu$ such as the beta distribution, our analysis makes no assumption about the form of $\nu$.
+Our algorithm is based on successive halving with the surprising exception that arms start to be discarded after just a single pull, requiring an analysis that goes beyond concentration alone. 
+The provable correctness of this algorithm also provides an explanation for the empirical observation that the most aggressive bracket of the Hyperband algorithm of \cite{li2017hyperband} for hyperparameter tuning is almost always best.    
+%\end{abstract}
+
+%\begin{keywords}
+%  Infinite-armed bandit, pure-exploration, best-arm identification
+%\end{keywords}
+
+% In Section~\ref{experiments} we discuss our  experimental results of using \texttt{Sequential Halving} for pure exploration of the infinitely armed bandits and in Section~\ref{theory} we analyze the simple regret of the algorithm.
+\input{fixedbudget/intro}
+\input{fixedbudget/analysis}
+\input{fixedbudget/experiments}
+\clearpage
+%\clearpage
+%\appendix
+\input{fixedbudget/appendix}
+
+
+%\end{document}
+

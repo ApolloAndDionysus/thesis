@@ -1,0 +1,218 @@
+
+\documentclass{article}
+
+\input{notation}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+ 
+        \Huge
+        \textbf{On Multi-Armed Bandit Theory and Applications}
+ 
+        \vspace{0.5cm}
+        %\LARGE
+        %Thesis Subtitle
+ 
+        \vspace{1.5cm}
+ 
+        \textbf{Maryam Aziz}
+ 
+        \vfill
+ 
+        In partial fulfillment of the requirements for the degree of \\
+        Doctor of Philosophy
+ 
+        \vspace{0.8cm}
+ 
+        %\includegraphics[width=0.4\textwidth]{university}
+ 
+        \Large
+        College of Computer and Information Science\\
+        Northeastern University\\
+        Boston, MA\\
+        2018
+ 
+    \end{center}
+\end{titlepage}
+
+ 
+  \thispagestyle{plain}
+\begin{center}
+    \Large
+    %\textbf{Dedication} \\
+ To Mom, Zakia, and Dad, Abdul Ghafoor, who gave me the gift of life and nourished me.
+\end{center}
+
+ \newpage
+ \thispagestyle{plain}
+\begin{center}
+    \Large
+    \textbf{Abstract}
+    to be added.
+\end{center}
+
+ \newpage
+ \thispagestyle{plain}
+\begin{center}
+    \Large
+    \vspace{0.9cm}
+    \textbf{Acknowledgements}
+    to be added.
+\end{center}
+ \newpage
+%\doublespacing % Uncomment \usepackage{setspace}
+ \thispagestyle{plain}
+\tableofcontents
+\listoffigures
+\listoftables
+ \thispagestyle{plain}
+%\singlespacing % Reset spacing
+\newpage
+
+\fancyhead{}
+\fancyhead[LO,CE]{Chapter \thesection}
+\fancyhead[RO,LE]{On Multi-Armed Bandit Theory and Applications}
+\fancyfoot{}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[CO,RE]{Maryam Aziz}
+
+
+\section{Introduction}
+The author started out by exploring feature selection in boosting algorithms when
+the number of features is too large to provide precise measurements of
+the quality of each individual feature within a reasonable amount of time.
+Can one improve upon uniform sampling (e.g., as in random forests)
+in this setting?
+For example, cosider text classification from skip-grams, which consist of $n$ words co-occurring in any order within a window of size
+$w>n$.
+The number of skip-grams appearing in a large text corpus grows very 
+quickly with $n$ and $w$, but some of these skip-grams are very good
+features for classification.
+How can we build a model which uses the top-scoring skip-grams when we
+can't afford to measure the quality of each of them?
+After some empirical work on such datasets, we decided to step back
+and deal with the problem in the abstract, with the following research
+question.
+
+How would one go about choosing a near-best option from an effectively infinite set of options when one has a finite amount of time to make a decision and imperfect knowledge of the quality of the options?
+Such problems are well-modeled by the ``pure exploration" variant of the classical multi-armed bandit problem.
+We ultimately wrote two theoretical bandit model papers addressing this
+question,
+and also a paper presenting an improved boosted decision tree training
+algorithm using insights derived from my theoretical work.
+
+A large portion of this thesis work is in the ``pure exploration" setting 
+of infinitely armed bandits under no assumptions over the arm ``reservoir distribution."
+This work permits the application of bandit models to a broader class of problems, where fewer assumptions are required for theoretical guarantees
+to hold.
+My colleagues and I examined this problem in both the fixed budget setting, wherein one attempts to maximize performance with limited resources
+(e.g. CPU time or number of trials),
+and the fixed confidence setting, wherein one attempts to minimize budget while meeting a quality constraint on the selected arm.
+
+More formally, the goal of an infinitely armed bandit algorithm in the pure exploration setting is to return an $\epsilon$-good arm with probability at least $1-\delta$.
+The complexity of the problem depends on $\epsilon, \delta$ and the so-called reservoir distribution $\nu$ from which the means of the arms are drawn iid. While most previous work focus  on specific cases of $\nu$ our analysis makes no assumption on the reservoir.
+
+Chapter~\ref{fixedconfidence} addresses the fixed confidence setting of this problem.
+It proposes a new PAC-like $(\alpha,\epsilon,\delta)$ framework
+within which an arm within $\epsilon$ of the top $\alpha$ fraction of
+the reservoir is returned by an algorithm with probability at least
+$1-\delta$.
+In short, $\alpha$ specifies the quality of arm you want
+(i.e. the probability of sampling a better arm),
+$\epsilon$ indicates how much budget to spend on differentiating very
+similar arms, and
+$\delta$ provides the confidence guarantee.
+We derived a sample complexity lower bound within this framework
+and proposed an algorithm whose sample complexity is within a $\log(1/\delta)$ factor of our lower bound.
+This  $\log(1/\delta)$ gap is commonly found in 
+state-of-the-art algorithms for infinitely-armed bandits,
+and it isn't yet clear whether this gap can be closed without
+assumptions about the reservoir distribution. Our work in the fixed confidence setting was published in Algorithmic Learning Theory  ~\citep{aziz18alt}.
+
+
+In the fixed budget setting, Chapter~\ref{fixedbudget},
+we proposed an algorithm based on successive halving,
+which seeks the best of $n$ arms by running
+$\log_2(n)$ rounds. In each round
+the same number of samples is drawn from each surviving arm,
+the half with worst empirical performance are removed,
+and the number of samples per arm is doubled in the next round.
+We show that running Successive Halving with $n$ randomly sampled arms and a budget of $n\log_2(n)$ pulls--where arms start being discarded after being pulled just once--achieves the same theoretical sample complexity guarantees of the more complicated 
+state-of-the-art variant Hyperband\citep{li2017hyperband} up to
+poly-logarithmic factors, but with better empirical performance.
+Our analysis is novel in that it accounts for arms being discarded far before concentration of measure kicks in.
+In exhaustive experimental studies, we showed that our algorithm is not only superior on most reservoir distributions (including those derived from finite-armed problems) but also against algorithms designed to make use of knowledge about the reservoirs which our algorithm does not have.
+We also contribute an information theoretic lower bound for the infinite-armed bandit problem. The upper and lower bounds match up to polynomial factors of $\log(1/\delta)$ and other logarithmic factors. Our work in the fixed budget setting~\citep{aziz19alt}
+is currently under review.
+
+In Chapter~\ref{AP-Boost}, the author returns to the original research question of
+efficiently training boosted decision trees with large feature sets~.
+Inspired by our work in multi-armed bandits, we
+developed a highly efficient algorithm for computing exact greedy-optimal decision
+trees, outperforming the state-of-the-art Quick Boost~\citep{Appel:2013:QBD:3042817.3043003}.
+We developed a framework for deriving lower bounds on the problem that applies to a wide family
+of conceivable algorithms for the task (including our algorithm and Quick Boost),
+and we demonstrated empirically on a variety of datasets that our algorithm
+is near-optimal within this family of algorithms.
+We further derived a lower bound applicable to any algorithm solving the
+task, and we demonstrate that our algorithm empirically achieves
+performance close to this best-achievable lower bound.
+The pre-print online provides results for trees split based on accuracy. We have also implemented our algorithm for GINI,
+and are preparing an update with these results.
+We are also considering adding results for
+XGBoost~\citep{DBLP:journals/corr/ChenG16} as a final contribution.
+
+The author's multi-armed work led her to dose finding in clinical trials. We studied, Chapter~\ref{dosefinding}, the problem of finding the optimal dosage in a phase I clinical trial through the multi-armed bandit lens. We advocated the use of Thompson Sampling, a flexible algorithm that can accommodate different types of monotonicity assumptions on the toxicity and efficacy of the doses. We proposed two designs inspired by state-of-the-art multi armed bandit algorithms for which we provided finite-time upper bounds on the error probability or the number of sub-optimal dose selections, which is unprecedented for dose finding algorithms. Through a large simulation study, we then showed that variants of Thompson Sampling outperform state-of-the-art dose identification algorithms in different types of trials, in particular testing the most toxic doses fewer times and recommending the optimal doses more times.
+This work is under review.
+
+\newpage
+\section{Fixed confidence setting}\label{fixedconfidence}
+\input{fixedconfidence/aziz18}
+\newpage
+\section{Fixed budget setting}\label{fixedbudget}
+\input{fixedbudget/main.tex}
+\section{Greedy-optimal Boosted decision trees}\label{AP-Boost}
+\section{Dose finding for phase I clinical trials}\label{dosefinding}
+\input{dosefinding/ClinicalTrials}
+%\begin{figure}
+%  \caption{Dummy figure}
+%\end{figure}
+%
+%\begin{table}
+%  \caption{Dummy table}
+%\end{table}
+
+%\newpage
+
+% The appendix starts here, the list of figures and tables are auto-generated as 
+% well.
+%\addtocontents{toc}{\setcounter{tocdepth}{1}}
+%\section{Another section}
+%\subsection{Subsection}
+%\subsubsection{Subsubsection}
+
+%...
+
+\addtocontents{toc}{\setcounter{tocdepth}{3}} % reset to default
+
+\newpage
+
+\small
+\bibliographystyle{plainnat}
+\bibliography{fixedconfidence/paper,fixedconfidence/biblioEmilie,refs,fixedbudget/refs, dosefinding/biblioBandits}
+
+%\bibliographystyle{biometrics}
+%\bibliography{biblioBandits}
+%\bibliographystyle{plainnat}
+%\bibliography{fixedbudget/refs}
+
+\newpage
+
+%\begin{appendix}
+%  \listoffigures
+%  \listoftables
+%\end{appendix}
+\end{document}
