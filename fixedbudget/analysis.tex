@@ -4,9 +4,9 @@
 
 
 
-\subsection{Successive Halving for infinite-armed bandits}\label{theory}
-The Successive Halving algorithm of \cite{icml2013_karnin13} is presented in Figure~2: our proposed algorithm sets $T=\lceil n\log_2(n)\rceil$ for any $n \in \mathbb{N}$.
-In what follows of this paper, any reference to Successive Halving should be interepretted as taking the particular parameterization of $T=\lceil n \log_2(n) \rceil$ for any $n \in \mathbb{N}$, unless otherwise specified.
+\subsection{Successive Halving for Infinite-armed Bandits}\label{theory}
+The Successive Halving algorithm of \cite{icml2013_karnin13} is presented in Figure~2: our proposed algorithm, ISHA, sets $T=\lceil n\log_2(n)\rceil$ for any $n \in \mathbb{N}$.
+In what follows of this chapter, any reference to ISHA means as taking the particular parameterization of $T=\lceil n \log_2(n) \rceil$ for any $n \in \mathbb{N}$.
 In words, our proposed algorithm is simple: for some $n \in \mathbb{N}$, the algorithm draws $n$ arms without replacement, pulls each arm once, discards the worst half, and on each successive round pulls the surviving arms twice as many times as the previous round before discarding the worst half. The whole process takes $n$ pulls per round for $\log_2(n)$ rounds for a total of $n \log_2(n)$ total pulls.
 
 \begin{figure}[h]
@@ -27,8 +27,8 @@ In words, our proposed algorithm is simple: for some $n \in \mathbb{N}$, the alg
 \caption{Successive Halving algorithm. The algorithm we propose for infinite-armed bandits is to use $T = \lceil n \log_2(n) \rceil$ for any value of $n \in \mathbb{N}$. For anytime, double $n$ and repeat.}\label{alg-SH}
 \end{figure}
 
-The main dilemma of choosing $X$ for the lil'UCB-$X$ strategies in the introduction of this paper, and more generally all infinite-armed bandit problems, is determining whether it is better to draw more arms from a reservoir distribution over arms in the hope of getting an arm with better mean reward, or to spend the remaining arm pull budget on identifying a ``good'' arm from among already drawn arms.
-Our proposed parameterization of Sequential Halving navigates this dilemma by focusing not on individual arms but on populations of arms, where at each round the ``fitter'' (i.e. lower empirical mean) arms are more likely to survive and so from round to round the population as a whole ``evolves,'' in the sense that while any individual ``good'' arm might get unlucky and be removed from the population, overall the average expected reward of the surviving arms tends to improve.
+The main dilemma of choosing $X$ for the lil'UCB-$X$ strategies in the introduction of this chapter, and more generally all infinite-armed bandit problems, is determining whether it is better to draw more arms from a reservoir distribution over arms in the hope of getting an arm with better mean reward, or to spend the remaining arm pull budget on identifying a ``good'' arm from among already drawn arms.
+ISHA navigates this dilemma by focusing not on individual arms but on populations of arms, where at each round the ``fitter'' (i.e. lower empirical mean) arms are more likely to survive and so from round to round the population as a whole ``evolves,'' in the sense that while any individual ``good'' arm might get unlucky and be removed from the population, overall the average expected reward of the surviving arms tends to improve.
 % By allocating budget uniformly in each round of the algorithm to the
 % arms with highest empirical means from the last round,
 % it naturally avoids spending too much budget on arms which, on the one
@@ -61,7 +61,7 @@ Our proposed parameterization of Sequential Halving navigates this dilemma by fo
 % \end{align*}
 % Note that $F_0(x,\mu)$ is the CDF of a single draw of a random variable with mean $\mu$. 
 % Likewise, $F_k(x,\mu)$ is equal to $F_0(x,\mu)$ convolved with itself $2^k$ times.
-\subsubsection{Analysis}
+\subsection{Analysis}
 Our main result relies on two assumptions about the distribution $\phi(\ \cdot \ ; \mu)$ of observations from an arm given a drawn mean $\mu$.
 We make no assumptions about the shape or regularity of the reservoir $\nu_0$.
 % For instance, $\phi(\mu) = \mathcal{N}(\mu,1)$ or $\phi(\mu) = \text{Bernoulli}(\mu)$. 
@@ -95,6 +95,11 @@ z_{n,\epsilon} :=& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \epsilon)} \m
 \end{align*}
 If Successive Halving of Figure~\ref{alg-SH} is run with $n$ arms and $T=\lceil n \log_2(n) \rceil$ total pulls where $n \geq z_{n,\epsilon}$ then with probability at least $1-\delta$ the single arm returned is no greater than $\mu_* +\epsilon$.
 \end{theorem}
+
+\begin{remark}
+Note that if the support of $\phi$ is bounded in $[0,1]$ then taking $\delta=\epsilon$ in the above theorem implies $\E[ \mu_{J_{T}} ] - \mu_*\leq 2 \epsilon$ whenever $T=\lceil n \log_2(n) \rceil$ and $n \geq z_{n,\epsilon}$.
+\end{remark}
+
 % \begin{theorem}\label{thm:main}
 % Fix $\delta \in (0,1)$ and assume Assumptions 1 and 2 hold.
 % Define 
@@ -145,7 +150,7 @@ Also define
 \Delta_\ell := 2\sqrt{\frac{2R \log(n \log_2(n) 2^{-\ell+2}/\delta)}{2^\ell}} \ , \qquad\qquad \forall \ell \in \{0,1,\dots,\log_2(n)-1\}.
 \end{align*}
 
-The next lemma follows by a straightforward union and Chernoff bound (Appendix~\ref{sec:concentration_in_k_proof}).
+The next lemma follows by a straightforward union and Chernoff bound (Section~\ref{sec:concentration_in_k_proof}).
 \begin{lemma}\label{lem:concentration_in_k}
 Under Assumption~\ref{asm:subgauss} we have
 % \begin{align*}
@@ -154,7 +159,7 @@ $\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \bigcup_{i \in S_{\ell}} \left\{ |\wide
 \end{lemma}
 
 The next lemma exploits the fact that each $\mu_i \in S_k$ for any $k$ is an iid draw from $\nu_k$, by definition, and $|S_k| = n 2^{-k}$.
-The result follows by a union bound over $k$ (Appendix~\ref{sec:good_arms_in_set_k_proof}).
+The result follows by a union bound over $k$ (Section~\ref{sec:good_arms_in_set_k_proof}).
 \begin{lemma}\label{lem:good_arms_in_set_k}
 For any $\ell=0,1,\dots,\log_2(n)-1$ if  $n \geq \xi_{n,\ell} := \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then 
 % If $n \geq \max_{\ell =0,1,\dots, \log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then
@@ -170,7 +175,7 @@ If $n \geq  \max_{\ell=0,1,\dots,\log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{2^
 However, $\nu_k$ is not a natural quantity to reason about since it depends on the behavior of the algorithm.
 The next two lemmas characterize the behavior of this evolving distribution.
 The proof of the following lemma applies Bayes rule and exploits Assumption~\ref{asm:stochastic_ordering}. 
-It comes to the intuitive conclusion that the distribution of the true means gets no worse by thresholding the empirical means at the median (Appendix~\ref{sec:core_lemma_proof}).
+It comes to the intuitive conclusion that the distribution of the true means gets no worse by thresholding the empirical means at the median (Section~\ref{sec:core_lemma_proof}).
 \begin{lemma}\label{lem:core_lemma}
 Assume Assumption~\ref{asm:stochastic_ordering} holds.
 For any $k$ and $x\in \R$ we have
@@ -300,11 +305,11 @@ with probability at least $1-\delta$.
 \end{proof}
 
 
-\subsection{Lower bound}
+\subsection{Lower Bound}
 
 Fix any reservoir distribution $\nu_0$ and $\epsilon,\delta \in (0,1)$. 
-Our upper bound of Theorem~\ref{thm:main} states that if the proposed algorithm is provided a budget of $\epsilon^{-2}+\frac{1}{\nu_0(\mu_* + \epsilon)}\int_{\mu_*+\epsilon} (\mu-\mu_*)^{-2} d\nu_0(\mu)$ pulls (up to poly-logarthmic factors), then the prescribed procedure outputs an $\epsilon$-good coin with probability at least $1-\delta$.
-In this section, we argue that any algorithm that identifies an $\epsilon$-good coin with probability at least $1-\delta$ must take nearly this many total pulls in expectation.
+Our upper bound of Theorem~\ref{thm:main} states that if the proposed algorithm is provided a budget of $\epsilon^{-2}+\frac{1}{\nu_0(\mu_* + \epsilon)}\int_{\mu_*+\epsilon} (\mu-\mu_*)^{-2} d\nu_0(\mu)$ pulls (up to poly-logarthmic factors), then the prescribed procedure outputs an $\epsilon$-good arm with probability at least $1-\delta$.
+In this section, we argue that any algorithm that identifies an $\epsilon$-good arm with probability at least $1-\delta$ must take nearly this many total pulls in expectation.
 We follow the lower bound technique of \cite{malloy2012quickest} beginning with a definition borrowed from \cite{berry1997}.
 \begin{definition}
 % Fix any $\nu_0$ and $\epsilon,\delta\in(0,1)$.
@@ -316,8 +321,8 @@ Implicit in \cite{malloy2012quickest} is the assumption that there exists a non-
 Such an assumption is reasonable because observations from any particular arm are conditionally independent given the mean of the arm, and knowing the mean of one arm provides no information about the mean of another. 
 Thus, the number of times any particular arm is pulled depends \emph{only} on the observations from that arm, and because the means of the arms are drawn iid from $\nu$, each arm should be treated identically.
 Thus, the procedure will continue to discard arms until it finds one and commits to it for all time. 
-Of course, any such strategy would require precise knoweldge of $\nu_0$ making it impractical, but it useful for a lower bound.
-
+Of course, any such non-recalling strategy would require precise knoweldge of $\nu_0$ making it purely a thought experiment, but it is useful for a lower bound.
+Nevertheless, many algorithms for the regret setting of infinite-armed bandits make very strong assumptions and are non-recalling strategies (c.f., \cite{berry1997,bonald2013two,Chan2018Infinite}.
 
 % The only reason for exploration in bandits is to discover what \emph{else} is out there, but in this case the player knows $\nu$ exactly, so they already \emph{know} what else is out there. 
 % Thus, we only need to consider algorithms that act on one arm at a time, and treat each arm identically. 
@@ -325,7 +330,7 @@ Define
 $KL(\mu,\mu') = \int_{x} \phi(x;\mu) \log\left( \frac{\phi(x;\mu)}{\phi(x;\mu')}\right) dx$
 where we assume $KL(c,d) \geq KL(a,b)$ for all $[a,b] \subseteq [c,d]$.
 This is a common assumption and holds for families of distributions $\phi( \cdot ; \mu)$ parameterized by their mean (e.g., Bernoulli, Gaussian, Poisson) \cite{kaufmann2016complexity}.
-\begin{theorem}
+\begin{theorem}\label{thm:fb-lb}
 Fix a reservoir distribution $\nu$, $\delta \in (0,1/15)$, and $\epsilon >0$ such that $\nu(\mu_*+\epsilon) \leq 1/2$.
 If at time $\tau \in \mathbb{N}$ a non-recalling strategy outputs an arm $\widehat{i} \in \mathbb{N}$ that satisfies $\P(\mu_{\widehat{i}} \leq \mu_* + \epsilon ) \geq 1-\delta$, then
 \begin{align*}
@@ -343,7 +348,7 @@ for any $\widetilde{\mu}$ with $\widetilde{\kappa} := \nu(\widetilde{\mu}) - \nu
 
 \noindent\textbf{Polynomial-tail, Equation~\ref{eqn:beta_parameterization}:} $\nu(\mu_* + x) := \P( \mu \leq \mu_* + x) \propto x^\beta$. Take $\widetilde{\mu} = \mu_* + 2^{1/\beta} \epsilon$ so that $\widetilde{\kappa} = \nu(\mu_*+2^{1/\beta} \epsilon) - \nu(\mu_* + \epsilon) \propto \epsilon^\beta$ yielding a sample complexity of $\epsilon^{-2}\log(1/\delta) + \epsilon^{-\beta}$.
 
-We will only sketch the proof of Theorem~2, leaving the technical details to the appendix.
+We will only sketch the proof of Theorem~\ref{thm:fb-lb}, leaving the technical details to the Section.
 Since each arm is treated identically, one realizes that such a procedure is performing a sequence of composite binary hypothesis tests where the test decides to keep sampling or not given the observations up to the current time.
 Let $\P_\mu$ and $\E_\mu$ be the probability law of observations from an arm with mean $\mu$.
 It will be also convenient to define $\pi:=\nu(\mu_*+\epsilon)$.

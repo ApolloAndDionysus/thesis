@@ -1,0 +1,49 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{dsfont}
+
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+
+\begin{theorem}[ISHA Guarantee]
+Fix $\delta \in (0,1)$. Under Assumptions 1 and 2, for any $\epsilon >0$ define
+\begin{align*}
+z_{n,\epsilon} :=& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \epsilon)} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \epsilon}  (x-\mu_*)^{-2}  \nu_0(x) \right\}\\
+\leq& \log(2 \log_2(n)/\delta) \max\Bigg\{ \frac{1}{\nu_0(\mu_* + \epsilon)},
+\\ &~~~~~~~~~~
+64 R \log(4 n \log_2(n) /\delta) \left( \epsilon^{-2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) \Bigg\}.
+\end{align*}
+If ISHA is run with $n$ arms and $T=\lceil n \log_2(n) \rceil$ total pulls where $n \geq z_{n,\epsilon}$ then with probability at least $1-\delta$ the single arm returned is no greater than $\mu_* +\epsilon$.
+\end{theorem}
+
+\begin{theorem}[ISHA Guarantee, $\alpha$ version]
+Fix $\delta \in (0,1)$. Under Assumptions 1 and 2, for any $\epsilon >0$ define $\alpha = \nu_0(\mu_* + \epsilon)$ and
+\begin{align*}
+z_{n,\epsilon} :=&
+    \frac{1}{\alpha}
+    \log\left( \frac{ 2 \lg(n) }{ \delta } \right)
+    \max\left\{ 1, 64 R \log\left( \frac{4 n \lg(n) }{ \delta } \right) 
+    \sup_{x \geq \mu_* + \epsilon}  (x-\mu_*)^{-2}  \nu_0(x) \right\}
+\\ \leq&
+    \log\left( \frac{2 \lg(n)}{\delta} \right) \max\Bigg\{ \frac{1}{\alpha},
+\\ &~~~~~~~~~~
+    64 R \log\left( \frac{4 n \lg(n) }{ \delta } \right)
+    \left( \frac{1}{\epsilon^{2}} + \frac{1}{\alpha}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) \Bigg\}.
+\end{align*}
+If ISHA is run with $n$ arms and $T=\lceil n \log_2(n) \rceil$ total pulls where $n \geq z_{n,\epsilon}$ then with probability at least $1-\delta$ the single arm returned is no greater than $\mu_* +\epsilon$.
+\end{theorem}
+
+Number of arms required satisfies both of:
+\begin{align}
+    n &\ge \frac{1}{\alpha} \log \left( \frac{ 2 \lg(n) }{ \delta } \right)
+\\
+    n &\ge 64 R \log \left( \frac{ 2 \lg(n) }{ \delta } \right)
+     \log\left( \frac{4 T }{ \delta } \right)
+    \left( \frac{1}{\epsilon^{2}} + \frac{1}{\alpha}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) 
+\end{align}
+
+
+\end{document}

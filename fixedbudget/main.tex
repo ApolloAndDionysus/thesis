@@ -82,7 +82,7 @@
 %\maketitle
 
 %\begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
-We consider a muti-armed bandit game where the number of arms is much larger than the maximum budget and is effectively infinite.
+Similar to Chapter~\ref{fixedconfidence}, we consider a multi-armed bandit game where the number of arms is much larger than the maximum, but fixed, budget and is effectively infinite.
 We characterize necessary and sufficient conditions on the total budget for an algorithm to return an $\epsilon$-good arm with probability at least $1-\delta$.
 In such situations, the sample complexity depends on $\epsilon, \delta$ and the so-called reservoir distribution $\nu$ from which the means of the arms are drawn iid. 
 While a substantial literature has developed around analyzing specific cases of $\nu$ such as the beta distribution, our analysis makes no assumption about the form of $\nu$.
@@ -102,7 +102,7 @@ The provable correctness of this algorithm also provides an explanation for the 
 %\clearpage
 %\appendix
 \input{fixedbudget/appendix}
-
+\clearpage
 
 %\end{document}
 

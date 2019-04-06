@@ -1,0 +1,59 @@
+\subsection{Setup and Notation}
+We adopt the setup, 
+description and notation of~\citet{icml2013_appel13} for ease of
+comparison.  
+
+\paragraph {A Generic Boosting Algorithm.}
+Boosting algorithms train a linear combination of classifiers
+$\mathcal{H}_T(x)=\sum^T_t {\alpha_t h_t(x)}$
+such that an error function $\mathcal{E}$ is minimized by optimizing scalar
+$\alpha_t$ and the weak learner $h_t(x)$ at round $t$.
+Examples $x_i$ misclassified by $h_t(x)$ are assigned ``heavy'' weights $w_i$
+so that the algorithm focuses on these heavy weight examples when training weak
+learner $h_{t+1}(x)$ in round $t+1$.
+Decision trees, defined formally below, are often used as weak learners.
+
+\paragraph {Decision Tree.}  A binary decision tree $h_{\textit{Tree}}(x)$ is a
+tree-based classifier where every non-leaf node is a decision stump
+$h(x)$.  A decision stump can be viewed as a tuple $(p, k, \tau)$ of a
+polarity (either $+1$ or $-1$), the feature column index, and
+threshold, respectively, which predicts a binary label from the set
+$\{+1, -1\}$ for any input $x \in \mathbb{R}^K$ using the function
+$h(x) \equiv p\mathop{\mathrm{sign}}(x[k] - \tau)$.
+
+A decision tree $h_{\textit{Tree}}(x)$ is trained, top to bottom, by
+``splitting'' a node, i.e. selecting a stump $h(x)$ that optimizes
+some function such as error rate, information gain, or GINI impurity.  
+While this chapter focuses on selecting stumps based on
+error rate, we intend to extend our work to other measures.
+Our algorithm \texttt{Adaptive-Pruning Stump} (Algorithm~\ref{adaptive-pruning-stump}), a subroutine of \texttt{Adaptive-Pruning Boost} (Algorithm~\ref{boosting}), trains a decision stump $h(x)$ with
+fewer total example assessments than its analog, the subroutine of the-state-of-the-art algorithm
+\texttt{Quick Boost}, does. Note that \texttt{Adaptive-Pruning Stump} used iteratively can train a decision tree, but for simplicity we assume our weak learners are binary decision stumps.
+While we describe \texttt{Adaptive-Pruning Stump} for
+binary classification, the reasoning also applies to multi-class data.
+% the
+%decision stump ultimately differentiates between one class and a group of
+%classes (a binary classification).
+
+To describe how \texttt{Adaptive-Pruning Stump} trains a stump
+we need a few definitions.
+Let $n$ be the total number of examples, and $m \le n$ some number of examples
+on which a stump has been trained so far.
+We will assume that Boosting provides the examples in decreasing weight
+order.
+This order can be maintained in $O(n)$ time in the presence of Boosting weight updates
+because examples which are correctly classified do not change their relative
+weight order, and examples which are incorrectly classified do not change their
+relative weight order; a simple merge of these two groups suffices.
+We can therefore number our examples from 1 to $n$ in decreasing weight order.
+Furthermore,
+\begin{itemize}[topsep=0pt,itemsep=0pt]
+\item let $Z_m := \sum_{i=1}^m {w_i}$ be sum of the weights of first $m$ (heaviest) examples, and
+\item let $\epsilon_m := \sum_{i=1}^m {w_i \mathbbm{1} \{h(x_i) \ne y_i\}}$ be the sum of the weights of the examples from the first $m$ which are misclassified by the stump $h(x)$.
+\end{itemize}
+
+The weighted error rate for stump $j$ on the first $m$ examples is then
+$E^j_m := \epsilon_m^j / Z_m$.
+
+
+

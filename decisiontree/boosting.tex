@@ -1,0 +1,17 @@
+Boosting algorithms, e.g. AdaBoost, gradient boosting, LogiBoost etc, train a linear classifier $\mathcal{H}_T(x)=\sum^T_t {\alpha_t h_t(x)}$, where $h_t(x)$ is the weak learner selected at round $t$ such that an error function $\mathcal{E}_t$ is minimized, and $\alpha_t$ is an scaler optimized based on $\mathcal{E}_t$. Based on $\mathcal{E}_t$, each instance $x_i$ is assigned a weight $w_i$ such that instances misclassified at round $t$ are assigned heavier weights so that in the next round the algorithm focuses on these heavy weight instances when training weak learner $h_{t+1}(x)$. Decision Trees are often trained as weak learners.
+
+\subsection{Decision Tree}
+
+\begin{algorithm}[H]
+\caption{SP-Boosting}\label{boosting}
+\begin{algorithmic}
+   \STATE {\bfseries Input:} Instances \{$x_1, \dots, x_n$\}, Labels \{$y_1, \dots, y_n$\}
+   \STATE {\bfseries Output:} $\mathcal{H}_T(x)$
+   \STATE {\bfseries Initialize Weights:} $\{w_{1},\dots,w_{n}\}$   \FOR{$t=1$ {\bfseries to} $T$}
+   \STATE Train Decision Tree $h_t(x)$
+   \STATE Choose $\alpha_t$
+   \STATE $\mathcal{H}_t(x)=\mathcal{H}_{t-1}(x) + \alpha_t h_t(x)$
+   \STATE Update and Sort (in descending order) $w$
+   \ENDFOR
+\end{algorithmic}
+\end{algorithm}

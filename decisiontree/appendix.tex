@@ -1,0 +1,25 @@
+\subsection{Additional Results}
+\subsubsection{Train and Test Error for AdaBoost}
+Table~\ref{tbl:AdaBoostTestTrainErrors} reports test and train errors at various Boosting rounds. Our algorithm achieves the test and train error in fewer total number of example assessments, compared to \texttt{Quick Boost}. Note that both algorithms, except in the case of RCV1, have the same test and train error at a given round, as they should because both train identical decision trees. The case of RCV1 is due to the algorithms picking a weak learner arbitrarily in case of ties, without changing the overall results significantly.
+\input{decisiontree/figures/result1_table_adaboost}
+
+\subsection{Train and Test Error for LazyBoost and Weight Trimming}
+\input{decisiontree/figures/result1_table_a6a_non_random_seed}
+\input{decisiontree/figures/result1_table_mnist}
+\input{decisiontree/figures/result1_table_rcv1_non_random_seed}
+\input{decisiontree/figures/result1_table_satimage_non_random_seed}
+\input{decisiontree/figures/result1_table_w4a_non_random_seed}
+
+\clearpage
+\subsubsection {Different Tree Depths}
+\input{decisiontree/result2_table}
+We also experimented with different tree depths, and found that \texttt{Adaptive-Pruning Boost} shows more dramatic gains in terms of total number of assessments when it uses deeper trees as weak learners.
+We believe this is because of accumulated gains for training more nodes
+in each tree. 
+We have included an example of this in Table~\ref{DiffDepths}, where for two datasets (W4A, and A6A) we show experiments at depth 1 through 5. We report the total number of assessments used by \texttt{AdaBoost} (exact greedy-optimal decision trees) after 500 rounds.
+
+\clearpage
+
+%\input{appendix_infogain.tex}
+%\input{appendix_infogainTight.tex}
+%\input{appendix_gini}

@@ -1,0 +1,24 @@
+\subsection{Experiments}
+We experimented with shallow trees on various binary and multi-class datasets.
+We report both assessment complexity and CPU time complexity for each dataset. Though \texttt{Adaptive-Pruning Boost} is a general Boosting algorithm, we experimented with the following class of algorithms (1) Boosting exact greedy-optimal decision trees and (2) Boosting approximate decision trees.
+
+Each algorithm was run with either the state-of-the-art method (\texttt{Quick Boost}) or our decision tree training method (\texttt{Adaptive-Pruning Boost}), apart from the case of Figure~\ref{fig:wolb} that also uses the brute-force decision tree search method (\texttt{Classic AdaBoost}). The details of our datasets are in Table~\ref{datasets}. For datasets SATIMAGE, W4A, A6A, and RCV1 tree depth of three was used and for MNIST Digits tree depth of four was used (as in \citet{icml2013_appel13}). Train and test error results are provided as supplementary material.
+
+\input{decisiontree/table_datasets}
+
+\paragraph{Boosting Exact Greedy-Optimal Decision Trees.}
+We used \texttt{AdaBoost} for exact decision tree training.
+Figure~\ref{fig:wolb} shows the total number of example assessments used by AdaBoost when it uses three different decision trees building methods described above. In all of these experiments, our algorithm, \texttt{Adaptive-Pruning Boost}, not only consistently beats \texttt{Quick Boost} but it also almost matches the weight order lower bound. The \texttt{Classic AdaBoost} can be seen as the upper bound on the total number of example assessments.
+
+Table~\ref{complexity-exact-results} shows that CPU time improvements correspond to example-assessments improvements for \texttt{Adaptive-Pruning Boost} for all our datasets, except for RCV1. This could be explained by Figure~\ref{fig:wolb} wherein \texttt{Quick Boost} is seen approaching the lower bound for this particular dataset. While \texttt{Adaptive-Pruning Boost} is closer to the lower bound, its example-assessments improvements are not enough to translate to CPU time improvements.
+
+\input{decisiontree/lb_vs_ub}
+
+\input{decisiontree/table_results_exact}
+
+\paragraph{Boosting Approximate Decision Trees.}
+We used two approximate boosting algorithms.
+We experimented with Boosting with Weight-Trimming 90\% and 99\% \citep{Friedman98additivelogistic}, wherein the weak hypothesis is trained only on 90\% or 99\% of the weights, and LazyBoost 90\% and 50\% \citep{Escudero:2001:ULW:2387364.2387381} wherein the weak hypothesis is trained only on 90\% or 50\% randomly selected features. Table~\ref{complexity-approx-results} shows that the CPU time improvements correspond to assessment improvements.
+
+Note that approximate algorithms like XGBoost of \cite{Chen:2016:XST:2939672.2939785} are not competitors to \texttt{Adaptive-Pruning Boost} but rather potential ``clients'' because such algorithms train on a subset of the data. Therefore, they are not appropriate baselines to our method.
+\input{decisiontree/table_results_approx-non-random}

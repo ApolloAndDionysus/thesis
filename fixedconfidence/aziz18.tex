@@ -85,7 +85,7 @@ For regret minimization, one attempts
 % to maximize the
 %expectation of the cumulative rewards obtained.
 %This is equivalent to
- minimize \emph{regret}, the difference between
+ to minimize \emph{regret}, the difference between
 the expected cumulative rewards of an
 optimal strategy and the employed strategy.
 %oracle drawing always the arm
@@ -166,8 +166,8 @@ for $\ArmMean$. Rather, there is some \emph{reservoir distribution} on the arms'
 means (the set $\ArmMean(\Arms)$ with our notation) such that at each round the
 learner can decide to query a new arm, whose mean is drawn from the reservoir,
 and sample it, or to sample an arm that was previously queried. While regret
-minimization was studied by several authors~\citep{NIPS2008_3452,
-NIPS2013_5109,10.1007/978-3-662-44848-9_20}, the recent work
+minimization was studied by several authors~\citep{wang2008,
+bonald2013two,david2014infinitely}, the recent work
 of~\cite{DBLP:journals/corr/CarpentierV15} is the first to study the
 pure-exploration problem in the fixed-budget setting.
 
@@ -286,7 +286,7 @@ In  Section~\ref{sec-fc-upper}, we present and analyze the \texttt{$(\alpha,\eps
 % note: this sentence is in section 1 because reviewers didn't like learning
 % the limitations of the algorithm only late in the paper.
 A comparison between our upper and lower bounds can be found in Section~\ref{sec-compare-lb-ub}.
-We defer most proofs to the appendix, along with some
+We defer most proofs to Section \ref{supp-proofs}, along with some
 numerical experiments.
 
 
@@ -396,7 +396,7 @@ choice of new arms to query independent of their mean mappings.
 This is key to our approach to dealing with reservoirs about which nothing
 is known; we can avoid integrating over such reservoirs and so do not require
 the reservoir to be smooth.
-For details, see Appendix~\ref{proof-CD}.
+For details, see Section~\ref{proof-CD}.
 
 \subsubsection{Objective and Generic Algorithm}\label{generic}
 
@@ -457,12 +457,13 @@ For notational convenience, when we set $\epsilon$ to zero we write
 $\GTargetNoEps := \GTargetZeroEps$.
 
 
-\begin{wrapfigure}{r}{0.4\textwidth}
+\begin{figure}
 \vspace{-15pt}
-\begin{minipage}{0.4\textwidth}
+\fbox{
+%\begin{minipage}{0.4\textwidth}
 \begin{algorithm}[H]
+\caption{Generic algorithm}
 %
-\caption{Generic algorithm.}
 \label{algo:Generic}
 \begin{algorithmic}
 %
@@ -482,9 +483,10 @@ H_{t-1}}$
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
-\end{minipage}
+%\end{minipage}
+}
 \vspace{-15pt}
-\end{wrapfigure}
+\end{figure}
 
 \paragraph{Generic algorithm}  An algorithm is made of a
 \emph{sampling rule} $(\armRV_t)$, a \emph{stopping rule} $\tau$ (with
@@ -644,8 +646,8 @@ in an infinite bandit model.
 
 Regret minimization has been studied
 extensively for infinite bandit models
-\citep{berry1997,NIPS2008_3452, NIPS2013_5109,
-10.1007/978-3-662-44848-9_20}, whereas
+\citep{berry1997,wang2008, bonald2013two,
+david2014infinitely}, whereas
 \cite{DBLP:journals/corr/CarpentierV15} is the first work dealing with
 pure-exploration for general reservoirs. The authors consider the fixed-budget
 setting, under the tail
@@ -678,8 +680,8 @@ Although the fixed-confidence pure-exploration problem for infinitely armed
 bandits has been rarely addressed
 %in the literature 
 for general reservoir distributions, the \emph{most-biased
-coin problem} studied by \cite{DBLP:journals/corr/abs-1202-3639,
-Jamieson:2016wd} can be viewed as a particular
+coin problem} studied by \cite{chandrasekaran2014finding,
+jamieson2016power} can be viewed as a particular
 instance, with a specific reservoir distribution that is a mixture of
 ``heavy'' coins of mean $\expReward_1$ and ``light'' coins
 of mean $\expReward_0$: $G = (1-\alpha)\delta_{\expReward_0} + \alpha
@@ -709,7 +711,7 @@ sample complexity of any two-phase algorithm (such as ours) might scale like $\l
 a dependence on $\delta$ of $\log \frac{1}{\delta}$ for the special case they address.
 
 %After submitting this work, we became aware of the recent work of
-Finally, the recent work of \cite{Chaudhuri2017PACIO} studies a framework that is similar to the one introduced in this paper\footnote{Note that we became aware of their work after submitting our paper.}. Their first goal of identifying, in a finite bandit model an arm with mean larger than $\mu_{[m]} - \epsilon$ (with $\mu_{[m]}$ the arm with $m$-th largest mean) is extended to the infinite case, in which the aim is to find an $(\alpha,\epsilon)$-optimal arm. 
+Finally, the recent work of \cite{chaudhuri2017pac} studies a framework that is similar to the one introduced in this chapter\footnote{Note that we became aware of their work after submitting our work.}. Their first goal of identifying, in a finite bandit model an arm with mean larger than $\mu_{[m]} - \epsilon$ (with $\mu_{[m]}$ the arm with $m$-th largest mean) is extended to the infinite case, in which the aim is to find an $(\alpha,\epsilon)$-optimal arm. 
 The first algorithm proposed for the infinite case applies the Median Elimination algorithm \citep{EvenDaral06} on top of
 $\frac{1}{\alpha}\log\frac{2}{\delta}$ 
 arms drawn from the reservoir and is proved to have a
@@ -848,7 +850,7 @@ for best arm identification with $\epsilon=0$. Assuming arm means $\expReward_1 
 
 The proof relies on the following lemma that expresses a change of
 measure in an infinite bandit model. Its proof is detailed in
-Appendix~\ref{supp-proofs}. 
+Section~\ref{supp-proofs}. 
 
 \begin{lemma}\label{lem-CD} Let $\ArmMeanAlt : \Arms \rightarrow \ExpRewards$ be an
 alternative mean-mapping.
@@ -1028,11 +1030,12 @@ obtain $(\alpha,\delta)$-correctness
 under assumptions on the tail of the reservoir.
 
 
-\subsubsection{The algorithm}\label{kl-lucb}
+\subsubsection{The Algorithm}\label{kl-lucb}
 
-\begin{wrapfigure}{r}{0.55\textwidth}
-\vspace{-35pt}
-\begin{minipage}{0.55\textwidth}
+\begin{figure}
+\vspace{-5pt}
+\fbox{
+%\begin{minipage}{0.55\textwidth}
 \begin{algorithm}[H]
 \caption{$(\alpha,\epsilon)$-KL-LUCB}\label{alg-alpha-kl-lucb}
 \begin{algorithmic}
@@ -1056,9 +1059,10 @@ under assumptions on the tail of the reservoir.
 \STATE \textbf{return} {$w^{\hat{a}(t)}$}
 \end{algorithmic}
 \end{algorithm}
-\end{minipage}
+}
+%\end{minipage}
 \vspace{-5pt}
-\end{wrapfigure}
+\end{figure}
 
 
 \texttt{$(\alpha,\epsilon)$-KL-LUCB}, presented as Algorithm~\ref{alg-alpha-kl-lucb}, is a two-phase algorithm. It first queries $n=\frac{1}{\alpha} \log \frac{2}{\delta}$ arms
@@ -1126,7 +1130,7 @@ $
 $
 %\]
 hence $\hat{s}_\tau$ belongs to the top-$\alpha$ fraction, up to $\epsilon$. We prove in
-Appendix~\ref{proof:correctness}
+Section~\ref{proof:correctness}
 that $\Pr{A^\complement} \leq \delta/2$ and $\Pr{B^\complement}\leq \delta/2$,
 which yields the following result. 
 %
@@ -1204,7 +1208,7 @@ with $C_0(\gamma)$ such that
 $C_0(\gamma) \ge \gamma \log(C_0(\gamma)) + 1 + \frac{\gamma}{e}$.
 \end{theorem}
 
-Theorem~\ref{samplecomp} only presents the leading term in $\delta$ (when $\delta$ goes to zero) of the sample complexity upper bound, but an explicit upper bound can be extracted from the proof of Theorem~\ref{samplecomp}, given in Appendix~\ref{sec-proof}.  
+Theorem~\ref{samplecomp} only presents the leading term in $\delta$ (when $\delta$ goes to zero) of the sample complexity upper bound, but an explicit upper bound can be extracted from the proof of Theorem~\ref{samplecomp}, given in Section~\ref{sec-proof}.  
 %We now compare this bound to our lower bound and discuss the squared log factor.
 
 \subsection{Comparison and Discussion}
@@ -1259,7 +1263,7 @@ The second phase can be reduced to a problem of finding one of the top $m$ arms,
 
 Despite all this, it seems likely that a one-phase algorithm can avoid the
 quadratic dependence on $\log \frac{1}{\delta}$.
-Indeed, \cite{Jamieson:2016wd}
+Indeed, \cite{jamieson2016power}
 provides such an algorithm for the special case of reservoirs involving just
 two expected rewards.
 They employ a subroutine which 
@@ -1313,7 +1317,7 @@ and updating confidence intervals only for those arms whose upper bounds overlap
 with the top arm.
 However, we provide no performance guarantees for the algorithm with these 
 modifications.
-Note that our results are for the algorithm as stated in the paper, and not with 
+Note that our results are for the algorithm as stated in the chapter, and not with 
 any of these modifications.
 
 \begin{table}
@@ -1410,7 +1414,7 @@ performance.
 %
 %\appendix 
 
-\subsection{Additional proofs}\label{supp-proofs}
+\subsection{Additional Proofs}\label{supp-proofs}
 
 \subsubsection{Proof of Lemma~\ref{lem-CD}} \label{proof-CD}
 
@@ -1655,7 +1659,7 @@ In addition to events $A$ and $B$ defined in Section~\ref{sec-correctness}, we i
 C = \bigcap_{i = 1,\dots,m} \left\{|\{ a \leq n : w^a \in \ArmGrp{i}\}| \leq 6\log({1}/{\delta})\right\}
 \end{align}
 We prove the following in
-Appendix~\ref{proof:armNumAppBandit}.
+Section~\ref{proof:armNumAppBandit}.
 
 \begin{lemma}\label{lem-armNumAppBandit} If $\delta \leq \alpha \leq 1/3$,
 $\Pr{ C } \geq 1-\delta$.
@@ -1666,7 +1670,7 @@ For all $t\in\N$ we introduce the event
 W_t = \bigcap_{1\leq a \leq n} (L_a(t) \leq \ArmMean_a \leq U_a(t))
 \end{align}
 and define $W = \cap_{t\in\N^*} W_t$. By the same argument as the one used in the proof of Lemma~\ref{correctness} (see
-Appendix~\ref{proof:correctness}),
+Section~\ref{proof:correctness}),
 one 
 can show that $\Pr{ W } \geq 1-2\delta.$
 

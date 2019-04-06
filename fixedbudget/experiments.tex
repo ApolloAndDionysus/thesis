@@ -1,11 +1,10 @@
 %!TEX root = main.tex
 
-\subsection {Empirical study}\label{experiments}
-We evaluate Successive Halving against various baselines,
+\subsection {Empirical Study}\label{experiments}
+We evaluate ISHA against various baselines,
 using Bernoulli arms.
 %reward distributions in $\{0,1\}$. 
-Let $n^*_T$ be the maximum number of arms in Successive Halving,
-i.e. $T \geq n^*_T \log_2 n^*_T$. 
+
 %We begin by introducing the reservoirs and algorithms.
 
 \textbf{Datasets/reservoirs.}
@@ -17,8 +16,8 @@ We also use the reservoir described in Equation~\ref{eqn:mostbiasedcoin_reservoi
 In particular, the spikes are symmetric around $1/2$ and $(\pi,\epsilon) \in \{(10^{-3},\sqrt{10^{-1}}), (10^{-2},\sqrt{10^{-2}}), (10^{-1},\sqrt{10^{-3}})\}$ so that $1/{\pi \epsilon^2}=10,000$.
 % $\epsilon$ is the gap between mean rewards $\mu_1$ and $\mu_2$, where $\alpha$ is the probability of drawing $\mu_1$ and $1-\alpha$ is the probability of drawing $\mu_2$. The mean rewards were centered around $.5$, i.e. $\mu_1 = .5+\frac{\epsilon}{2}$ and $\mu_2 = .5-\frac{\epsilon}{2}$
 
-We also test against a reservoir generated from data collected from the New Yorker Caption Contest dataset~\citep{NIPS2015_5868, new_yorker_contest},
-using contest number 539 having 4,827 captions.  We synthesize a reservoir CDF (Figure~\ref{fig:newyorkercdf} in Appendix~\ref{appendix:experiments}) over Bernoulli arms, where each caption is an arm and the expected reward is number of times it was rated unfunny divided by its total ratings count, so small means are better.
+We also test against a reservoir generated from data collected from the New Yorker Caption Contest dataset~\citep{NIPS2015_5868},
+using contest number 637 having 3,795 captions and 875,065 total votes uniformly at random distributed amongst the captions, resulting in about 231 votes per caption. For our experiment, arms are randomly drawn with replacement from the $3,795$ arms, where the mean of each arm is taken to be the fraction of times ``unfunny'' was observed in the dataset, so small means are better. The arm reservoir CDF (Figure~\ref{fig:newyorkercdf}) can be found in Section~\ref{appendix:experiments}.
 
 %% For a more realistic reservoir, we fit a CDF to data from the New
 %% Yorker Caption Contest dataset~\citep{NIPS2015_5868,
@@ -43,25 +42,24 @@ using contest number 539 having 4,827 captions.  We synthesize a reservoir CDF (
 
 \textbf{Algorithms.}
 We compare against three main
-classes of algorithms: (1) pure exporation algorithms, (2)
-explore-vs-exploit algorithms, and (3) anytime algorthms.  Detailed
+classes of algorithms: (1) pure exploration algorithms, (2)
+explore-vs-exploit algorithms, and (3) anytime algorithms.  Detailed
 descriptions of these algorithms and their use in our empirical study
-are given in Appendix~\ref{appendix:experiments}.  In brief, within
+are given in Section~\ref{appendix:experiments}.  In brief, within
 the pure exploration family, we consider
 SIRI~\citep{DBLP:journals/corr/CarpentierV15},
 lil'UCB~\citep{Jamieson2014lilU}, Hyperband~\citep{li2017hyperband},
 and Successive Rejects~\citep{audibert2010best}.  We also devise a
-strong baseline for Successive Halving that we refer to as Chernoff.
+strong baseline for ISHA that we refer to as Chernoff.
 Chernoff has knowledge of $\mu_*$, and simply draws an arm from the
 reservoir, tests it so long as its the empirical lower bound does not
 exceed $\mu_*$, discarding the arm and drawing another if the arm is
 ever proven to be suboptimal.  Within the explore-vs-exploit family,
 we consider four infinite-armed bandit algorithms of \cite{berry1997}, CBT
 and Empirical CBT \citep{Chan2018Infinite}, and fixed horizon Two
-Target \citep{bonald2013two}.  We also consider an anytime version of Successive Halving:
+Target \citep{bonald2013two}.  We also consider an anytime version of ISHA:
 choose increasing dyadic numbers of arms, $n=2^i, i=1,2,\dots$.  For each value of $n$,
-sample $n$ new arms and run Successive Halving with budget $T=n\log_2
-n$ and save the result as the best arm found so far.  We compare this
+sample $n$ new arms and run ISHA and save the result as the best arm found so far.  We compare this
 algorithm to Hyperband Anytime and SIRI Anytime (using the budget
 doubling trick as proposed by the SIRI authors).
 
@@ -69,15 +67,16 @@ doubling trick as proposed by the SIRI authors).
 Our proposed algorithm starts discarding arms after just a single pull, far before concentration of measure has kicked in. 
 %Empirical studies of Hyperband which hedges over parallel versions of Successive Halving where each has the same budget but different number of arms have anecdotally shown that the most aggressive bracket with the most arms, tends to be the superior bracket \citep{li2017hyperband}. 
 It is truly surprising that theoretical results can be obtained for such a result, and consequently we begin with an empirical study of this phenomenon. 
-We evaluate Successive Halving against a variety of alternative approaches. Our exhaustive experiments can be found in Appendix~\ref{appendix:experiments}, here we report only a representative sample.
+We evaluate ISHA against a variety of alternative approaches. Our exhaustive experiments can be found in Section~\ref{appendix:experiments}, here we report only a representative sample.
 % Here we present two types of experiments:
 % (1) finding the ``right'' number of arms for Successive Halving such that simple regret is minimized, and
 % (2) evaluating the simple regret of Successive Halving vs. the baselines described above for various values of budget $T$.
 
 \textbf{Successive Halving performance as a function of the number of arms for a fixed budget.}
-Figure~\ref{fig:sh-num-arms:alpha1_beta3_scaled} studies the tradeoff between the number of arms $n$ and budget $T$ Successive Halving in terms of simple regret averaged over 500 replications.
+Figure~\ref{fig:sh-num-arms:alpha1_beta3_scaled} studies the tradeoff between the number of arms $n$ and budget $T$ for Successive Halving in terms of simple regret averaged over 500 replications. Let $n^*_T$ be the maximum number of arms in Successive Halving,
+i.e. $T \geq n^*_T \log_2 n^*_T$.
 Each ``sheet'' of the plot corresponds to a single value of budget $T$ for a number of arms $n=2,2^2,2^3,\dots,n^*_T$.
-We observe that across a variety of reservoirs (see Appendix~\ref{appendix:experiments}) the maximum possible number of arms $n^*_T$ appears to perform better than or as well as any other value of $n$.
+We observe that across a variety of reservoirs (see Section~\ref{appendix:experiments}) Successive Halving with the maximum possible number of arms $n^*_T$ (ISHA) appears to perform better than or as well as Successive Halving with any other value of $n$.
 
 % Choosing the optimal number of arms is the main variable in deciding how to optimally run Successive Halving in the infinite setting.
 % A given reservoir will have some minimum number of arms necessary to
@@ -95,11 +94,11 @@ We observe that across a variety of reservoirs (see Appendix~\ref{appendix:exper
 % Next, we test our algorithm against some baselines.
 \textbf{Simple regret vs. Budget.} 
 In the next several plots we compare the simple regret of
-Successive Halving run with $n^*_T$ arms to that of various baselines. The results are averaged over 200 replications.
+ISHA to that of various baselines. The results are averaged over 200 replications.
 In Figures~\ref{fig:sh-infinite:alpha1_beta3_scaled}
 and \ref{fig:sh-infinite:TwoSpike_1}
 we compare to state-of-the-art algorithms for infinitely-armed bandit models. 
-We observe that while different algorithms are most competitive on different reservoirs, Successive Halving and Successive Rejects are the only algorithms that are consistently superior across all reservoirs.
+While different algorithms are most competitive on different reservoirs, ISHA and Successive Rejects are the only algorithms that are consistently superior across all reservoirs.
 %See Appendix~\ref{appendix:experiments} for the results on all other reservoirs.
 % We added Empirical CBT, a regret algorithm, due to its adaptability to unknown reservoirs.
 % We also include Successive Rejects, a finite bandit algorithm, with the
@@ -119,15 +118,15 @@ such as the lil'UCB.
 
 Figure~\ref{fig:sh-unscaled-alpha1_beta1_unscaled} compares mainly against exploration-vs-exploitation baselines.
 Recall that many of these baseline algorithms are designed specifically for $Beta$ reservoirs and assume knowledge of
-of the reservoir. Even so, Successive Halving does as well or better. 
+of the reservoir. Even so, ISHA does as well or better. 
 %See Appendix~\ref{appendix:experiments} for a second similar result.
 
 
-Finally, in Figure~\ref{fig:sh-anytime:alpha1_beta3_scaled}, we compare Successive Halving 
-and Successive Halving Anytime to several other anytime algorithms.
+Finally, in Figure~\ref{fig:sh-anytime:alpha1_beta3_scaled}, we compare ISHA 
+and ISHA Anytime to several other anytime algorithms.
 %These algorithms are designed to use an arbitrarily large budget and iteratively refine their notion of the best arm available in such
 %a way that they eventually converge on the optimal arm.
-Successive Halving Anytime easily outperforms its baselines,
+ISHA Anytime easily outperforms its baselines,
 performing nearly as well as its non-Anytime version. 
 %See Appendix~\ref{appendix:experiments} for similar results on more reservoirs.
 
@@ -164,7 +163,7 @@ performing nearly as well as its non-Anytime version.
 	\caption{$Beta(1,1)$ }
 	\label{fig:sh-unscaled-alpha1_beta1_unscaled}
 \end{subfigure}
-\caption{A sampled set of results. See Appendix~\ref{appendix:experiments} for more.}
+\caption{A sampled set of results. See Section~\ref{appendix:experiments} for more.}
 \end{figure}
 
 %\begin{figure}

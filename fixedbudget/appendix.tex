@@ -186,7 +186,7 @@ so that
  \end{align*}
  \end{proof}
 
-\subsubsection{Proof of Theorem~{2}}
+\subsubsection{Proof of Theorem~\ref{thm:fb-lb}}
 
 \begin{proof}
 We plug in the result of Lemma~\ref{lem:exp_N1} with $\kappa=2\pi$ into Equation~\ref{eqn:N1_to_many} to obtain
@@ -224,7 +224,7 @@ Finally, $1 \geq (1 - \tfrac{\delta}{2}  \log(\tfrac{1-\delta}{\delta/42}))\geq 
 
 \end{proof}
 
-\subsection {Additional empirical study}\label{appendix:experiments}
+\subsection {Empirical study}\label{appendix:experiments}
 
 Here we present further results in addition to what we provided in Section~\ref{experiments}. We start with describing in some detail the baselines we used and then present further experiments on various reservoirs.
 
@@ -232,7 +232,7 @@ Here we present further results in addition to what we provided in Section~\ref{
 Our first batch of baselines are pure exploration algorithms.
 
 We introduce the algorithm we call Chernoff, meant as a strong baseline
-for Successive Halving. This algorithm has knowledge of $\mu_*$.
+for ISHA. This algorithm has knowledge of $\mu_*$.
 We define the algorithm in terms of the confidence lower bound $L_i(t) = \min \{q \in [0,\widehat{\mu}_{i}] : N_i(t) KL(\hat{\mu}_i(t),q) \le \log(1/\delta_k) \}\label{kl-ub}$
 where $t$ is the budget used so far,
 $N_i(t)$ is the number of times arm $i$ is pulled,
@@ -289,23 +289,23 @@ We use $m=3$ in our experiments.
 
 \paragraph{Anytime algorithms.}
 We also propose the following Anytime version
-of Successive Halving and compare it to other anytime algorithms.
-When an effectively unlimited budget is available, Successive Halving
+of ISHA and compare it to other anytime algorithms.
+When an effectively unlimited budget is available, ISHA
 Anytime can be run as follows.
 Choose increasing dyadic numbers of arms, $n=2^i, i=1,2,\dots$.
 For each value of $n$, sample $n$ new arms and
-run Successive Halving with budget $T=n\log_2 n$ and save the result
+run ISHA and save the result
 as the best arm found so far.
 We compare this algorithm to Hyperband Anytime and SIRI Anytime (using the budget doubling trick as proposed by the SIRI authors).
 
 \subsubsection{Experiments and Insights}\label{appendix:fb-experiments}
 \paragraph{Successive Halving performance as a function of the number of arms for a fixed budget.}
-The class of experiments in Figure~\ref{appendix:fig:sh-num-arms} reports the average simple regret for Successive Halving using $n^*_T$ (the maximum number of arms s.t. $T \ge n^*_T\log_2 n^*_T$) in comparison to various
+The class of experiments in Figure~\ref{appendix:fig:sh-num-arms} reports the average simple regret for ISHA (Successive Halving using the maximum number of arms s.t. $T \ge n^*_T\log_2 n^*_T$) in comparison to various
 smaller choices of $n$. Across a variety of reservoirs, $n^*_T$ arms is always a good choice for Successive Halving in the infinite setting.
 
 \paragraph{Simple regret vs. Budget.} 
 In the class of experiments in Figure~\ref{appendix:fig:sh-infinite} we compare the simple regret of
-Successive Halving run with $n^*_T$ arms to that of various pure exploration baselines.
+ISHA to that of various pure exploration baselines.
  
 Figure~\ref{appendix:fig:sh-lilucb} highlights the difficulty of
 choosing the optimal number of arms for UCB-style algorithms,
@@ -313,7 +313,7 @@ such as the lil'UCB.
 
 Figure~\ref{appendix:fig:sh-unscaled} compares mainly against various exploration-vs-exploitation baselines, some of which were specifically designed specifically for $Beta$ reservoirs.
 
-Finally, in Figure~\ref{appendix:fig:sh-anytime}, we compare Successive Halving  and Successive Halving Anytime to several other anytime algorithms.
+Finally, in Figure~\ref{appendix:fig:sh-anytime}, we compare ISHA  and ISHA Anytime to several other anytime algorithms.
 
 \clearpage
 
@@ -452,7 +452,7 @@ Finally, in Figure~\ref{appendix:fig:sh-anytime}, we compare Successive Halving 
 \end{subfigure}
 %
 %\begin{subfigure}{0.4\textwidth}
-%	\includegraphics[width=\textwidth]{fixedbudget/figures/folder5/new_yorker.png}
+%	\includegraphics[width=\textwidth]{figures/folder5/new_yorker.png}
 %	\caption{New Yorker}
 %	\label{fig:sh-lilucb:new_yorker}
 %\end{subfigure}
@@ -510,7 +510,7 @@ Finally, in Figure~\ref{appendix:fig:sh-anytime}, we compare Successive Halving 
 
 \begin{figure}
 % \vspace{-2.5em}
-\includegraphics[width=\textwidth]{fixedbudget/figures/reversed_individual_539_summary_LilUCB.png}
+\includegraphics[width=\textwidth]{fixedbudget/figures/NY_CDF.pdf}
 \caption{New Yorker CDF}
 \label{fig:newyorkercdf}
 \end{figure}

@@ -1,0 +1,63 @@
+%% AMS-LaTeX Created with the Wolfram Language for Students - Personal Use Only : www.wolfram.com
+
+\documentclass{article}
+\usepackage{amsmath, amssymb, graphics, setspace}
+
+\newcommand{\mathsym}[1]{{}}
+\newcommand{\unicode}[1]{{}}
+
+\newcounter{mathematicapage}
+\begin{document}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Leaves}=2;}\\
+\pmb{\text{Labels}=2;}\\
+\pmb{S=\text{Array}[s,\{\text{Leaves},\text{Labels}\}];}\\
+\pmb{U=\text{Array}[u,\{\text{Leaves},\text{Labels}\}];}\\
+\pmb{W=\text{Array}[w,\{\text{Labels}\}];}\\
+\pmb{\text{Lam}=\text{Array}[\lambda ,\{\text{Labels}\}];}\\
+\pmb{\text{Sum}\left[-\frac{(S[[\rho ,y]]+U[[\rho ,y]])^2}{\text{Sum}[S[[\rho ,\text{y2}]]+U[[\rho ,\text{y2}]],\{\text{y2},1,\text{Labels}\}]},\{\rho
+,1,\text{Leaves}\},\right.}\\
+\pmb{\{y,1,\text{Labels}\}]-\text{Sum}[\text{Lam}[[y]] (W[[y]]-\text{Sum}[U[[\rho ,y]],\{\rho ,1,\text{Leaves}\}]),}\\
+\pmb{\{y,1,\text{Labels}\}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Grad}\left[\text{Sum}\left[-\frac{(S[[\rho ,y]]+U[[\rho ,y]])^2}{\text{Sum}[S[[\rho ,\text{y2}]]+U[[\rho ,\text{y2}]],\{\text{y2},1,\text{Labels}\}]},\{\rho
+,1,\text{Leaves}\},\right.\right.}\\
+\pmb{\{y,1,\text{Labels}\}]-\text{Sum}[\text{Lam}[[y]] (W[[y]]-\text{Sum}[U[[\rho ,y]],\{\rho ,1,\text{Leaves}\}]),}\\
+\pmb{\{y,1,\text{Labels}\}],\text{Flatten}[\text{Append}[\text{Lam},\text{Flatten}[U]]]]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left\{u[1,1]+u[2,1]-w[1],u[1,2]+u[2,2]-w[2],\frac{(s[1,1]+u[1,1])^2}{(s[1,1]+s[1,2]+u[1,1]+u[1,2])^2}+\frac{(s[1,2]+u[1,2])^2}{(s[1,1]+s[1,2]+u[1,1]+u[1,2])^2}-\frac{2
+(s[1,1]+u[1,1])}{s[1,1]+s[1,2]+u[1,1]+u[1,2]}+\lambda [1],\frac{(s[1,1]+u[1,1])^2}{(s[1,1]+s[1,2]+u[1,1]+u[1,2])^2}+\frac{(s[1,2]+u[1,2])^2}{(s[1,1]+s[1,2]+u[1,1]+u[1,2])^2}-\frac{2
+(s[1,2]+u[1,2])}{s[1,1]+s[1,2]+u[1,1]+u[1,2]}+\lambda [2],\frac{(s[2,1]+u[2,1])^2}{(s[2,1]+s[2,2]+u[2,1]+u[2,2])^2}+\frac{(s[2,2]+u[2,2])^2}{(s[2,1]+s[2,2]+u[2,1]+u[2,2])^2}-\frac{2
+(s[2,1]+u[2,1])}{s[2,1]+s[2,2]+u[2,1]+u[2,2]}+\lambda [1],\frac{(s[2,1]+u[2,1])^2}{(s[2,1]+s[2,2]+u[2,1]+u[2,2])^2}+\frac{(s[2,2]+u[2,2])^2}{(s[2,1]+s[2,2]+u[2,1]+u[2,2])^2}-\frac{2
+(s[2,2]+u[2,2])}{s[2,1]+s[2,2]+u[2,1]+u[2,2]}+\lambda [2]\right\}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Solve}[\{u[1,1]+u[2,1]-w[1]==0,u[1,2]+u[2,2]-w[2]==0,}\\
+\pmb{\frac{(s[1,1]+u[1,1])^2}{(s[1,1]+s[1,2]+u[1,1]+u[1,2])^2}+\frac{(s[1,2]+u[1,2])^2}{(s[1,1]+s[1,2]+u[1,1]+u[1,2])^2}-}\\
+\pmb{\frac{2 (s[1,1]+u[1,1])}{s[1,1]+s[1,2]+u[1,1]+u[1,2]}+\lambda [1]==0,}\\
+\pmb{\frac{(s[1,1]+u[1,1])^2}{(s[1,1]+s[1,2]+u[1,1]+u[1,2])^2}+\frac{(s[1,2]+u[1,2])^2}{(s[1,1]+s[1,2]+u[1,1]+u[1,2])^2}-}\\
+\pmb{\frac{2 (s[1,2]+u[1,2])}{s[1,1]+s[1,2]+u[1,1]+u[1,2]}+\lambda [2]==0,}\\
+\pmb{\frac{(s[2,1]+u[2,1])^2}{(s[2,1]+s[2,2]+u[2,1]+u[2,2])^2}+\frac{(s[2,2]+u[2,2])^2}{(s[2,1]+s[2,2]+u[2,1]+u[2,2])^2}-}\\
+\pmb{\frac{2 (s[2,1]+u[2,1])}{s[2,1]+s[2,2]+u[2,1]+u[2,2]}+\lambda [1]==0,}\\
+\pmb{\frac{(s[2,1]+u[2,1])^2}{(s[2,1]+s[2,2]+u[2,1]+u[2,2])^2}+\frac{(s[2,2]+u[2,2])^2}{(s[2,1]+s[2,2]+u[2,1]+u[2,2])^2}-}\\
+\pmb{\left.\frac{2 (s[2,2]+u[2,2])}{s[2,1]+s[2,2]+u[2,1]+u[2,2]}+\lambda [2]==0\right\},}\\
+\pmb{\text{Flatten}[\text{Append}[\text{Lam},\text{Flatten}[U]]]]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left\{\left\{\lambda [1]\to \left(s[1,1]^2+2 s[1,1] s[1,2]-s[1,2]^2+2 s[1,1] s[2,1]+2 s[1,2] s[2,1]+s[2,1]^2+2 s[1,1] s[2,2]-2 s[1,2]
+s[2,2]+2 s[2,1] s[2,2]-s[2,2]^2+2 s[1,1] w[1]+2 s[1,2] w[1]+2 s[2,1] w[1]+2 s[2,2] w[1]+w[1]^2+2 s[1,1] w[2]-2 s[1,2] w[2]+2 s[2,1] w[2]-2 s[2,2]
+w[2]+2 w[1] w[2]-w[2]^2\right)/(s[1,1]+s[1,2]+s[2,1]+s[2,2]+w[1]+w[2])^2,\lambda [2]\to \left(-s[1,1]^2+2 s[1,1] s[1,2]+s[1,2]^2-2 s[1,1] s[2,1]+2
+s[1,2] s[2,1]-s[2,1]^2+2 s[1,1] s[2,2]+2 s[1,2] s[2,2]+2 s[2,1] s[2,2]+s[2,2]^2-2 s[1,1] w[1]+2 s[1,2] w[1]-2 s[2,1] w[1]+2 s[2,2] w[1]-w[1]^2+2
+s[1,1] w[2]+2 s[1,2] w[2]+2 s[2,1] w[2]+2 s[2,2] w[2]+2 w[1] w[2]+w[2]^2\right)/(s[1,1]+s[1,2]+s[2,1]+s[2,2]+w[1]+w[2])^2,u[1,1]\to -u[2,1]+w[1],u[1,2]\to
+(-s[1,2] s[2,1]+s[1,1] s[2,2]-s[1,2] u[2,1]-s[2,2] u[2,1]+s[2,2] w[1]+s[1,1] w[2]-u[2,1] w[2]+w[1] w[2])/(s[1,1]+s[2,1]+w[1]),u[2,2]\to (s[1,2] s[2,1]-s[1,1]
+s[2,2]+s[1,2] u[2,1]+s[2,2] u[2,1]-s[2,2] w[1]+s[2,1] w[2]+u[2,1] w[2])/(s[1,1]+s[2,1]+w[1])\right\}\right\}\)
+\end{doublespace}
+
+\end{document}

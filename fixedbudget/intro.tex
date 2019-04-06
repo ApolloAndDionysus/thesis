@@ -14,7 +14,7 @@ But each algorithm starts the same:  \textit{Pull each arm $i \in \{1,\dots,n\}$
 \begin{wrapfigure}{r}{.4\textwidth}
 % \vspace{-2.5em}
 \includegraphics[width=.4\textwidth]{fixedbudget/figures/folder5/new_yorker.png}
-\caption{$4827$ arms. Difference of the recommended and optimal arm's mean as a function of total pulls. }
+\caption{$3,795$ arms. Difference of the recommended and optimal arm's mean as a function of total pulls. }
 \label{fig:newyorker}
 \vspace{-1.5em}
 \end{wrapfigure}
@@ -31,9 +31,9 @@ Such cases arise when the proportion of $\epsilon$-good arms is independent of $
 
 Consider a concrete example of the New Yorker caption contest dataset,
 where captions are voted on to find the funniest one (see Section~\ref{experiments}).
-The bold blue line is the best-arm identification algorithm lil'UCB \citep{Jamieson2014lilU} executed on all $4827$ arms, lil'UCB-$X$ for $X$ in $\{10,100,1000,10000\}$ is lil'UCB run on $X$ arms randomly drawn with replacement from the $4827$ arms, and Successive Halving is the proposed algorithm of this work. Each algorithm outputs the empirical best arm at any given total budget of pulls, breaking ties randomly.
+The bold blue line is the best-arm identification algorithm lil'UCB \citep{Jamieson2014lilU} executed on all $3,795$ arms, lil'UCB-$X$ for $X$ in $\{10,100,1000,10000\}$ is lil'UCB run on $X$ arms randomly drawn with replacement from the $3,795$ arms, and ISHA is the proposed algorithm of this work. Each algorithm outputs the empirical best arm at any given total budget of pulls, breaking ties randomly.
 We observe that one can identify a ``pretty good'' arm faster when the number of drawn arms $X$ is small, but as a consequence this small set of arms will not have an arm very close to the best possible arm.
-We also observe that Successive Halving appears to naturally navigate this tradeoff.  
+We also observe that ISHA appears to naturally navigate this tradeoff.  
 
 When $n \gg B$ we can treat $n$ as effectively \emph{infinite} and the difference between sampling an arm with or without replacement is indistinguishable. 
 Towards this end, we define the \emph{infinite-armed bandit problem}.
@@ -64,9 +64,9 @@ Consider the pure-exploration infinite-armed bandit game.
 % If $Z_t := X_{I_t,N_{I_t}(t)}$ then given the filtration $\mathcal{F}_t = ( (I_1, Z_1, J_1), \dots, (I_t, Z_t, J_t))$ we have that $I_t$ is $\mc{F}_{t-1}$ measurable, $Z_t$ is $\mc{F}_t$ measureable, and $J_t$ is $\mc{F}_t$ measureable.
 
 
-\noindent\textbf{Objective:} For a fixed reservoir distribution $\nu_0$ and $\epsilon,\delta \in (0,1)$, minimize the time $\tau \in \mathbb{N}$ such that $\P( \mu_{J_\tau} \leq \mu_* + \epsilon ) \geq 1-\delta$ where $\mu_* = \inf \{ x : x \in \text{support}(\nu_0) \}$.
+\noindent\textbf{Goal:} For a fixed reservoir distribution $\nu_0$ with $\mu_* = \inf \{ x : x \in \text{support}(\nu_0) \}$ and $\epsilon \in (0,1)$, how big must $\tau \in \mathbb{N}$ be to ensure that $\mu_{J_\tau} \leq \mu_* + \epsilon$ with high probability?
 
-\noindent Said another way, minimize \emph{simple regret} \citep{bubeck2009pure,DBLP:journals/corr/CarpentierV15}.
+\noindent Said another way, minimize \emph{simple regret} \citep{bubeck2009pure,DBLP:journals/corr/CarpentierV15} in high probability, which implies a bound on $\E[\mu_{J_t}]-\mu_*$ (see Remark~2).
 
 % An important deviation of this simple regret objective from the fixed confidence setting of PAC-learning for multi-armed bandits \cite{EvenDaral06,DBLP:conf/icml/KalyanakrishnanTAS12,icml2013_karnin13,Jamieson2014lilU} is that in the defined infinite armed-bandit problem \emph{the player never decides to stop and output an arm}.
 % Suppose the player \emph{did} stop at some finite time under some distribution $\nu$. 
@@ -79,7 +79,7 @@ Consider the pure-exploration infinite-armed bandit game.
 
 
 
-\subsection{Prior work}\label{prior_work}
+\subsection{Prior Work}\label{prior_work}
 
 The main objective of this work is \emph{pure-exploration} where different arms are sampled different numbers of times with the goal of choosing $J_t$ such that the \emph{simple regret} $\mu_{J_t}-\mu_* \leq \epsilon$ for as small $t$ as possible. 
 Contrast this with \emph{exploration-vs-exploitation} where the objective is to pull different arms to minimize the \emph{cumulative regret} of all the plays of the arms pulled: $\sum_{s=1}^t \mu_{I_s} - \mu_*$.
@@ -141,7 +141,7 @@ The most-biased coin problem is a particular instance where
 where $\delta_{x}(\theta)$ is a Dirac-delta at $x$ and parameters $\rho,\pi,\epsilon \in (0,1)$ are known \citep{chandrasekaran2014finding,malloy2012quickest} and unknown \citep{jamieson2016power}.
 This parameterization is thought to be difficult because there is no incremental improvement towards the optimal arm over time: the optimal arm has either been identified or it has not. 
  % knowledge of the means of sub-optimal arms provides no knowledge about the value of the optimal mean in the sense that \eqref{eqn:beta_parameterization} does by being able to extrapolate\footnote{This property was used by \cite{DBLP:journals/corr/CarpentierV15} to adapt to unknown $\beta$ in the model of \eqref{eqn:beta_parameterization}.}.
-Quantile problems have also been studied in the pure-exploration setting, such as identifying an arm $\epsilon$-close to $\mu_q$ \citep{chaudhuri2017pac,aziz2018pure}.
+Quantile problems have also been studied in the pure-exploration setting, such as identifying an arm $\epsilon$-close to $\mu_q$ \citep{chaudhuri2017pac,aziz2018pure,ren2018exploring}.
 
 
 
@@ -160,8 +160,9 @@ While Hyperband is state-of-the-art, hedging over these $\log_2(n)$ copies of Su
 
 
 \subsection{Main Contributions}
-In this work we show that running just one version of Successive Halving with $n$ arms and a budget of $n\log_2(n)$ pulls--where arms start being discarded after being pulled just once--achieves the same theoretical sample complexity guarantees of Hyperband up to poly-logarithmic factors, but the algorithm is considerably simpler and performs better empirically.
+In this work we show that running just one version of Successive Halving, named ISHA, with $n$ arms and a budget of $n\log_2(n)$ pulls--where arms start being discarded after being pulled just once--achieves the same theoretical sample complexity guarantees of Hyperband up to poly-logarithmic factors, but the algorithm is considerably simpler and performs better empirically.
 That is, for any reservoir distribution $\nu_0$ and $\epsilon,\delta$, for sufficiently large $n$ this procedure returns an $\epsilon$-good arm with probability at least $1-\delta$.
+Remark~2 also characterizes the expected simple regret $\E[J_{\tau}]-\mu_*$. 
 Our analysis accounts for arms being discarded far before concentration of measure kicks in, requiring a novel analysis that may inspire future works.
 In exhaustive experimental studies, we show that our proposed algorithm is not only superior on most reservoir distributions (including those derived from finite-armed problems) but also against algorithms that were designed specifically for the reservoirs we evaluated them on, like parameterizations \eqref{eqn:beta_distribution}-\eqref{eqn:mostbiasedcoin_reservoir}.
 
