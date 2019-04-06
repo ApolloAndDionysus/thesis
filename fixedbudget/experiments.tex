@@ -1,7 +1,7 @@
 %!TEX root = main.tex
 
 \subsection {Empirical Study}\label{experiments}
-We evaluate ISHA against various baselines,
+We evaluate ISHA against various baselines
 using Bernoulli arms.
 %reward distributions in $\{0,1\}$. 
 
@@ -66,7 +66,7 @@ doubling trick as proposed by the SIRI authors).
 \subsubsection{Experiments and Insights}\label{fb-experiments}
 Our proposed algorithm starts discarding arms after just a single pull, far before concentration of measure has kicked in. 
 %Empirical studies of Hyperband which hedges over parallel versions of Successive Halving where each has the same budget but different number of arms have anecdotally shown that the most aggressive bracket with the most arms, tends to be the superior bracket \citep{li2017hyperband}. 
-It is truly challenging that theoretical results can be obtained for such a result and we are working on it, and consequently we begin with an empirical study of this phenomenon. 
+%It is truly challenging that theoretical results can be obtained for such a result and we are working on it, and consequently we begin with an empirical study of this phenomenon. 
 We evaluate ISHA against a variety of alternative approaches. Our exhaustive experiments can be found in Section~\ref{appendix:experiments}, here we report only a representative sample.
 % Here we present two types of experiments:
 % (1) finding the ``right'' number of arms for Successive Halving such that simple regret is minimized, and

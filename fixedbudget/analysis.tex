@@ -5,9 +5,11 @@
 
 
 \subsection{Successive Halving for Infinite-armed Bandits}\label{theory}
-The Successive Halving algorithm of \cite{icml2013_karnin13} is presented in Figure~2: our proposed algorithm, ISHA, sets $T=\lceil n\log_2(n)\rceil$ for any $n \in \mathbb{N}$.
-In what follows of this chapter, any reference to ISHA means as taking the particular parameterization of $T=\lceil n \log_2(n) \rceil$ for any $n \in \mathbb{N}$.
-In words, our proposed algorithm is simple: for some $n \in \mathbb{N}$, the algorithm draws $n$ arms without replacement, pulls each arm once, discards the worst half, and on each successive round pulls the surviving arms twice as many times as the previous round before discarding the worst half. The whole process takes $n$ pulls per round for $\log_2(n)$ rounds for a total of $n \log_2(n)$ total pulls.
+The Successive Halving algorithm of \cite{icml2013_karnin13} is presented in Figure~\ref{alg-SH}: our proposed algorithm, ISHA,
+	chooses $n \in \mathbb{N}$ arms so that $T=\lceil n\log_2(n)\rceil$
+	for budget $T$.
+In what follows of this chapter, any reference to ISHA means taking the particular parameterization of $T=\lceil n \log_2(n) \rceil$ for given budget $T$.
+In words, our proposed algorithm is simple: for some $n \in \mathbb{N}$, the algorithm draws $n$ arms without replacement, pulls each arm once, discards the worst half, and on each successive round pulls the surviving arms twice as many times as the previous round before discarding the worst half. The whole process takes $n$ pulls per round for $\log_2(n)$ rounds for a total of $n \log_2(n) = T$ total pulls.
 
 \begin{figure}[h]
 \centering
@@ -24,7 +26,7 @@ In words, our proposed algorithm is simple: for some $n \in \mathbb{N}$, the alg
 % \end{algorithm}
 \end{minipage}
 }
-\caption{Successive Halving algorithm. The algorithm we propose for infinite-armed bandits is to use $T = \lceil n \log_2(n) \rceil$ for any value of $n \in \mathbb{N}$. For anytime, double $n$ and repeat.}\label{alg-SH}
+\caption{Successive Halving algorithm. The algorithm we propose for infinite-armed bandits is to choose $n \in \mathbb{N}$ so that $T = \lceil n \log_2(n) \rceil$. For anytime, double $n$ and repeat.}\label{alg-SH}
 \end{figure}
 
 \begin{wrapfigure}{r}{0.45\textwidth}
@@ -37,7 +39,7 @@ budget. }
 \vspace{-1.5em}
 \end{wrapfigure}
 
-The main dilemma of choosing $X$ for the lil'UCB-$X$ strategies in the introduction of this chapter, and more generally all infinite-armed bandit problems, is determining whether it is better to draw more arms from a reservoir distribution over arms in the hope of getting an arm with better mean reward, or to spend the remaining arm pull budget on identifying a ``good'' arm from among already drawn arms.
+The main dilemma of choosing $X$ for the lil'UCB-$X$ strategies in the introduction of this chapter, and more generally all infinite-armed bandit problems, is determining whether it is better to draw more arms from a reservoir distribution over arms in the hope of getting an arm with better mean reward, or to spend the remaining arm pull budget on identifying a ``good'' arm from among already-drawn arms.
 ISHA navigates this dilemma by focusing not on individual arms but on populations of arms, where at each round the ``fitter'' (i.e. lower empirical mean) arms are more likely to survive and so from round to round the population as a whole ``evolves,'' in the sense that while any individual ``good'' arm might get unlucky and be removed from the population, overall the average expected reward of the surviving arms tends to improve. This is approach is in contrast to state-of-the-art Hyperband's approach, which hedges over different initializations of Successive Halving in hope of accounting for various unknown arm reservoir distributions. Nonetheless, ISHA consistently outperforms Hyperband and tends to enjoy
 an increasing advantage as the budget increases.
 A typical example is shown in Figure~\ref{fig:isha_vs_hb_improvement}.
@@ -75,12 +77,18 @@ A typical example is shown in Figure~\ref{fig:isha_vs_hb_improvement}.
 % \end{align*}
 % Note that $F_0(x,\mu)$ is the CDF of a single draw of a random variable with mean $\mu$. 
 % Likewise, $F_k(x,\mu)$ is equal to $F_0(x,\mu)$ convolved with itself $2^k$ times.
+
+Proving an upper bound for ISHA is challenging because standard
+concentration-of-measure approaches do not apply yet in the first
+few rounds of the algorithm.
+However, based on the proof for Hyperband which requires the budget
+from Eq.~\ref{eqn:rough_sample_complexity}
+and based on our incomplete theoretical work so far we make the
+following conjecture about the simple regret of ISHA.
 \begin{conjecture}\label{conjecture:main}
 Fix $\delta \in (0,1)$. Under some benign assumptions, for any $\epsilon >0$ define
-
 $z_{n,\epsilon}:= \frac{1}{\epsilon^2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x)$ (up to logarithmic factors).
-
-
+%
 If Successive Halving of Figure~\ref{alg-SH} is run with $n$ arms and $T=\lceil n \log_2(n) \rceil$ total pulls where $n \geq z_{n,\epsilon}$ then with probability at least $1-\delta$ the single arm returned is no greater than $\mu_* +\epsilon$.
 \end{conjecture}
 
@@ -181,7 +189,7 @@ If Successive Halving of Figure~\ref{alg-SH} is run with $n$ arms and $T=\lceil 
 %% \end{align*}
 %\end{lemma}
 %
-%The next lemma exploits the fact that each $\mu_i \in S_k$ for any $k$ is an iid draw from $\nu_k$, by definition, and $|S_k| = n 2^{-k}$.
+%The next lemma exploits the fact that each $\mu_i \in S_k$ for any $k$ is an i.i.d. draw from $\nu_k$, by definition, and $|S_k| = n 2^{-k}$.
 %The result follows by a union bound over $k$ (Section~\ref{sec:good_arms_in_set_k_proof}).
 %\begin{lemma}\label{lem:good_arms_in_set_k}
 %For any $\ell=0,1,\dots,\log_2(n)-1$ if  $n \geq \xi_{n,\ell} := \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then 
@@ -330,8 +338,9 @@ If Successive Halving of Figure~\ref{alg-SH} is run with $n$ arms and $T=\lceil 
 
 \subsection{Lower Bound}
 
+We will now prove a lower bound for the problem which ISHA solves.
 Fix any reservoir distribution $\nu_0$ and $\epsilon,\delta \in (0,1)$. 
-Our upper bound of Conjecture~\ref{conjecture:main} states that if the proposed algorithm is provided a budget of $\epsilon^{-2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{\mu_*+\epsilon} (\mu-\mu_*)^{-2} d\nu_0(\mu)$ pulls (up to logarithmic factors), then the prescribed procedure outputs an $\epsilon$-good arm with probability at least $1-\delta$.
+Our proposed upper bound of Conjecture~\ref{conjecture:main} states that if ISHA is provided a budget of $\epsilon^{-2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{\mu_*+\epsilon} (\mu-\mu_*)^{-2} d\nu_0(\mu)$ pulls (up to logarithmic factors), then the prescribed procedure outputs an $\epsilon$-good arm with probability at least $1-\delta$.
 In this section, we argue that any algorithm that identifies an $\epsilon$-good arm with probability at least $1-\delta$ must take nearly this many total pulls in expectation.
 We follow the lower bound technique of \cite{malloy2012quickest} beginning with a definition borrowed from \cite{berry1997}.
 \begin{definition}
@@ -342,7 +351,7 @@ A \emph{non-recalling strategy} is one that always draws a new arm from $\nu_0$ 
 
 Implicit in \cite{malloy2012quickest} is the assumption that there exists a non-recalling strategy for every $\nu_0, \epsilon, \delta$ that is near-optimal with respect to \emph{any} strategy.
 Such an assumption is reasonable because observations from any particular arm are conditionally independent given the mean of the arm, and knowing the mean of one arm provides no information about the mean of another. 
-Thus, the number of times any particular arm is pulled depends \emph{only} on the observations from that arm, and because the means of the arms are drawn iid from $\nu$, each arm should be treated identically.
+Thus, the number of times any particular arm is pulled depends \emph{only} on the observations from that arm, and because the means of the arms are drawn i.i.d. from $\nu_0$, each arm should be treated identically.
 Thus, the procedure will continue to discard arms until it finds one and commits to it for all time. 
 Of course, any such non-recalling strategy would require precise knoweldge of $\nu_0$ making it purely a thought experiment, but it is useful for a lower bound.
 Nevertheless, many algorithms for the regret setting of infinite-armed bandits make very strong assumptions and are non-recalling strategies (c.f., \cite{berry1997,bonald2013two,Chan2018Infinite}.
@@ -352,7 +361,7 @@ Nevertheless, many algorithms for the regret setting of infinite-armed bandits m
 Define
 $KL(\mu,\mu') = \int_{x} \phi(x;\mu) \log\left( \frac{\phi(x;\mu)}{\phi(x;\mu')}\right) dx$
 where we assume $KL(c,d) \geq KL(a,b)$ for all $[a,b] \subseteq [c,d]$.
-This is a common assumption and holds for families of distributions $\phi( \cdot ; \mu)$ parameterized by their mean (e.g., Bernoulli, Gaussian, Poisson) \cite{kaufmann2016complexity}.
+This is a common assumption and holds for families of distributions $\phi( \cdot ; \mu)$ parameterized by their mean (e.g., Bernoulli, Gaussian, Poisson; \cite{kaufmann2016complexity}).
 \begin{theorem}\label{thm:fb-lb}
 Fix a reservoir distribution $\nu$, $\delta \in (0,1/15)$, and $\epsilon >0$ such that $\nu(\mu_*+\epsilon) \leq 1/2$.
 If at time $\tau \in \mathbb{N}$ a non-recalling strategy outputs an arm $\widehat{i} \in \mathbb{N}$ that satisfies $\P(\mu_{\widehat{i}} \leq \mu_* + \epsilon ) \geq 1-\delta$, then
@@ -363,7 +372,7 @@ for any $\widetilde{\mu}$ with $\widetilde{\kappa} := \nu(\widetilde{\mu}) - \nu
 \end{theorem}
 
 
-\noindent We related this lower bound to previously known upperbounds using Gaussian realizations (or Bernoulli's near $1/2$) where $KL(\mu,\mu') \leq c (\mu-\mu')^2$: 
+\noindent We related this lower bound to previously known upper bounds using Gaussian realizations (or Bernoullis near $1/2$) where $KL(\mu,\mu') \leq c (\mu-\mu')^2$: 
 
 \noindent\textbf{Continuous as $\mu \rightarrow \mu_*$:} Take $\widetilde{\kappa} = \sqrt{\delta}$. As $\delta \rightarrow 0$ we have $\widetilde{\mu} \rightarrow \mu_*+\epsilon$ to yield a sample compelxity of $\epsilon^{-2} \log(\tfrac{1}{ \delta \nu(\mu_*+\epsilon)}) + \frac{1}{\nu(\mu_*+\epsilon)} \int_{\mu_*+\epsilon} \frac{1}{(\mu-\mu_*)^2} d\nu(\mu)$.
 
@@ -376,7 +385,7 @@ Since each arm is treated identically, one realizes that such a procedure is per
 Let $\P_\mu$ and $\E_\mu$ be the probability law of observations from an arm with mean $\mu$.
 It will be also convenient to define $\pi:=\nu(\mu_*+\epsilon)$.
 Let $N_i$ be the random number of times the $i$th arm is pulled before it is either discarded (denoted by the event $R_i^c$) or declared as $\epsilon$-good ($R_i$). 
-Note that $R_i$, $R_1$ as well as $N_i$, $N_1$ for all $i$ are independent and identically distributed for any non-recalling algorithm by the iid nature of the draws from $\nu_0$.
+Note that $R_i$, $R_1$ as well as $N_i$, $N_1$ for all $i$ are independent and identically distributed for any non-recalling algorithm by the i.i.d. nature of the draws from $\nu_0$.
 Define $\alpha := \frac{1}{1-\pi} \int_{\mu_1 = \mu_* + \epsilon} \P_{\mu_1}(R_1) d\nu(\mu_1)$ and $\beta := \frac{1}{\pi} \int_{\mu_1 = \mu_*}^{\mu_* + \epsilon} \P_{\mu_1}(R_1^c) d\nu(\mu_1)$.
 Then
 \begin{align*}
@@ -384,7 +393,7 @@ Then
  &= \E[N_1] + \E[\sum_{i > 1} N_i | R_1^c] ( (1-\alpha) (1-\pi) + \beta \pi) \\
 &= \E[N_1] + \E[\sum_{i \geq 1} N_i ] ( (1-\alpha) (1-\pi) + \beta \pi) 
 \end{align*}
-by the iid nature of $\mu_i \sim \nu$ and thus memoryless property of the process.
+by the i.i.d. nature of $\mu_i \sim \nu$ and thus memoryless property of the process.
 After rearranging,
 \begin{align}
 \E[ \sum_{i \geq 1} N_i ] &= \frac{\E[N_1]}{\alpha (1-\pi) + (1-\beta) \pi}. \label{eqn:N1_to_many}
