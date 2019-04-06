@@ -196,7 +196,7 @@ Note that by design of the algorithm, the total number of allocated doses is ind
 % I don't see how it works in practice as you cannot allocate patients t_r times to each doses ?? 
 % E : I tried to be more precise rephrasing the things in terms of doses and patients 
 
-Building on the analysis of \cite{Karnin13}, we prove in \refWAProofSH{} this upper bound on the error probability of Sequential Halving for MTD identification.  
+Building on the analysis of \cite{Karnin13}, we prove in Appendix~\ref{sec:SHproof} this upper bound on the error probability of Sequential Halving for MTD identification.  
 
 \begin{theorem}\label{thm:SH}
 Algorithm~\ref{alg-ST} satisfies 
@@ -280,7 +280,7 @@ Several recommendation rules may be used for Independent Thompson Sampling. As t
 % \todo[inline]{M: but we no longer use the above recommendation rule in our experiments. mentioning it might raise questions. maybe also mention why it might not be a good recommendation rule? e.g. it does not directly take advantage of increasing structure as our current recommendation rule does? Or TS due to its exploratory nature might not select the MTD the most if $n$ is small or if there are other doses close to MTD which might be selected as often as or more even than the MTD?}
 
 For the classical rewards maximization problem, the first regret analysis of Thompson Sampling for Bernoulli bandits dates back to \cite{AGCOLT12} and was further improved by \cite{ALT12,AGAISTAT13}. %who show that TS is asymptotically optimal, as the number of selections of each sub-optimal arm matches the asymptotic lower bound given by \cite{LaiRobbins85bandits}. 
-In \refWAProofTS, building on the analysis of \cite{AGAISTAT13}, we prove the following for Thompson Sampling applied to MTD identification. 
+In Appendix~\ref{proof:TS}, building on the analysis of \cite{AGAISTAT13}, we prove the following for Thompson Sampling applied to MTD identification. 
 
 \begin{theorem}\label{thm:TS}  Let $d_k^*$ be the quantity defined in Theorem~\ref{thm:LB}. For all $\epsilon >0$, there exists a constant $C_{\epsilon,\theta,\bm p}$ (depending on $\epsilon$, the threshold $\theta$ and the toxicity probabilities) such that for all $k$:  $|p_k - \theta| \neq |\theta - p_{k^*}|$, under \texttt{Independent Thompson Sampling},\[
 \bE[N_{k}(n)]  \leq \frac{1 + \epsilon}{\mathrm{kl}(p_k,d_k^*)} \log(n) + C_{\epsilon,\theta,\bm p}.\]
@@ -555,9 +555,9 @@ We first evaluate the three algorithms introduced in Section~\ref{sec:TSIncreasi
  
 Table~\ref{tbl-tox} provides results for four different scenarios in which there are $K=6$ doses with a target toxicity $\theta = 0.30$, budget $n=36$ and prior toxicities $p = [0.06$ $\ \ 0.12$ $\ \ 0.20$ $\ \ 0.30$ $\ \ 0.40 \ \ 0.50]$.
 We report the percentage of allocation to and recommendation of each dose when $n=36$, estimated over $N=2000$ repetitions.
-The MTD of each scenario is underlined, and results for the MTD that are superior to what is achieved by the CRM are marked in bold. Five additional scenarios can be found in \refWTTox.
+The MTD of each scenario is underlined, and results for the MTD that are superior to what is achieved by the CRM are marked in bold. Five additional scenarios can be found in Table~\ref{tbl-tox-2}.
 
-\paragraph{Dose recommendation}  $\mathrm{TS}(\epsilon)$ and $\mathrm{TS}\_\mathrm{A}$ outperform CRM 3 out of 4 times (in scenarios of \refWTTox, $\mathrm{TS}(\epsilon)$ and $\mathrm{TS}\_\mathrm{A}$ outperform CRM 3 out of 5 times and 2 out of 5 times, respectively). As expected, $\mathrm{Sequential \ Halving}$ and
+\paragraph{Dose recommendation}  $\mathrm{TS}(\epsilon)$ and $\mathrm{TS}\_\mathrm{A}$ outperform CRM 3 out of 4 times (in scenarios of Table~\ref{tbl-tox-2}, $\mathrm{TS}(\epsilon)$ and $\mathrm{TS}\_\mathrm{A}$ outperform CRM 3 out of 5 times and 2 out of 5 times, respectively). As expected, $\mathrm{Sequential \ Halving}$ and
  $\mathrm{Independent \ TS}$, that do not leverage the increasing structure, do not have a remarkable performance. Those algorithms would need a larger budget to have a good empirical performance. With $n=36$, those strategies seldom do much better than selecting the doses uniformly at random.  
 
 \paragraph{Dose allocation} While $\mathrm{TS}\_\mathrm{A}$ and $\mathrm{TS}(\epsilon)$ do not always have higher allocation percentage at the optimal (underlined) dose compared to CRM,
@@ -575,7 +575,7 @@ We use the same parameters for the admissible set and the implementation of $\ma
  
 \input{dosefinding/tbl_efficacy}
 
-Table~\ref{tbl-eff} provides results on several scenarios (with more in \refWTEffs). We report allocations to and recommendations of each dose, and how often the trials stopped early, over $N=2000$ repetitions with $n=60$.
+Table~\ref{tbl-eff} provides results on several scenarios (with more in Table~\ref{tbl-eff-2} ). We report allocations to and recommendations of each dose, and how often the trials stopped early, over $N=2000$ repetitions with $n=60$.
 Optimal doses are underlined by a plain line; a dashed line identifies doses with toxicity above $\theta$. Results where
 our algorithms recommend the optimal decision more often than 
 $\mathrm{MTA}$-$\mathrm{RA}$ are in bold.
@@ -583,11 +583,11 @@ $\mathrm{MTA}$-$\mathrm{RA}$ are in bold.
 \paragraph{Dose recommendation}  
 Recall our assumption that efficacy increases monotonically in toxicity up to a point and then plateaus. We present experimental results on several scenarios, some of which are borrowed from \cite{MKR17}, on which this plateau assumption is not always exactly met. In most of these scenarios, $\mathrm{TS}\_\mathrm{A}$ outperforms $\mathrm{MTA}$-$\mathrm{RA}$. 
 
-In scenario 1 (and 6-10 in \refWTEffa) an efficacy plateau exists at a reasonable toxicity, so the optimal dose corresponds to the plateau breakpoint. Our algorithms make the optimal decision more often than $\mathrm{MTA}$-$\mathrm{RA}$: $\mathrm{TS}$ 4 out of 6 times and $\mathrm{TS}\_\mathrm{A}$ 5 out of 6 times. In scenario 2 (and scenario 11 in \refWTEffb) the plateau starts when the toxicity is already too high, hence the optimal dose is before the plateau. In scenario 2,  $\mathrm{TS}\_\mathrm{A}$ and $\mathrm{TS}$ both outperform $\mathrm{MTA}$-$\mathrm{RA}$, while in scenario 11 $\mathrm{MTA}$-$\mathrm{RA}$ has a slight advantage over $\mathrm{TS}$. 
+In scenario 1 (and 6-10 in Table~\ref{tbl-eff-2}) an efficacy plateau exists at a reasonable toxicity, so the optimal dose corresponds to the plateau breakpoint. Our algorithms make the optimal decision more often than $\mathrm{MTA}$-$\mathrm{RA}$: $\mathrm{TS}$ 4 out of 6 times and $\mathrm{TS}\_\mathrm{A}$ 5 out of 6 times. In scenario 2 (and scenario 11 in Table~\ref{tbl-eff-2b}) the plateau starts when the toxicity is already too high, hence the optimal dose is before the plateau. In scenario 2,  $\mathrm{TS}\_\mathrm{A}$ and $\mathrm{TS}$ both outperform $\mathrm{MTA}$-$\mathrm{RA}$, while in scenario 11 $\mathrm{MTA}$-$\mathrm{RA}$ has a slight advantage over $\mathrm{TS}$. 
 
-Scenarios 3 (and 12 in \refWTEffb) has no true efficacy plateau, but there is a ``breakpoint'' (underlined) after which efficacy increases slowly while toxicity increases quickly. This dose may be a good trade-off between efficacy and toxicity worth exploring in further phases. $\mathrm{TS}\_\mathrm{A}$ identifies this dose more often than $\mathrm{MTA}$-$\mathrm{RA}$, but $\mathrm{TS}$ does slightly worse. 
+Scenarios 3 (and 12 in Table~\ref{tbl-eff-2b}) has no true efficacy plateau, but there is a ``breakpoint'' (underlined) after which efficacy increases slowly while toxicity increases quickly. This dose may be a good trade-off between efficacy and toxicity worth exploring in further phases. $\mathrm{TS}\_\mathrm{A}$ identifies this dose more often than $\mathrm{MTA}$-$\mathrm{RA}$, but $\mathrm{TS}$ does slightly worse. 
 
-Lastly, we study the case of no clear optimal dose in scenarios 4 and 5 (and scenario 13 in \refWTEffb). In scenario 4 most doses, including the entire quasi-plateau, are too toxic, and we prefer to stop early or at most recommend dose 1 (the only dose meeting the toxicity constraint but with low efficacy). By this view, $\mathrm{TS}$ and $\mathrm{TS}\_\mathrm{A}$ outperform $\mathrm{MTA}$-$\mathrm{RA}$. Our algorithms most often either stop early or recommend dose 1, while in comparison $\mathrm{MTA}$-$\mathrm{RA}$ recommends dose 2 a large fraction (0.332) of the time. In scenarios 5 and 13 all doses are either too toxic or ineffective, so a good algorithm would stop early. %While in scenario 8 dose 3 meets the toxicity constraint, its efficacy is too small when compared to its high toxicity for any medical purpose. In scenario 9, all doses are too toxic, including the dose at the plateau point. 
+Lastly, we study the case of no clear optimal dose in scenarios 4 and 5 (and scenario 13 in Table~\ref{tbl-eff-2b}). In scenario 4 most doses, including the entire quasi-plateau, are too toxic, and we prefer to stop early or at most recommend dose 1 (the only dose meeting the toxicity constraint but with low efficacy). By this view, $\mathrm{TS}$ and $\mathrm{TS}\_\mathrm{A}$ outperform $\mathrm{MTA}$-$\mathrm{RA}$. Our algorithms most often either stop early or recommend dose 1, while in comparison $\mathrm{MTA}$-$\mathrm{RA}$ recommends dose 2 a large fraction (0.332) of the time. In scenarios 5 and 13 all doses are either too toxic or ineffective, so a good algorithm would stop early. %While in scenario 8 dose 3 meets the toxicity constraint, its efficacy is too small when compared to its high toxicity for any medical purpose. In scenario 9, all doses are too toxic, including the dose at the plateau point. 
 $\mathrm{TS}\_\mathrm{A}$ does this more often than $\mathrm{MTA}$-$\mathrm{RA}$ in both scenarios and $\mathrm{TS}$ in one of the two scenarios. 
 
 

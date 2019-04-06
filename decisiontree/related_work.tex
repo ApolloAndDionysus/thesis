@@ -1,0 +1,69 @@
+\subsection{Related Work}\label{related-work}
+
+
+Much effort has gone to reducing the overall computational complexity of
+training Boosting models.
+In the spirit of \citet{icml2013_appel13}, which has the state-of-the-art
+exact optimal-greedy boosted decision tree training algorithm \texttt{Quick Boost}
+(our main competitor), we divide these attempts into three categories and
+provide examples of the literature from each category: reducing
+1) the set of features to focus on;
+2) the set of examples to focus on; and/or
+3) the training time of decision trees.
+Note that these categories are independent of and parallel to each other.
+For instance, 3), the focus of this work, can build a decision tree from
+any subset of features or examples.
+We show improvements compared to state-of-the-art algorithm both on subsets
+of the training data and on the full training matrix.
+Popular approximate algorithms such as
+XGBoost \citep{Chen:2016:XST:2939672.2939785}
+typically focus on 1) and 2)
+and could benefit from using our algorithm for their training step.
+
+Various works \citep{4270071, PaulBiswajitAthithanEtAl} focus on reducing the set of features.
+\citet{busafekete:in2p3-00614564} divides features into subsets
+and at each round of boosting uses adversarial bandit models to find the most promising subset for boosting. \texttt{LazyBoost} \citep{Escudero:2001:ULW:2387364.2387381} samples a subset of features uniformly at random to focus on at a given boosting round. 
+
+Other attempts at computational complexity reduction involve sampling a set of
+examples.
+Given a fixed budget of examples, \texttt{Laminating}
+\citep{Dubout:2014:ASL:2627435.2638580} attempts to find the best among a set of
+hypotheses by testing each surviving hypothesis on a increasingly larger set of
+sampled examples while pruning the worst performing half and doubling the number of examples, until it is left
+with one hypthesis. It returns this hypothesis to boosting as the best one with probability $1-\delta$. The hypothesis identification part of \texttt{Laminating} is fairly identical to the best arm identification algorithm \texttt{Sequential Halving} \citep{icml2013_karnin13}. \texttt{Stochastic Gradient Boost} \citep{FriedmanStochasticGB}, and the weight trimming approach of \citet{Friedman98additivelogistic} are a few other intances of reducing the set of examples. \texttt{FilterBoost} \citep{NIPS2007_3321} uses an oracle to sample a set of examples from a very large dataset and uses this set to train a weak learner.
+
+Another line of research focuses on reducing the training time of decision trees
+\citep{implementing-decision-trees-and-forests-on-a-gpu, articleWuEtAl}.
+More recently, \citet{icml2013_appel13} proposed \texttt{Quick Boost}, which
+trains decision tree as weak learners while pruning underperforming
+features earlier than a classic Boosting algorithm would.
+They build their algorithm on the insight that the (weighted) error rate of
+a feature when trained on a subset of examples can be used to bound its error
+rate on all examples.
+This is because the error rate is simply the normalized sum of the weights of the misclassified examples; if one supposes that all unseen examples may be
+correctly classified, that yields a lower bound on the error rate.
+If this lower bound is above the best observed error rate of a feature
+trained on all examples, the underperforming feature may be pruned and no
+more effort spent on it.
+
+Our \texttt{Adaptive-Pruning Boost} algorithm carries forward the ideas
+introduced by \texttt{Quick Boost}.
+In contrast to \texttt{Quick Boost},
+our algorithm is parameter-free and adaptive.
+Our algorithm uses fewer training examples and thus faster training CPU time than
+\texttt{Quick Boost}.
+It works by gradually adding weight to the
+``winning'' feature with the smallest upper bound on, e.g., its error rate
+and the ``challenger'' feature with smallest lower bound,
+until all challengers are pruned.
+We demonstrate consistent improvement over \texttt{Quick Boost} on a
+variety of datasets,
+and show that when speed improvements are more modest this is due to
+\texttt{Quick Boost} approaching the lower bound more tightly rather than
+due to our algorithm using more examples than are necessary.
+Our algorithm is consistently nearly-optimal in terms of the lower bound
+for algorithms which assess examples in weight order,
+and this lower bound in turn is close to the global lower bound.
+Experimentally, we show that the reduction in total assessed examples
+also reduces the CPU time.
+

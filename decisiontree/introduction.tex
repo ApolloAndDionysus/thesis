@@ -1,0 +1,123 @@
+\section{Introduction}\label{introduction}
+
+Boosting algorithms are among the most popular classification
+algorithms in use today, e.g. in computer vision, learning-to-rank,
+and text classification.  Boosting, originally introduced by
+\citet{Schapire90thestrength, Freund:1995:BWL:220262.220446,
+  Freund:1996:ENB:3091696.3091715}, is a family of machine learning
+algorithms in which an accurate classification strategy is learned by
+combining many ``weak'' hypotheses, each trained with respect to a
+different weighted distribution over the training data.  These
+hypotheses are learned sequentially, and at each iteration of boosting
+the learner is biased towards correctly classifying the examples which
+were most difficult to classify by the preceding weak hypotheses.
+
+Decision trees \citep{Quinlan:1993:CPM:152181}, due to their simplicity
+and representation power, are among the most popular weak learners
+used in Boosting algorithms \citep{Freund:1996:ENB:3091696.3091715,
+  Quinlan:1996:BBC:1892875.1892983}.  However, for large-scale data
+sets, training decision trees across potentially hundreds of rounds of
+boosting can be prohibitively expensive.  Two approaches to ameliorate
+this cost include
+(1) \emph{approximate decision tree training},
+which aims to identify a subset of the
+features and/or a subset of the training examples such that
+\emph{exact} training on this subset yields a high-quality decision
+tree,
+and (2)
+\emph{efficient exact decision tree training},
+which aims to compute the greedy optimal decision tree over the entire data
+set and feature space as efficiently as possible.
+These two approaches complement each other:
+approximate training often devolves to exact
+training on a subset of the data.
+
+  As such, we
+consider the task of efficient exact decision tree learning in the
+context of boosting where our primary objective is to minimize the
+number of examples that must be examined for any feature in order to
+perform greedy-optimal decision tree training. 
+Our method
+is simple to implement, and gains in feature-example efficiency directly corresponds to improvements in computation time.
+
+
+The main contributions of the paper are as follows:\vspace{-0.5\baselineskip}
+\begin{itemize}
+\item We develop a highly efficient algorithm for computing exact
+  greedy-optimal decision trees, \texttt{Adaptive-Pruning Boost}, and
+  we demonstrate through extensive experiments that our method
+  outperforms the state-of-the-art \texttt{Quick Boost} method.
+\item We develop a constrained-oracle framework for deriving
+  feature-example lower bounds on the problem that applies to a wide
+  family of conceivable algorithms for the task, including our
+  algorithm and \texttt{Quick Boost}, and we demonstrate that our
+  algorithm is near-optimal within this family of algorithms through
+  extensive experiments.
+\item Within the constrained-oracle framework, we also derive a
+  feature-example lower bound applicable to any algorithm solving the
+  task, and we demonstrate that our algorithm empirically achieves
+  performance close to this lower bound as well.
+\end{itemize}
+
+We will next expand on the ideas that underlie
+our three main results above and discuss related work.
+
+\paragraph{The Multi-Armed Bandit (MAB) Inspiration.}
+Our approach to efficiently splitting decision tree nodes is based on
+identifying intervals which contain the score (e.g. classifier's training accuracy) of each possible split and tightening those
+intervals by observing training examples incrementally.
+We can eventually exclude entire features
+from further consideration because their intervals do not
+overlap the intervals of the best splits.
+Under this paradigm, the optimal strategy would be to assess all
+examples for the best feature,
+reducing its interval to an exact value,
+and only then to assess examples for the remaining features
+to rule them out.
+Of course, we do not know in advance which feature is best.
+Instead, we wish to spend our assessments optimally to identify the
+best feature with the fewest assessments spent on the other features.
+This corresponds well to the best arm identification problem studied
+in the MAB literature. This insight inspired our training algorithm.
+
+A ``Pure Exploration'' MAB algorithm in the ``Fixed-Confidence'' setting
+\citep{DBLP:conf/icml/KalyanakrishnanTAS12,NIPS2012_4640,COLT13}
+is given a set of arms (probability distributions over rewards)
+and returns the arm with highest expected reward with high probability
+(subsequently, WHP)
+while minimizing the number of samples drawn from each arm.
+Such confidence interval algorithms are generally categorized as
+LUCB (Lower Upper Confidence Bounds) algorithms, because at each round
+they ``prune'' sub-optimal arms whose confidence intervals do not overlap
+with the most promising arm's interval until it is confident that WHP
+it has found the best arm. 
+
+In contrast to the MAB setting where one estimates the expected reward
+of an arm WHP,
+in the Boosting setting one can calculate the exact (training) accuracy
+of a feature (expected reward of an arm) if one is willing to assess that
+feature on all training examples.
+When only a subset of examples are assessed, one can also calculate a
+non-probabilistic ``uncertainty interval'' which is guaranteed to contain
+the feature's true accuracy. This interval shrinks in proportion to the boosting weight of the assessed examples. We specialize the generic LUCB-style MAB algorithm of the best arm identification to assess examples in decreasing order of boosting weights, and to use uncertainty intervals in place of the more typical probabilistic confidence intervals.
+
+\paragraph{Our Lower Bounds.}
+We introduce two empirical lower bounds on the total number of examples needed
+to be assessed in order to identify the exact greedy-optimal node for a given
+set of boosting weights.
+Our first lower bound is for the class of algorithms which assess feature
+accuracy by testing the feature on examples in order of decreasing Boosting
+weights (we call this the \emph{assessment complexity} of the problem).
+We show empirically that our algorithm's performance is consistently nearly
+identical to this lower bound.
+%
+Our second lower bound permits examples to be assessed in any order.
+It requires a feature to be assessed with the minimal set of examples
+necessary to prove that its training accuracy is not optimal.
+This minimal set depends on the boosting weights in a given round,
+from which the best possible (weighted) accuracy across all weak hypotheses
+is calculated.
+For non-optimal features, the minimal set is then identified using
+Integer Linear Programming.
+
+

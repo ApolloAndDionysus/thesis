@@ -1,0 +1,32 @@
+\begin{table*}[ht]
+\caption{Computational Complexity for AdaBoost.
+All results are for 500 rounds of boosting except MNIST (300 rounds) and RCV1 (400 rounds).}
+\label{complexity-exact-results}	
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{llccrccr}
+\toprule
+& & \multicolumn{3}{c}{CPU Time in Seconds} & \multicolumn{3}{c}{\# Example Assessments} \\
+Dataset & Boosting & AP-B & QB & Improv. & AP-B & QB & Improv. \\
+\midrule
+a6a & AdaBoost & 4.49e+02 & 4.46e+02 & 5.3\% & 1.69e+09 & 1.83e+09 & 7.8\% \\
+%
+mnist & AdaBoost & 6.32e+05 & 6.60e+05 & 4.2\% & 3.52e+11 & 3.96e+11 & 11.1\% \\
+%
+rcv1 & AdaBoost & 1.58e+05 & 1.58e+05 & -0.5\% & 6.15e+11 & 6.58e+11 & 6.5\% \\
+%
+satimage & AdaBoost & 9.21e+02 & 1.19e+03 & 18.9\% & 8.64e+08 & 1.11e+09 & 22.5\% \\
+%
+w4a & AdaBoost & 3.03e+02 & 3.96e+02 & 27.1\% & 1.69e+09 & 2.41e+09 & 29.8\% \\
+\midrule
+Mean &  & &  & 11\% & & & 15.54\% \\
+\bottomrule
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table*}
+

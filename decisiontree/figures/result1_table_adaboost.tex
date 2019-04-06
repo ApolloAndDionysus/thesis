@@ -1,0 +1,33 @@
+\begin{table*}[ht]
+\caption{AdaBoost results,
+reported at rounds 100, 300 and 500 (400 for RCV1).}
+\label{tbl:AdaBoostTestTrainErrors}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{lccccccccc}
+\toprule
+	& \multicolumn{3}{c}{100}
+	& \multicolumn{3}{c}{300}
+	& \multicolumn{3}{c}{400/500}
+	\\
+Alg: Data & \# Assess. & Train & Test & \# Assess. & Train & Test & \# Assess. & Train & Test \\
+\midrule
+AP-B: a6a & 3.35e+08 & 0.142 & 0.155 & 1.02e+09 & 0.131 & 0.157 & 1.69e+09 & 0.128 & 0.160 \\
+QB: a6a & 3.57e+08 & 0.142 & 0.155 & 1.09e+09 & 0.131 & 0.157 & 1.83e+09 & 0.128 & 0.160 \\
+AP-B: mnist & 1.26e+11 & 0.106 & 0.111 & 3.52e+11 & 0.057 & 0.064 & --- & --- & --- \\
+QB: mnist & 1.36e+11 & 0.106 & 0.111 & 3.96e+11 & 0.057 & 0.064 & --- & --- & --- \\
+AP-B: rcv1 & 1.73e+11 & 0.027 & 0.059 & 4.83e+11 & 0.005 & 0.047 & 6.15e+11 & 0.001 & 0.044 \\
+QB: rcv1 & 1.85e+11 & 0.029 & 0.061 & 5.13e+11 & 0.004 & 0.047 & 6.58e+11 & 0.001 & 0.046 \\
+AP-B: satimage & 1.98e+08 & 0.113 & 0.150 & 5.46e+08 & 0.070 & 0.121 & 8.64e+08 & 0.049 & 0.109 \\
+QB: satimage & 2.20e+08 & 0.113 & 0.150 & 6.61e+08 & 0.070 & 0.121 & 1.11e+09 & 0.049 & 0.109 \\
+AP-B: w4a & 3.92e+08 & 0.011 & 0.019 & 1.07e+09 & 0.006 & 0.018 & 1.69e+09 & 0.006 & 0.018 \\
+QB: w4a & 4.64e+08 & 0.011 & 0.020 & 1.45e+09 & 0.006 & 0.018 & 2.41e+09 & 0.006 & 0.018 \\
+\bottomrule
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table*}

@@ -1,0 +1,180 @@
+\section{Algorithm}\label{alg}
+\texttt{Adaptive-Pruning Stump} prunes features based on
+exact intervals (which we call uncertainty intervals) and returns the best feature
+deterministically.
+To do this we need lower bounds and upper bounds on the stump's
+training error rate. 
+Our lower bound assumes that all unseen examples are classified
+correctly and our upper bound assumes that all unseen examples are classified
+incorrectly.
+We define $L_m^j$ as the lower bound on the error rate for
+stump $j$ on all $n$ examples, when computed on the first $m$ examples,
+and $U_m^j$ as the corresponding upper bound.
+%\begin{itemize}
+%\item $L_m^j := \epsilon_m^j / Z_n$ is the lower bound on the error rate for
+%	stump $j$ on all $n$ examples, when computed on the first $m$ examples, and
+%\item $U_m^j := (\epsilon_m^j + Z_n - Z_m) / Z_n$ is the upper bound for stump $j$ when computed on the first $m$ examples.
+%\end{itemize}
+For any $1 \le m \le n$, we define,
+%\begin{align}
+%$L_m^j \le E_n^j \le U_m^j$
+%\end{align}
+using $c^j_i := \mathbbm{1} \{h_j(x_i) \ne y_i\}$ to indicate
+whether stump $j$ incorrectly classifies example $i$,
+\begin{align*}
+	L_m^j :=
+%	= \frac{\epsilon^j_m}{Z_n}
+%	\underbrace{
+	 \frac{1}{Z_n}
+		\sum_{i=1}^m {w_i c^j_i}
+%		}_{L_m^j}
+%\\
+	\le  
+	\underbrace{
+	\frac{1}{Z_n} 
+%	\left(
+%		\sum_{i=1}^m {w_i c^j_i}
+%		+ \sum_{i=m+1}^n {w_i c^j_i}
+		\sum_{i=1}^n {w_i c^j_i}
+%		\right)
+	}_{E_n^j}
+%\\
+	\le  \frac{1}{Z_n}\left(
+		\epsilon^j_m
+		+ \sum_{i=m+1}^n w_i
+		\right)
+%\\
+	=
+%	  \underbrace{
+	\frac{1}{Z_n}\left(
+		\epsilon^j_m
+		+ (Z_n - Z_m)
+		\right)
+%		}_{U_m^j}
+		=: U_m^j.
+\end{align*}
+%
+For any two stumps $i$ and $j$ when numbers $m$ and $m'$ exist
+such that $L_m^i > U_{m'}^j$ then we can safely discard stump $i$, as it cannot
+have the lowest error rate.
+This extension of the pruning rule used by \citet{icml2013_appel13}
+permits each feature to have its own interval of possible error
+rates, and permits us to compare features for pruning without first
+needing to assess all $n$ examples for any feature
+(\texttt{Quick Boost}'s subroutine requires the
+current-best feature to be tested on all $n$ examples).
+
+Now we describe our algorithm in detail; see the
+listing in Algorithm~\ref{adaptive-pruning-stump}.
+We use $f_k$ to denote an object which stores all decision stumps $h(x)$ for feature
+$x[k]$.
+Recall that $x \in \mathbb{R}^K$ and that $x[k]$ is the $k_{th}$ feature of $x$,
+for $k \in \{ 1, \dots, K \}$.
+$f_k$ has method $assess(batch)$, when given a ``batch'' of examples, updates
+$L_m$, $E_m$,  $U_m$ (defined above) for all decision stumps of feature $x[k]$ based
+on the examples in the batch.
+It also has methods $LB()$ and $UB()$, which report the $L_m$ and $U_m$ for the
+single hypothesis with smallest error $E_m$ on the $m$ examples seen so far,
+and $bestStump()$, which returns the hypothesis with smallest error $E_m$.
+
+\texttt{Adaptive-Pruning Stump} proceeds until there is some feature $k^*$ whose upper bound
+is below the lower bounds for all other features.
+We then know that the best hypothesis uses feature $k^*$.
+We assess any remaining unseen examples
+for feature $k^*$ in order to identify the best threshold and polarity
+and to calculate $E^{k^*}_n$.
+Thus, our algorithm always finds the exact greedy-optimal hypothesis.
+
+In order to efficiently compare two features $i$ and $j$ to decide whether
+to prune feature $i$,
+we want to ``add'' the minimum weight to these arms to
+possibly obtain that $L_m^i > U_{m'}^j$.
+The most efficient way to do this is to test each feature against
+a batch of the heaviest unseen examples whose weight is at least
+the gap $U_{m'}^j - L_m^i$.
+This permits us to choose batch sizes adaptively, based on the minimum weight
+needed to prune a feature given the current boosting weights and the
+current uncertainty intervals for each arm.
+We note that our ``weight order'' lower bound on the sample complexity of the
+problem in the next section is also calculated based on this insight.
+This is in contrast to \texttt{Quick Boost}, which accepts parameters to
+specify the total number of batches and the weight to use for initial estimates;
+the remaining weight is divided evenly among the batches.
+When the number of batches chosen is too large, the run time of a training
+round approaches $O(n^2)$; when it is too small, the run time approaches
+that of assessing all $n$ examples.
+
+\begin{wrapfigure}{R}{0.5\textwidth}
+\vspace{-2.5em}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{algorithm}[H]
+\caption{\texttt{Adaptive-Pruning Stump}}\label{adaptive-pruning-stump}
+\begin{algorithmic}
+   \STATE {\bfseries Input:} Examples \{$x_1, \dots, x_n$\}, Labels \{$y_1, \dots, y_n$\}, Weights $\{w_{1},\dots,w_{n}\}$
+    \STATE {\bfseries Output:} $h(x)$  
+    \STATE $m \gets$ min. index s.t. $Z_m \ge 0.5$
+    \FOR {$k = 1$ {\bfseries to} $K$}
+        \STATE $f_k.assess([x_1, \dots, x_m]); m_k \gets m$
+    \ENDFOR
+    \STATE $a \gets k$ with min $f_k.UB()$
+    \STATE $b \gets k \ne a$ with min $f_k.LB()$
+    \WHILE {$f_a.UB() > f_b.LB()$}
+        \STATE $gap \gets f_a.UB() - f_b.LB()$
+        \STATE $m \gets$ min index s.t. $Z_m \ge Z_{m_a} + gap$
+        \STATE $f_a.assess([x_{m_a+1}, \dots, x_m]); m_a \gets m$
+        \STATE $gap \gets f_a.UB() - f_b.LB()$
+        \IF {$gap > 0$}
+            \STATE $m \gets$ min index s.t. $Z_m \ge Z_{m_b} + gap$
+            \STATE $f_b.assess([x_{m_b+1}, \dots, x_m]); m_b \gets m$
+        \ENDIF
+        \IF {$f_a.UB() < f_b.UB()$}
+            \STATE $a \gets b$
+        \ENDIF
+        \STATE $b \gets k \ne a$ with min $f_k.LB()$
+    \ENDWHILE
+    \STATE {\bfseries return} $h(x) := f_a.bestStump()$
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+%
+\begin{minipage}[t]{0.5\textwidth}
+\begin{algorithm}[H]
+\caption{\texttt{Adaptive-Pruning Boost}}\label{boosting}
+\begin{algorithmic}
+   \STATE {\bfseries Input:} Instances \{$x_1, \dots, x_n$\}, Labels \{$y_1, \dots, y_n$\}
+   \STATE {\bfseries Output:} $\mathcal{H}_T(x)$
+   \STATE {\bfseries Initialize Weights:} $\{w_{1},\dots,w_{n}\}$   \FOR{$t=1$ {\bfseries to} $T$}
+   \STATE Train Decision Tree $h_{Tree}(x)$ one node at a time by calling \texttt{Adaptive-Pruning Stump}
+   \STATE Choose $\alpha_t$ and update $\mathcal{H}_t(x)$
+   \STATE Update and Sort (in descending order) $w$
+   \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+\vspace{-6em}
+\end{wrapfigure}
+
+At each round, \texttt{Adaptive-Pruning Boost} trains a decision tree
+in Algorithm~\ref{boosting} by calling the subroutine
+\texttt{Adaptive-Pruning Stump} of Algorithm~\ref{adaptive-pruning-stump}.
+
+\paragraph{Implementation Details.}
+The $f_k.assess()$ implementation is shared across all algorithms.
+ For $b$ batches of exactly $m$ examples each on a feature $k$ with $v$ distinct
+ values, our implementation of $f_k.assess$ takes $O(b m \log (m + v))$
+ operations.
+ We maintain an ordered list of intervals of thresholds for each feature with
+ the feature values for the examples assessed so far lying on the interval
+ boundaries.
+ Any threshold in the interval will thus have the same performance on all
+ examples assessed so far.
+ To assess a batch of examples, we sort the examples in the batch by feature
+ value and then split intervals as needed and calculate scores for the
+ thresholds on each interval in time linear in the batch size and number of
+ intervals.
+
+Note also that maintaining the variables $a$ and $b$ requires a
+single heap, and that in many iterations of the \texttt{while} loop we can
+update these variables from the heap in constant time
+(e.g. when $b$ has not changed, when $a$ and $b$ are simply swapped,
+or when $b$ can be pruned).

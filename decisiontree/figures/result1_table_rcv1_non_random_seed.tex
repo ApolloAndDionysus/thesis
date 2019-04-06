@@ -1,0 +1,31 @@
+\begin{table*}[ht]
+\caption{Performance for RCV1}
+\label{tbl:perf-rcv1}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{lccccccccc}
+\toprule
+	& \multicolumn{3}{c}{100}
+	& \multicolumn{3}{c}{300}
+	& \multicolumn{3}{c}{400}
+	\\
+ & \# Assess. & Train & Test & \# Assess. & Train & Test & \# Assess. & Train & Test \\
+\midrule
+AP LazyBoost (0.5) & 8.93e+10 & 0.029 & 0.061 & 2.48e+11 & 0.006 & 0.047 & 3.18e+11 & 0.002 & 0.046 \\
+QB LazyBoost (0.5) & 9.06e+10 & 0.028 & 0.060 & 2.55e+11 & 0.005 & 0.048 & 3.29e+11 & 0.002 & 0.046 \\
+AP LazyBoost (0.9) & 1.59e+11 & 0.027 & 0.058 & 4.35e+11 & 0.005 & 0.047 & 5.60e+11 & 0.002 & 0.045 \\
+QB LazyBoost (0.9) & 1.64e+11 & 0.027 & 0.058 & 4.62e+11 & 0.004 & 0.047 & 5.93e+11 & 0.001 & 0.045 \\
+AP Wt. Trim (0.9) & 1.19e+11 & 0.022 & 0.059 & 2.92e+11 & 0.003 & 0.047 & 3.65e+11 & 0.001 & 0.046 \\
+QB Wt. Trim (0.9) & 1.22e+11 & 0.025 & 0.058 & 3.03e+11 & 0.003 & 0.047 & 3.79e+11 & 0.001 & 0.046 \\
+AP Wt. Trim (0.99) & 1.62e+11 & 0.027 & 0.059 & 4.40e+11 & 0.004 & 0.047 & 5.61e+11 & 0.001 & 0.045 \\
+QB Wt Trim (0.99) & 1.70e+11 & 0.027 & 0.059 & 4.60e+11 & 0.004 & 0.048 & 5.86e+11 & 0.001 & 0.046 \\
+\bottomrule
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table*}
+
