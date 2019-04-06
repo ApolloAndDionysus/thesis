@@ -27,8 +27,22 @@ In words, our proposed algorithm is simple: for some $n \in \mathbb{N}$, the alg
 \caption{Successive Halving algorithm. The algorithm we propose for infinite-armed bandits is to use $T = \lceil n \log_2(n) \rceil$ for any value of $n \in \mathbb{N}$. For anytime, double $n$ and repeat.}\label{alg-SH}
 \end{figure}
 
+\begin{wrapfigure}{r}{0.45\textwidth}
+% \vspace{-2.5em}
+\includegraphics[width=.45\textwidth]{fixedbudget/figures/NY.png}
+\caption{The New Yorker dataset. We plot the ratio of state-of-the-art 
+Hyperband's simple regret to ISHA's simple regret as a function of
+budget. }
+\label{fig:isha_vs_hb_improvement}
+\vspace{-1.5em}
+\end{wrapfigure}
+
 The main dilemma of choosing $X$ for the lil'UCB-$X$ strategies in the introduction of this chapter, and more generally all infinite-armed bandit problems, is determining whether it is better to draw more arms from a reservoir distribution over arms in the hope of getting an arm with better mean reward, or to spend the remaining arm pull budget on identifying a ``good'' arm from among already drawn arms.
-ISHA navigates this dilemma by focusing not on individual arms but on populations of arms, where at each round the ``fitter'' (i.e. lower empirical mean) arms are more likely to survive and so from round to round the population as a whole ``evolves,'' in the sense that while any individual ``good'' arm might get unlucky and be removed from the population, overall the average expected reward of the surviving arms tends to improve.
+ISHA navigates this dilemma by focusing not on individual arms but on populations of arms, where at each round the ``fitter'' (i.e. lower empirical mean) arms are more likely to survive and so from round to round the population as a whole ``evolves,'' in the sense that while any individual ``good'' arm might get unlucky and be removed from the population, overall the average expected reward of the surviving arms tends to improve. This is approach is in contrast to state-of-the-art Hyperband's approach, which hedges over different initializations of Successive Halving in hope of accounting for various unknown arm reservoir distributions. Nonetheless, ISHA consistently outperforms Hyperband and tends to enjoy
+an increasing advantage as the budget increases.
+A typical example is shown in Figure~\ref{fig:isha_vs_hb_improvement}.
+
+
 % By allocating budget uniformly in each round of the algorithm to the
 % arms with highest empirical means from the last round,
 % it naturally avoids spending too much budget on arms which, on the one
@@ -61,254 +75,263 @@ ISHA navigates this dilemma by focusing not on individual arms but on population
 % \end{align*}
 % Note that $F_0(x,\mu)$ is the CDF of a single draw of a random variable with mean $\mu$. 
 % Likewise, $F_k(x,\mu)$ is equal to $F_0(x,\mu)$ convolved with itself $2^k$ times.
-\subsection{Analysis}
-Our main result relies on two assumptions about the distribution $\phi(\ \cdot \ ; \mu)$ of observations from an arm given a drawn mean $\mu$.
-We make no assumptions about the shape or regularity of the reservoir $\nu_0$.
-% For instance, $\phi(\mu) = \mathcal{N}(\mu,1)$ or $\phi(\mu) = \text{Bernoulli}(\mu)$. 
-\begin{assumption} \label{asm:stochastic_ordering}
-% Let $\phi(\mu)$ denote the probability law that observations from an arm with mean $\mu$ obey. 
-For all $m \in \mathbb{N}$ and $t \in \R$
-\begin{align*}
-\P\Big(\frac{1}{m} \sum_{j=1}^m X_j \leq t \, \Big| \, X_j \overset{iid}{\sim} \phi( \ \cdot \ ; x) \Big) \geq \P\Big(\frac{1}{m} \sum_{j=1}^m Y_j \leq t \, \Big| \, Y_j \overset{iid}{\sim} \phi( \ \cdot \ ; y) \Big) \iff x \leq y.
-\end{align*} 
-\end{assumption}
-Assumption~\ref{asm:stochastic_ordering} states that the distribution with the smaller mean is more likely to have a smaller empirical mean. 
-This holds, for example, if $\phi(\cdot,\mu)$ is $\text{Bernoulli}(\mu)$ or Gaussian observations with known variance $\mathcal{N}(\mu,R)$.
-A consequence of Assumption~\ref{asm:stochastic_ordering} is that
-\begin{align*}
-\P( \mu_i \in S_{k+1} \, | \, \mu_i = x, \mu_i \in S_{k} ) \geq \P( \mu_i \in S_{k+1} \, | \, \mu_i = y, \mu_i \in S_{k} ) \quad \forall x \leq y.
-\end{align*} 
-Assumption~\ref{asm:stochastic_ordering} often holds for the class of single-parameter exponential families that are well-studied in the multi-armed bandit literature \citep{audibert2010best}.
-Our second assumption is standard and allows us to rely on the concentration of measure phenomenon.
-\begin{assumption}\label{asm:subgauss}
-If $X \sim \phi(\ \cdot \ ; \mu)$ then $X-\mu$ is an i.i.d. mean-zero, $R$-sub-Gaussian random variable such that $\E[\exp(\lambda (X-\mu))] \leq \exp(\lambda^2 R /2 )$ for any $\lambda >0$.
-\end{assumption} 
-Assumption~\ref{asm:subgauss} is quite benign: if $X \in [0,1]$ then $R \leq 1/4$; if $X \sim \mathcal{N}(\mu,v^2)$ then $R = v^2$.
+\begin{conjecture}\label{conjecture:main}
+Fix $\delta \in (0,1)$. Under some benign assumptions, for any $\epsilon >0$ define
 
-\begin{theorem}\label{thm:main}
-Fix $\delta \in (0,1)$. Under Assumptions 1 and 2, for any $\epsilon >0$ define
-\begin{align*}
-z_{n,\epsilon} :=& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \epsilon)} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \epsilon}  (x-\mu_*)^{-2}  \nu_0(x) \right\}\\
-\leq& \log(2 \log_2(n)/\delta) \max\Bigg\{ \frac{1}{\nu_0(\mu_* + \epsilon)},
-\\ &~~~~~~~~~~
-64 R \log(4 n \log_2(n) /\delta) \left( \epsilon^{-2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) \Bigg\}.
-\end{align*}
+$z_{n,\epsilon}:= \frac{1}{\epsilon^2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x)$ (up to logarithmic factors).
+
+
 If Successive Halving of Figure~\ref{alg-SH} is run with $n$ arms and $T=\lceil n \log_2(n) \rceil$ total pulls where $n \geq z_{n,\epsilon}$ then with probability at least $1-\delta$ the single arm returned is no greater than $\mu_* +\epsilon$.
-\end{theorem}
+\end{conjecture}
 
-\begin{remark}
-Note that if the support of $\phi$ is bounded in $[0,1]$ then taking $\delta=\epsilon$ in the above theorem implies $\E[ \mu_{J_{T}} ] - \mu_*\leq 2 \epsilon$ whenever $T=\lceil n \log_2(n) \rceil$ and $n \geq z_{n,\epsilon}$.
-\end{remark}
-
-% \begin{theorem}\label{thm:main}
-% Fix $\delta \in (0,1)$ and assume Assumptions 1 and 2 hold.
-% Define 
-% \begin{align*}
-% \Delta_\ell := 2\sqrt{\frac{2R \log(n \log_2(n) 2^{-\ell+2}/\delta)}{2^\ell}} \ , \qquad\qquad \forall \ell \in \{0,1,\dots,\log_2(n)-1\}.
-% \end{align*}
-% If 
-% \begin{align*}
-% n \geq z_n :=& \max_{k=0,1,\dots,\log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_k)} \max\{ 1, \max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \}
-% \end{align*}
-% then with probability at least $1-\delta$
-% \begin{align*}
-% \mu_{A} \leq  \min_{i \in S_k} \mu_i + \Delta_k/2 \leq \mu_* + \tfrac{3}{2} \Delta_k \quad \text{where} \quad A = \arg\min_{i \in S_k} \widehat{\mu}_{i,k}
-% \end{align*} 
-% for all $k = 0, 1, \dots, \log_2(n)-1$.
-% \end{theorem}
-% We can make the theorem more interpretable by simplifying $z_n$
-% \begin{align*}
-% \max_{\ell=0,\dots,k-1}  2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) &= \max_{\ell=0,\dots,k-1}  16 R \log(n \log_2(n) 2^{-\ell+2}/\delta) \Delta_{\ell}^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \\
-% &\leq  64 R \log(4 n \log_2(n) /\delta) \max_{\ell=0,\dots,k-1}  (2\Delta_{\ell})^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \\
-% &\leq  64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k-1}}  (x-\mu_*)^{-2}  \nu_0(x).
-% \end{align*}
-% We note that
-% \begin{align*}
-% \max_{k=0,1,\dots,\log_2(n)-1} &\frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_k)} \max\{ 1, \max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \}\\
-% \leq& \max_{k=0,1,\dots,\log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_k)} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k-1}}  (x-\mu_*)^{-2}  \nu_0(x) \right\} \\
-% \leq& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_{\log_2(n)-1})} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{\log_2(n)-1}}  (x-\mu_*)^{-2}  \nu_0(x) \right\}
-% \end{align*}
-
-% If we set $\epsilon = \Delta_{\log_2(n)-1}$ and define 
-% \begin{align*}
-% z_{n,\epsilon} :=& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \epsilon)} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \epsilon}  (x-\mu_*)^{-2}  \nu_0(x) \right\}\\
-% \leq& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \epsilon)} \max\left\{ 1,  64 R \log(4 n \log_2(n) /\delta) \left( \epsilon^{-2} \nu_0(\mu_*+\epsilon) + \int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) \right\} \\
-% =& \log(2 \log_2(n)/\delta) \max\left\{ \frac{1}{\nu_0(\mu_* + \epsilon)}, 64 R \log(4 n \log_2(n) /\delta) \left( \epsilon^{-2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) \right\}
-% \end{align*}
-% then the algorithm outputs an $\tfrac{3}{2}\epsilon$-good arm with with probability at least $1-\delta$ whenever $n \geq z_{n,\epsilon}$.
-
-
-Before we prove the theorem, we need some notation and technical lemmas.
-Define 
-\begin{align*}
-\nu_k(x) = \E\Big[ \tfrac{1}{|S_k|} \sum_{i \in S_k} \1\{ \mu_i \leq x \} \Big] = \P( \mu_i \leq x \, | \, \mu_i \in S_k )
-\end{align*}
-where the expectation is taken with respect to the random set $S_k$. 
-Note that this definition is consistent with the reservoir distribution $\nu_0( \, \cdot \, )$ for $k=0$.
-Also define
-\begin{align*}
-\Delta_\ell := 2\sqrt{\frac{2R \log(n \log_2(n) 2^{-\ell+2}/\delta)}{2^\ell}} \ , \qquad\qquad \forall \ell \in \{0,1,\dots,\log_2(n)-1\}.
-\end{align*}
-
-The next lemma follows by a straightforward union and Chernoff bound (Section~\ref{sec:concentration_in_k_proof}).
-\begin{lemma}\label{lem:concentration_in_k}
-Under Assumption~\ref{asm:subgauss} we have
-% \begin{align*}
-$\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \bigcup_{i \in S_{\ell}} \left\{ |\widehat{\mu}_{i,\ell} - \mu_\ell| \geq \Delta_\ell/2 \right\} \right) \leq \delta/2$.
-% \end{align*}
-\end{lemma}
-
-The next lemma exploits the fact that each $\mu_i \in S_k$ for any $k$ is an iid draw from $\nu_k$, by definition, and $|S_k| = n 2^{-k}$.
-The result follows by a union bound over $k$ (Section~\ref{sec:good_arms_in_set_k_proof}).
-\begin{lemma}\label{lem:good_arms_in_set_k}
-For any $\ell=0,1,\dots,\log_2(n)-1$ if  $n \geq \xi_{n,\ell} := \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then 
-% If $n \geq \max_{\ell =0,1,\dots, \log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then
-\begin{align*}
-\P\Big(\min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \Big) \leq \tfrac{\delta}{2 \log_2(n)}.
-\end{align*}
-Moreover, $\P\Big( \bigcup_{\ell=0}^{\log_2(n)-1} \left\{ \min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \right\} \Big)\leq \frac{\delta}{2}$
-whenever $n \geq \max_{\ell=0,1,\dots,\log_2(n)-1} \xi_{n,\ell}$.
-\end{lemma}
-
-
-If $n \geq  \max_{\ell=0,1,\dots,\log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$, then combining the two above lemmas would give the desired result of Theorem~\ref{thm:main}.
-However, $\nu_k$ is not a natural quantity to reason about since it depends on the behavior of the algorithm.
-The next two lemmas characterize the behavior of this evolving distribution.
-The proof of the following lemma applies Bayes rule and exploits Assumption~\ref{asm:stochastic_ordering}. 
-It comes to the intuitive conclusion that the distribution of the true means gets no worse by thresholding the empirical means at the median (Section~\ref{sec:core_lemma_proof}).
-\begin{lemma}\label{lem:core_lemma}
-Assume Assumption~\ref{asm:stochastic_ordering} holds.
-For any $k$ and $x\in \R$ we have
-\begin{align*}
-\nu_{k+1}(x) &= 2 \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) \, \nu_k(x)
-\geq \nu_k(x).
-\end{align*}
-Moreover, for any $k$ and $x < y$ we have $\frac{\nu_{k+1}(x)}{\nu_k(x)} \geq \frac{\nu_{k+1}(y)}{\nu_k(y)}$.
-% \begin{align*}
-% \frac{\nu_{k+1}(x)}{\nu_k(x)} \geq \frac{\nu_{k+1}(y)}{\nu_k(y)}.
-% \end{align*}
-\end{lemma} 
-
-\noindent The next lemma refines the previous one, stating sufficient conditions for  improvement. 
-\begin{lemma}\label{lem:E_k}
-Assume Assumption~\ref{asm:stochastic_ordering} holds.
-Fix some $k \in \mathbb{N}$. 
-% Without loss of generality, at stage $k$ we have $\mu_i \sim \nu_k$ for $i \in S_k = \{1,\dots,|S_k|\}$. 
-% The realized random variables $\widehat{\mu}_{i,k}$ are the result of averaging $2^k$ realizations from the base distribution with mean $\mu_i$.  
-Define the event
-\begin{align*}
-\mathcal{E}_k = \{ \min_{i\in S_k} \mu_i-\mu_* \leq \Delta_k, \, \max_{i\in S_k} |\widehat{\mu}_{i,k} - \mu_i| \leq \Delta_k/2\}.
-\end{align*} 
-Then
-\begin{align} 
-\nu_{k+1}(\mu_*+\epsilon) &\geq \1_{\mathcal{E}_k}\min\{ 1, 2 \nu_k(\mu_*+\epsilon) , \tfrac{\nu_0(\mu_*+\epsilon) }{\nu_0(\mu_* + 2\Delta_k)} \} \quad \forall \epsilon \leq \Delta_k. \label{eqn:recursion}
-\end{align}
-\end{lemma}
-\begin{proof}
-Assume $\mathcal{E}_k$.
-We consider two exhaustive cases: 
-
-\noindent\textbf{Case 1}: $\max_{i \in S_{k+1}} \widehat{\mu}_{i,k} \leq \mu_* + \Delta_k + (\Delta_k/2)$. Here 
-\begin{align*}
-\max_{i \in S_{k+1}} \mu_i \leq \max_{i \in S_{k+1}} \widehat{\mu}_{i,k} + \Delta_k/2 \leq \mu_* + 2 \Delta_k
-\end{align*} 
-which means that no $2\Delta_k$-bad arms make it into $S_{k+1}$ and $\nu_{k+1}(\mu_*+2\Delta_k)=1$. Thus, applying the second result of Lemma~\ref{lem:core_lemma} twice with $x = \mu_* + \epsilon$ and $y=\mu_* + 2 \Delta_k$, we have $\nu_{k+1}(\mu_* + \epsilon) \geq \frac{\nu_k(\mu_*+\epsilon)}{\nu_k(\mu_* + 2\Delta_k)} \geq \frac{\nu_0(\mu_*+\epsilon)}{\nu_0(\mu_* + 2\Delta_k)}$ for all $\epsilon < \Delta_k$.
-
-\noindent\textbf{Case 2}: $\mu_* + \Delta_k + (\Delta_k/2) < \max_{i \in S_{k+1}} \widehat{\mu}_{i,k}$ In this case all $\Delta_k$-good arms in $S_k$ are guaranteed to be in $S_{k+1}$. Thus $\nu_{k+1}(\mu_*+\Delta_k) = \min\{1,2 \nu_{k}(\mu_* + \Delta_k)\}$ by the first result of Lemma~\ref{lem:core_lemma} with $x = \mu_* +\Delta_k$.
-% \begin{align*}
-% \mathcal{E}_k \implies \nu_{k+1}(\mu_*+\epsilon) &\geq \min\{ 1, 2 \nu_k(\mu_*+\epsilon) , \tfrac{\nu_k(\mu_*+\epsilon) }{\nu_k(\mu_* + 2\Delta_k)} \} \quad \forall \epsilon \leq \Delta_k.
-% \end{align*}
-\end{proof}
-
-We are now ready to prove Theorem~\ref{thm:main}.
-\begin{proof}
-Let $z_{n,\Delta_{k}}$ be $z_{n,\epsilon}$ from the theorem statement with $\epsilon=\Delta_k$. Define
-% \begin{align*}
-% z_{n,\Delta_{k}}&:= \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_{k})} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k}}  (x-\mu_*)^{-2}  \nu_0(x) \right\}
-% \end{align*}
-% as well as
-\begin{align*}
-z_n := \max_{k=0,1,\dots,\log_2(n)-1} z_{n,\Delta_{k}}= z_{n,\Delta_{\log_2(n)-1}}  \quad \text{and} \quad
-\xi_{n,k} := \frac{\log(2 \log_2(n)/\delta)}{2^{-k} \nu_k(\mu_* + \Delta_k)}
-\end{align*}
-where $\xi_{n,k}$ comes from Lemma~\ref{lem:good_arms_in_set_k}.
-Note that $n \geq z_n$ by assumption.
-The theorem claims that with probability at least $1-\delta$ the returned arm has a mean no greater than $\mu_* + \Delta_{\log_2(n)-1}$ (which is implied if $\mathcal{E}_{\log_2(n)-1}$ holds) whenever $n \geq z_n = z_{n,\Delta_{\log_2(n)-1}}$ by simply making the substitution $\epsilon := \Delta_{\log_2(n)-1}$.
-Thus, our goal is to show that $\mathcal{E}_{\log_2(n)-1}$ holds by proving the stronger statement that $\bigcap_{k=0}^{\log_2(n)-1} \mathcal{E}_k$ holds.
-
-By immediate application of Lemma~\ref{lem:concentration_in_k} and Lemma~\ref{lem:good_arms_in_set_k}, for all $k=0,1,\dots,\log_2(n)-1$ simultaneously
-\begin{align}\label{eqn:main_implication}
-\{n \geq \xi_{n,k}\}  \implies \{ \min_{i \in S_k} \mu_i \leq \mu_* + \Delta_k \} \cap  \{ \max_{i\in S_k} |\widehat{\mu}_{i,k} - \mu_i| \leq \Delta_k/2 \} = \mc{E}_k
-\end{align}
-with probability at least $1-\delta$.
-% Thus, since $n \geq z_n$ it suffices to show that $\bigcap_{k=0}^{\log_2(n)-1} \{z_{n,\Delta_k} \geq \xi_{n,k}\}$.
-In what follows, assume the implication of \eqref{eqn:main_implication} holds for all $k$, since these occur with probability at least $1-\delta$.
-
-We will prove the theorem by induction
-% \begin{align*}
-% \{ n \geq z_n \} \cap \left\{ \bigcap_{\ell=0}^{k-1} \mathcal{E}_\ell \right\} \implies \{ n \geq z_n \} \cap \left\{ \bigcap_{\ell=0}^{k} \mathcal{E}_\ell \right\}
-% \end{align*}
-starting with the base case
-\begin{align*}
-\{n \geq z_n\} \implies \{ n \geq z_{n,\Delta_0} \} \implies \{ n \geq \frac{\log(2 \log_2(n)/\delta)}{ \nu_0(\mu_* + \Delta_0)} \} \equiv \{n \geq \xi_{n,0}\} \overset{\eqref{eqn:main_implication}}{\implies} \mc{E}_0.
-\end{align*} 
-Fix any $k \in \{1,\dots,\log_2(n)-1\}$. 
-Note $\{\nu_k(\mu_*+\Delta_k)=1 \} \implies \left\{ \min_{i \in S_k} \mu_i-\mu_* \leq \Delta_k \right\}$ so
-\begin{align*}
-\{\nu_k(\mu_*+\Delta_k)=1 \} \cap \{ \max_{i\in S_k} |\widehat{\mu}_{i,k} - \mu_i| \leq \Delta_k/2 \} \implies \mathcal{E}_k.
-\end{align*} 
-So assume $\nu_k(\mu_*+\Delta_k)<1$.
-On $\left\{ \bigcap_{\ell=0}^{k-1} \mathcal{E}_\ell \right\}$ we have 
-\begin{align*}
-\nu_{k}(\mu_*+\Delta_k) &\geq \min\{ 1, 2 \nu_{k-1}(\mu_*+\Delta_k) , \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-1})} \} \\
-&\geq \min\{ 1, 2 \min\{ 1, 2 \nu_{k-2}(\mu_*+\Delta_k) , \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-2})} \} , \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-1})} \} \\
-% &= \min\{ 1, 2^2 \nu_{k-2}(\mu_*+\Delta_k) , 2 \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-2})} , \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-1})} \} \\
-&\geq \min\{ 1,2^{k} \nu_0(\mu_* + \Delta_k), \min_{\ell=0,\dots,k-1} 2^{k-1-\ell} \tfrac{\nu_0(\mu_*+\Delta_k)}{\nu_0(\mu_* + 2\Delta_{\ell})} \} \\
-&= \min\{ 1,2^{k} \nu_0(\mu_* + \Delta_k) \min\{ 1,   \tfrac{1}{\max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell})} \} \}\\
-% &= 2^{k} \nu_0(\mu_* + \Delta_k) \min\{ 1,   \tfrac{1}{\max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell})} \} \\
-&= 2^{k} \nu_0(\mu_* + \Delta_k) \tfrac{1}{\max\{ 1, \max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \}} 
-\end{align*}
-where the last line uses $\nu_k(\mu_*+\Delta_k)<1$ and moves the $\min$ to the denominator.
-Now
-% \begin{align*}
-% \max\{1, \max_{\ell=0,\dots,k-1}  2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \} &= \max\{1, \max_{\ell=0,\dots,k-1}  16 R \log(n \log_2(n) 2^{-\ell+2}/\delta) \Delta_{\ell}^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \} \\
-% &\leq \max\{1, 64 R \log(4 n \log_2(n) /\delta) \max_{\ell=0,\dots,k-1}  (2\Delta_{\ell})^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \} \\
-% &\leq \max\{1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k-1}}  (x-\mu_*)^{-2}  \nu_0(x) \} \\
-% &\leq \max\{1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k}}  (x-\mu_*)^{-2}  \nu_0(x) \} \\
-% &= \frac{\nu_0(\mu_* + \Delta_{k})}{\log(2 \log_2(n)/\delta)} z_{n,\Delta_{k}}.
-% % &\leq \frac{\nu_0(\mu_* + \Delta_{k})}{\log(2 \log_2(n)/\delta)} n .
-% \end{align*}
-\begin{align*}
-\max_{\ell=0,\dots,k-1}  2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) &= \max_{\ell=0,\dots,k-1}  16 R \log(n \log_2(n) 2^{-\ell+2}/\delta) \Delta_{\ell}^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \\
-&\leq 64 R \log(4 n \log_2(n) /\delta) \max_{\ell=0,\dots,k-1}  (2\Delta_{\ell})^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \\
-&\leq 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k-1}}  (x-\mu_*)^{-2}  \nu_0(x) \\
-&\leq 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k}}  (x-\mu_*)^{-2}  \nu_0(x),
-\end{align*}
-% so that
-\begin{align*}
-\max\{1, \max_{\ell=0,\dots,k-1}  2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \}
-&\leq \max\{1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k}}  (x-\mu_*)^{-2}  \nu_0(x)\} \\
-&=\tfrac{\nu_0(\mu_* + \Delta_{k})}{\log(2 \log_2(n)/\delta)} z_{n,\Delta_{k}}.
-% &\leq \frac{\nu_0(\mu_* + \Delta_{k})}{\log(2 \log_2(n)/\delta)} n .
-\end{align*}
-Plugging this result back into the previous display and rearranging, we obtain
-\begin{align*}
-\nu_{k}(\mu_*+\Delta_k) \geq \frac{2^k \log(2 \log_2(n)/\delta)}{z_{n,\Delta_{k}}} \equiv z_{n,\Delta_k} \geq \xi_{n,k}.
-\end{align*}
-Thus,
-\begin{align*}
-\{n \geq z_n \} \cap \left\{ \bigcap_{\ell=0}^{k-1} \mathcal{E}_\ell \right\} &\implies \{n \geq z_n \} \cap \{z_{n,\Delta_k} \geq \xi_{n,k} \} \cap \left\{ \bigcap_{\ell=0}^{k-1} \mathcal{E}_\ell \right\}  \overset{\eqref{eqn:main_implication}}{\implies} \{n \geq z_n \} \cap  \left\{ \bigcap_{\ell=0}^{k} \mathcal{E}_\ell \right\}
-\end{align*}
-Because $k$ was chosen arbitrarily, and because $\mc{E}_0$ holds, we have proven that 
-$\{n \geq z_n \} \implies \left\{ \bigcap_{\ell=0}^{\log_2(n)-1} \mathcal{E}_\ell \right\}$ 
-with probability at least $1-\delta$.
-\end{proof}
+%\subsection{Analysis}
+%Our main result relies on two assumptions about the distribution $\phi(\ \cdot \ ; \mu)$ of observations from an arm given a drawn mean $\mu$.
+%We make no assumptions about the shape or regularity of the reservoir $\nu_0$.
+%% For instance, $\phi(\mu) = \mathcal{N}(\mu,1)$ or $\phi(\mu) = \text{Bernoulli}(\mu)$. 
+%\begin{assumption} \label{asm:stochastic_ordering}
+%% Let $\phi(\mu)$ denote the probability law that observations from an arm with mean $\mu$ obey. 
+%For all $m \in \mathbb{N}$ and $t \in \R$
+%\begin{align*}
+%\P\Big(\frac{1}{m} \sum_{j=1}^m X_j \leq t \, \Big| \, X_j \overset{iid}{\sim} \phi( \ \cdot \ ; x) \Big) \geq \P\Big(\frac{1}{m} \sum_{j=1}^m Y_j \leq t \, \Big| \, Y_j \overset{iid}{\sim} \phi( \ \cdot \ ; y) \Big) \iff x \leq y.
+%\end{align*} 
+%\end{assumption}
+%Assumption~\ref{asm:stochastic_ordering} states that the distribution with the smaller mean is more likely to have a smaller empirical mean. 
+%This holds, for example, if $\phi(\cdot,\mu)$ is $\text{Bernoulli}(\mu)$ or Gaussian observations with known variance $\mathcal{N}(\mu,R)$.
+%A consequence of Assumption~\ref{asm:stochastic_ordering} is that
+%\begin{align*}
+%\P( \mu_i \in S_{k+1} \, | \, \mu_i = x, \mu_i \in S_{k} ) \geq \P( \mu_i \in S_{k+1} \, | \, \mu_i = y, \mu_i \in S_{k} ) \quad \forall x \leq y.
+%\end{align*} 
+%Assumption~\ref{asm:stochastic_ordering} often holds for the class of single-parameter exponential families that are well-studied in the multi-armed bandit literature \citep{audibert2010best}.
+%Our second assumption is standard and allows us to rely on the concentration of measure phenomenon.
+%\begin{assumption}\label{asm:subgauss}
+%If $X \sim \phi(\ \cdot \ ; \mu)$ then $X-\mu$ is an i.i.d. mean-zero, $R$-sub-Gaussian random variable such that $\E[\exp(\lambda (X-\mu))] \leq \exp(\lambda^2 R /2 )$ for any $\lambda >0$.
+%\end{assumption} 
+%Assumption~\ref{asm:subgauss} is quite benign: if $X \in [0,1]$ then $R \leq 1/4$; if $X \sim \mathcal{N}(\mu,v^2)$ then $R = v^2$.
+%
+%\begin{theorem}\label{thm:main}
+%Fix $\delta \in (0,1)$. Under Assumptions 1 and 2, for any $\epsilon >0$ define
+%\begin{align*}
+%z_{n,\epsilon} :=& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \epsilon)} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \epsilon}  (x-\mu_*)^{-2}  \nu_0(x) \right\}\\
+%\leq& \log(2 \log_2(n)/\delta) \max\Bigg\{ \frac{1}{\nu_0(\mu_* + \epsilon)},
+%\\ &~~~~~~~~~~
+%64 R \log(4 n \log_2(n) /\delta) \left( \epsilon^{-2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) \Bigg\}.
+%\end{align*}
+%If Successive Halving of Figure~\ref{alg-SH} is run with $n$ arms and $T=\lceil n \log_2(n) \rceil$ total pulls where $n \geq z_{n,\epsilon}$ then with probability at least $1-\delta$ the single arm returned is no greater than $\mu_* +\epsilon$.
+%\end{theorem}
+%
+%\begin{remark}
+%Note that if the support of $\phi$ is bounded in $[0,1]$ then taking $\delta=\epsilon$ in the above theorem implies $\E[ \mu_{J_{T}} ] - \mu_*\leq 2 \epsilon$ whenever $T=\lceil n \log_2(n) \rceil$ and $n \geq z_{n,\epsilon}$.
+%\end{remark}
+%
+%% \begin{theorem}\label{thm:main}
+%% Fix $\delta \in (0,1)$ and assume Assumptions 1 and 2 hold.
+%% Define 
+%% \begin{align*}
+%% \Delta_\ell := 2\sqrt{\frac{2R \log(n \log_2(n) 2^{-\ell+2}/\delta)}{2^\ell}} \ , \qquad\qquad \forall \ell \in \{0,1,\dots,\log_2(n)-1\}.
+%% \end{align*}
+%% If 
+%% \begin{align*}
+%% n \geq z_n :=& \max_{k=0,1,\dots,\log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_k)} \max\{ 1, \max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \}
+%% \end{align*}
+%% then with probability at least $1-\delta$
+%% \begin{align*}
+%% \mu_{A} \leq  \min_{i \in S_k} \mu_i + \Delta_k/2 \leq \mu_* + \tfrac{3}{2} \Delta_k \quad \text{where} \quad A = \arg\min_{i \in S_k} \widehat{\mu}_{i,k}
+%% \end{align*} 
+%% for all $k = 0, 1, \dots, \log_2(n)-1$.
+%% \end{theorem}
+%% We can make the theorem more interpretable by simplifying $z_n$
+%% \begin{align*}
+%% \max_{\ell=0,\dots,k-1}  2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) &= \max_{\ell=0,\dots,k-1}  16 R \log(n \log_2(n) 2^{-\ell+2}/\delta) \Delta_{\ell}^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \\
+%% &\leq  64 R \log(4 n \log_2(n) /\delta) \max_{\ell=0,\dots,k-1}  (2\Delta_{\ell})^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \\
+%% &\leq  64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k-1}}  (x-\mu_*)^{-2}  \nu_0(x).
+%% \end{align*}
+%% We note that
+%% \begin{align*}
+%% \max_{k=0,1,\dots,\log_2(n)-1} &\frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_k)} \max\{ 1, \max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \}\\
+%% \leq& \max_{k=0,1,\dots,\log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_k)} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k-1}}  (x-\mu_*)^{-2}  \nu_0(x) \right\} \\
+%% \leq& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_{\log_2(n)-1})} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{\log_2(n)-1}}  (x-\mu_*)^{-2}  \nu_0(x) \right\}
+%% \end{align*}
+%
+%% If we set $\epsilon = \Delta_{\log_2(n)-1}$ and define 
+%% \begin{align*}
+%% z_{n,\epsilon} :=& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \epsilon)} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \epsilon}  (x-\mu_*)^{-2}  \nu_0(x) \right\}\\
+%% \leq& \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \epsilon)} \max\left\{ 1,  64 R \log(4 n \log_2(n) /\delta) \left( \epsilon^{-2} \nu_0(\mu_*+\epsilon) + \int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) \right\} \\
+%% =& \log(2 \log_2(n)/\delta) \max\left\{ \frac{1}{\nu_0(\mu_* + \epsilon)}, 64 R \log(4 n \log_2(n) /\delta) \left( \epsilon^{-2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{x = \mu_* + \epsilon}^\infty  \frac{1}{(x-\mu_*)^{2}}  d\nu_0(x) \right) \right\}
+%% \end{align*}
+%% then the algorithm outputs an $\tfrac{3}{2}\epsilon$-good arm with with probability at least $1-\delta$ whenever $n \geq z_{n,\epsilon}$.
+%
+%
+%Before we prove the theorem, we need some notation and technical lemmas.
+%Define 
+%\begin{align*}
+%\nu_k(x) = \E\Big[ \tfrac{1}{|S_k|} \sum_{i \in S_k} \1\{ \mu_i \leq x \} \Big] = \P( \mu_i \leq x \, | \, \mu_i \in S_k )
+%\end{align*}
+%where the expectation is taken with respect to the random set $S_k$. 
+%Note that this definition is consistent with the reservoir distribution $\nu_0( \, \cdot \, )$ for $k=0$.
+%Also define
+%\begin{align*}
+%\Delta_\ell := 2\sqrt{\frac{2R \log(n \log_2(n) 2^{-\ell+2}/\delta)}{2^\ell}} \ , \qquad\qquad \forall \ell \in \{0,1,\dots,\log_2(n)-1\}.
+%\end{align*}
+%
+%The next lemma follows by a straightforward union and Chernoff bound (Section~\ref{sec:concentration_in_k_proof}).
+%\begin{lemma}\label{lem:concentration_in_k}
+%Under Assumption~\ref{asm:subgauss} we have
+%% \begin{align*}
+%$\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \bigcup_{i \in S_{\ell}} \left\{ |\widehat{\mu}_{i,\ell} - \mu_\ell| \geq \Delta_\ell/2 \right\} \right) \leq \delta/2$.
+%% \end{align*}
+%\end{lemma}
+%
+%The next lemma exploits the fact that each $\mu_i \in S_k$ for any $k$ is an iid draw from $\nu_k$, by definition, and $|S_k| = n 2^{-k}$.
+%The result follows by a union bound over $k$ (Section~\ref{sec:good_arms_in_set_k_proof}).
+%\begin{lemma}\label{lem:good_arms_in_set_k}
+%For any $\ell=0,1,\dots,\log_2(n)-1$ if  $n \geq \xi_{n,\ell} := \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then 
+%% If $n \geq \max_{\ell =0,1,\dots, \log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then
+%\begin{align*}
+%\P\Big(\min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \Big) \leq \tfrac{\delta}{2 \log_2(n)}.
+%\end{align*}
+%Moreover, $\P\Big( \bigcup_{\ell=0}^{\log_2(n)-1} \left\{ \min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \right\} \Big)\leq \frac{\delta}{2}$
+%whenever $n \geq \max_{\ell=0,1,\dots,\log_2(n)-1} \xi_{n,\ell}$.
+%\end{lemma}
+%
+%
+%If $n \geq  \max_{\ell=0,1,\dots,\log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$, then combining the two above lemmas would give the desired result of Theorem~\ref{thm:main}.
+%However, $\nu_k$ is not a natural quantity to reason about since it depends on the behavior of the algorithm.
+%The next two lemmas characterize the behavior of this evolving distribution.
+%The proof of the following lemma applies Bayes rule and exploits Assumption~\ref{asm:stochastic_ordering}. 
+%It comes to the intuitive conclusion that the distribution of the true means gets no worse by thresholding the empirical means at the median (Section~\ref{sec:core_lemma_proof}).
+%\begin{lemma}\label{lem:core_lemma}
+%Assume Assumption~\ref{asm:stochastic_ordering} holds.
+%For any $k$ and $x\in \R$ we have
+%\begin{align*}
+%\nu_{k+1}(x) &= 2 \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) \, \nu_k(x)
+%\geq \nu_k(x).
+%\end{align*}
+%Moreover, for any $k$ and $x < y$ we have $\frac{\nu_{k+1}(x)}{\nu_k(x)} \geq \frac{\nu_{k+1}(y)}{\nu_k(y)}$.
+%% \begin{align*}
+%% \frac{\nu_{k+1}(x)}{\nu_k(x)} \geq \frac{\nu_{k+1}(y)}{\nu_k(y)}.
+%% \end{align*}
+%\end{lemma} 
+%
+%\noindent The next lemma refines the previous one, stating sufficient conditions for  improvement. 
+%\begin{lemma}\label{lem:E_k}
+%Assume Assumption~\ref{asm:stochastic_ordering} holds.
+%Fix some $k \in \mathbb{N}$. 
+%% Without loss of generality, at stage $k$ we have $\mu_i \sim \nu_k$ for $i \in S_k = \{1,\dots,|S_k|\}$. 
+%% The realized random variables $\widehat{\mu}_{i,k}$ are the result of averaging $2^k$ realizations from the base distribution with mean $\mu_i$.  
+%Define the event
+%\begin{align*}
+%\mathcal{E}_k = \{ \min_{i\in S_k} \mu_i-\mu_* \leq \Delta_k, \, \max_{i\in S_k} |\widehat{\mu}_{i,k} - \mu_i| \leq \Delta_k/2\}.
+%\end{align*} 
+%Then
+%\begin{align} 
+%\nu_{k+1}(\mu_*+\epsilon) &\geq \1_{\mathcal{E}_k}\min\{ 1, 2 \nu_k(\mu_*+\epsilon) , \tfrac{\nu_0(\mu_*+\epsilon) }{\nu_0(\mu_* + 2\Delta_k)} \} \quad \forall \epsilon \leq \Delta_k. \label{eqn:recursion}
+%\end{align}
+%\end{lemma}
+%\begin{proof}
+%Assume $\mathcal{E}_k$.
+%We consider two exhaustive cases: 
+%
+%\noindent\textbf{Case 1}: $\max_{i \in S_{k+1}} \widehat{\mu}_{i,k} \leq \mu_* + \Delta_k + (\Delta_k/2)$. Here 
+%\begin{align*}
+%\max_{i \in S_{k+1}} \mu_i \leq \max_{i \in S_{k+1}} \widehat{\mu}_{i,k} + \Delta_k/2 \leq \mu_* + 2 \Delta_k
+%\end{align*} 
+%which means that no $2\Delta_k$-bad arms make it into $S_{k+1}$ and $\nu_{k+1}(\mu_*+2\Delta_k)=1$. Thus, applying the second result of Lemma~\ref{lem:core_lemma} twice with $x = \mu_* + \epsilon$ and $y=\mu_* + 2 \Delta_k$, we have $\nu_{k+1}(\mu_* + \epsilon) \geq \frac{\nu_k(\mu_*+\epsilon)}{\nu_k(\mu_* + 2\Delta_k)} \geq \frac{\nu_0(\mu_*+\epsilon)}{\nu_0(\mu_* + 2\Delta_k)}$ for all $\epsilon < \Delta_k$.
+%
+%\noindent\textbf{Case 2}: $\mu_* + \Delta_k + (\Delta_k/2) < \max_{i \in S_{k+1}} \widehat{\mu}_{i,k}$ In this case all $\Delta_k$-good arms in $S_k$ are guaranteed to be in $S_{k+1}$. Thus $\nu_{k+1}(\mu_*+\Delta_k) = \min\{1,2 \nu_{k}(\mu_* + \Delta_k)\}$ by the first result of Lemma~\ref{lem:core_lemma} with $x = \mu_* +\Delta_k$.
+%% \begin{align*}
+%% \mathcal{E}_k \implies \nu_{k+1}(\mu_*+\epsilon) &\geq \min\{ 1, 2 \nu_k(\mu_*+\epsilon) , \tfrac{\nu_k(\mu_*+\epsilon) }{\nu_k(\mu_* + 2\Delta_k)} \} \quad \forall \epsilon \leq \Delta_k.
+%% \end{align*}
+%\end{proof}
+%
+%We are now ready to prove Theorem~\ref{thm:main}.
+%\begin{proof}
+%Let $z_{n,\Delta_{k}}$ be $z_{n,\epsilon}$ from the theorem statement with $\epsilon=\Delta_k$. Define
+%% \begin{align*}
+%% z_{n,\Delta_{k}}&:= \frac{\log(2 \log_2(n)/\delta)}{  \nu_0(\mu_* + \Delta_{k})} \max\left\{ 1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k}}  (x-\mu_*)^{-2}  \nu_0(x) \right\}
+%% \end{align*}
+%% as well as
+%\begin{align*}
+%z_n := \max_{k=0,1,\dots,\log_2(n)-1} z_{n,\Delta_{k}}= z_{n,\Delta_{\log_2(n)-1}}  \quad \text{and} \quad
+%\xi_{n,k} := \frac{\log(2 \log_2(n)/\delta)}{2^{-k} \nu_k(\mu_* + \Delta_k)}
+%\end{align*}
+%where $\xi_{n,k}$ comes from Lemma~\ref{lem:good_arms_in_set_k}.
+%Note that $n \geq z_n$ by assumption.
+%The theorem claims that with probability at least $1-\delta$ the returned arm has a mean no greater than $\mu_* + \Delta_{\log_2(n)-1}$ (which is implied if $\mathcal{E}_{\log_2(n)-1}$ holds) whenever $n \geq z_n = z_{n,\Delta_{\log_2(n)-1}}$ by simply making the substitution $\epsilon := \Delta_{\log_2(n)-1}$.
+%Thus, our goal is to show that $\mathcal{E}_{\log_2(n)-1}$ holds by proving the stronger statement that $\bigcap_{k=0}^{\log_2(n)-1} \mathcal{E}_k$ holds.
+%
+%By immediate application of Lemma~\ref{lem:concentration_in_k} and Lemma~\ref{lem:good_arms_in_set_k}, for all $k=0,1,\dots,\log_2(n)-1$ simultaneously
+%\begin{align}\label{eqn:main_implication}
+%\{n \geq \xi_{n,k}\}  \implies \{ \min_{i \in S_k} \mu_i \leq \mu_* + \Delta_k \} \cap  \{ \max_{i\in S_k} |\widehat{\mu}_{i,k} - \mu_i| \leq \Delta_k/2 \} = \mc{E}_k
+%\end{align}
+%with probability at least $1-\delta$.
+%% Thus, since $n \geq z_n$ it suffices to show that $\bigcap_{k=0}^{\log_2(n)-1} \{z_{n,\Delta_k} \geq \xi_{n,k}\}$.
+%In what follows, assume the implication of \eqref{eqn:main_implication} holds for all $k$, since these occur with probability at least $1-\delta$.
+%
+%We will prove the theorem by induction
+%% \begin{align*}
+%% \{ n \geq z_n \} \cap \left\{ \bigcap_{\ell=0}^{k-1} \mathcal{E}_\ell \right\} \implies \{ n \geq z_n \} \cap \left\{ \bigcap_{\ell=0}^{k} \mathcal{E}_\ell \right\}
+%% \end{align*}
+%starting with the base case
+%\begin{align*}
+%\{n \geq z_n\} \implies \{ n \geq z_{n,\Delta_0} \} \implies \{ n \geq \frac{\log(2 \log_2(n)/\delta)}{ \nu_0(\mu_* + \Delta_0)} \} \equiv \{n \geq \xi_{n,0}\} \overset{\eqref{eqn:main_implication}}{\implies} \mc{E}_0.
+%\end{align*} 
+%Fix any $k \in \{1,\dots,\log_2(n)-1\}$. 
+%Note $\{\nu_k(\mu_*+\Delta_k)=1 \} \implies \left\{ \min_{i \in S_k} \mu_i-\mu_* \leq \Delta_k \right\}$ so
+%\begin{align*}
+%\{\nu_k(\mu_*+\Delta_k)=1 \} \cap \{ \max_{i\in S_k} |\widehat{\mu}_{i,k} - \mu_i| \leq \Delta_k/2 \} \implies \mathcal{E}_k.
+%\end{align*} 
+%So assume $\nu_k(\mu_*+\Delta_k)<1$.
+%On $\left\{ \bigcap_{\ell=0}^{k-1} \mathcal{E}_\ell \right\}$ we have 
+%\begin{align*}
+%\nu_{k}(\mu_*+\Delta_k) &\geq \min\{ 1, 2 \nu_{k-1}(\mu_*+\Delta_k) , \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-1})} \} \\
+%&\geq \min\{ 1, 2 \min\{ 1, 2 \nu_{k-2}(\mu_*+\Delta_k) , \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-2})} \} , \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-1})} \} \\
+%% &= \min\{ 1, 2^2 \nu_{k-2}(\mu_*+\Delta_k) , 2 \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-2})} , \tfrac{\nu_0(\mu_*+\Delta_k) }{\nu_0(\mu_* + 2\Delta_{k-1})} \} \\
+%&\geq \min\{ 1,2^{k} \nu_0(\mu_* + \Delta_k), \min_{\ell=0,\dots,k-1} 2^{k-1-\ell} \tfrac{\nu_0(\mu_*+\Delta_k)}{\nu_0(\mu_* + 2\Delta_{\ell})} \} \\
+%&= \min\{ 1,2^{k} \nu_0(\mu_* + \Delta_k) \min\{ 1,   \tfrac{1}{\max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell})} \} \}\\
+%% &= 2^{k} \nu_0(\mu_* + \Delta_k) \min\{ 1,   \tfrac{1}{\max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell})} \} \\
+%&= 2^{k} \nu_0(\mu_* + \Delta_k) \tfrac{1}{\max\{ 1, \max_{\ell=0,\dots,k-1} 2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \}} 
+%\end{align*}
+%where the last line uses $\nu_k(\mu_*+\Delta_k)<1$ and moves the $\min$ to the denominator.
+%Now
+%% \begin{align*}
+%% \max\{1, \max_{\ell=0,\dots,k-1}  2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \} &= \max\{1, \max_{\ell=0,\dots,k-1}  16 R \log(n \log_2(n) 2^{-\ell+2}/\delta) \Delta_{\ell}^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \} \\
+%% &\leq \max\{1, 64 R \log(4 n \log_2(n) /\delta) \max_{\ell=0,\dots,k-1}  (2\Delta_{\ell})^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \} \\
+%% &\leq \max\{1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k-1}}  (x-\mu_*)^{-2}  \nu_0(x) \} \\
+%% &\leq \max\{1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k}}  (x-\mu_*)^{-2}  \nu_0(x) \} \\
+%% &= \frac{\nu_0(\mu_* + \Delta_{k})}{\log(2 \log_2(n)/\delta)} z_{n,\Delta_{k}}.
+%% % &\leq \frac{\nu_0(\mu_* + \Delta_{k})}{\log(2 \log_2(n)/\delta)} n .
+%% \end{align*}
+%\begin{align*}
+%\max_{\ell=0,\dots,k-1}  2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) &= \max_{\ell=0,\dots,k-1}  16 R \log(n \log_2(n) 2^{-\ell+2}/\delta) \Delta_{\ell}^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \\
+%&\leq 64 R \log(4 n \log_2(n) /\delta) \max_{\ell=0,\dots,k-1}  (2\Delta_{\ell})^{-2}  \nu_0(\mu_* + 2\Delta_{\ell}) \\
+%&\leq 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k-1}}  (x-\mu_*)^{-2}  \nu_0(x) \\
+%&\leq 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k}}  (x-\mu_*)^{-2}  \nu_0(x),
+%\end{align*}
+%% so that
+%\begin{align*}
+%\max\{1, \max_{\ell=0,\dots,k-1}  2^{\ell+1} \nu_0(\mu_* + 2\Delta_{\ell}) \}
+%&\leq \max\{1, 64 R \log(4 n \log_2(n) /\delta) \sup_{x \geq \mu_* + \Delta_{k}}  (x-\mu_*)^{-2}  \nu_0(x)\} \\
+%&=\tfrac{\nu_0(\mu_* + \Delta_{k})}{\log(2 \log_2(n)/\delta)} z_{n,\Delta_{k}}.
+%% &\leq \frac{\nu_0(\mu_* + \Delta_{k})}{\log(2 \log_2(n)/\delta)} n .
+%\end{align*}
+%Plugging this result back into the previous display and rearranging, we obtain
+%\begin{align*}
+%\nu_{k}(\mu_*+\Delta_k) \geq \frac{2^k \log(2 \log_2(n)/\delta)}{z_{n,\Delta_{k}}} \equiv z_{n,\Delta_k} \geq \xi_{n,k}.
+%\end{align*}
+%Thus,
+%\begin{align*}
+%\{n \geq z_n \} \cap \left\{ \bigcap_{\ell=0}^{k-1} \mathcal{E}_\ell \right\} &\implies \{n \geq z_n \} \cap \{z_{n,\Delta_k} \geq \xi_{n,k} \} \cap \left\{ \bigcap_{\ell=0}^{k-1} \mathcal{E}_\ell \right\}  \overset{\eqref{eqn:main_implication}}{\implies} \{n \geq z_n \} \cap  \left\{ \bigcap_{\ell=0}^{k} \mathcal{E}_\ell \right\}
+%\end{align*}
+%Because $k$ was chosen arbitrarily, and because $\mc{E}_0$ holds, we have proven that 
+%$\{n \geq z_n \} \implies \left\{ \bigcap_{\ell=0}^{\log_2(n)-1} \mathcal{E}_\ell \right\}$ 
+%with probability at least $1-\delta$.
+%\end{proof}
 
 
 \subsection{Lower Bound}
 
 Fix any reservoir distribution $\nu_0$ and $\epsilon,\delta \in (0,1)$. 
-Our upper bound of Theorem~\ref{thm:main} states that if the proposed algorithm is provided a budget of $\epsilon^{-2}+\frac{1}{\nu_0(\mu_* + \epsilon)}\int_{\mu_*+\epsilon} (\mu-\mu_*)^{-2} d\nu_0(\mu)$ pulls (up to poly-logarthmic factors), then the prescribed procedure outputs an $\epsilon$-good arm with probability at least $1-\delta$.
+Our upper bound of Conjecture~\ref{conjecture:main} states that if the proposed algorithm is provided a budget of $\epsilon^{-2} + \frac{1}{\nu_0(\mu_* + \epsilon)}\int_{\mu_*+\epsilon} (\mu-\mu_*)^{-2} d\nu_0(\mu)$ pulls (up to logarithmic factors), then the prescribed procedure outputs an $\epsilon$-good arm with probability at least $1-\delta$.
 In this section, we argue that any algorithm that identifies an $\epsilon$-good arm with probability at least $1-\delta$ must take nearly this many total pulls in expectation.
 We follow the lower bound technique of \cite{malloy2012quickest} beginning with a definition borrowed from \cite{berry1997}.
 \begin{definition}
@@ -348,7 +371,7 @@ for any $\widetilde{\mu}$ with $\widetilde{\kappa} := \nu(\widetilde{\mu}) - \nu
 
 \noindent\textbf{Polynomial-tail, Equation~\ref{eqn:beta_parameterization}:} $\nu(\mu_* + x) := \P( \mu \leq \mu_* + x) \propto x^\beta$. Take $\widetilde{\mu} = \mu_* + 2^{1/\beta} \epsilon$ so that $\widetilde{\kappa} = \nu(\mu_*+2^{1/\beta} \epsilon) - \nu(\mu_* + \epsilon) \propto \epsilon^\beta$ yielding a sample complexity of $\epsilon^{-2}\log(1/\delta) + \epsilon^{-\beta}$.
 
-We will only sketch the proof of Theorem~\ref{thm:fb-lb}, leaving the technical details to the Section.
+We will only sketch the proof of Theorem~\ref{thm:fb-lb}, leaving the technical details to Section~\ref{sec:SHproof}.
 Since each arm is treated identically, one realizes that such a procedure is performing a sequence of composite binary hypothesis tests where the test decides to keep sampling or not given the observations up to the current time.
 Let $\P_\mu$ and $\E_\mu$ be the probability law of observations from an arm with mean $\mu$.
 It will be also convenient to define $\pi:=\nu(\mu_*+\epsilon)$.

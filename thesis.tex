@@ -32,7 +32,7 @@
         %\includegraphics[width=0.4\textwidth]{university}
  
         \Large
-        College of Computer and Information Science\\
+        Khoury College of Computer Science\\
         Northeastern University\\
         Boston, MA\\
         2018
@@ -54,24 +54,13 @@
    %\large
 \noindent
     \textbf{Abstract} \\
-How would one go about choosing a near-best option from an effectively infinite set in finite time, with imperfect knowledge of the quality
-of the options?  
-Consider drug testing, for example.
-One may have access to many candidate drugs (``arms'')
-but only resources to perform a limited number of tests,
-and yet one's goal is to identify a ``near-optimal'' drug within the
-budget available.
-Such problems are well-modeled by variants of the classical multi-arm bandit problem.
+How would one go about choosing a near-best option from an effectively infinite set in finite time, with imperfect knowledge of the quality of the options? Such problems arise in computer science (e.g. online learning, reinforcement learning, hyper-parameter tuning, and recommender systems) and beyond. Consider drug testing, for example. One may have access to many candidate drugs (“arms”) but only resources to perform a limited number of tests, and yet one’s goal is to identify a “near-optimal” drug within the budget available. Such problems are well-modeled by variants of the classical multi-armed bandit problem.
 
-We focus on the pure exploration version of the infinitely-armed bandit problem wherein a player is confronted with an effectively infinite set of arms, each having an unknown stochastic reward, and the goal is to quickly identify an arm with ``near best'' mean reward by repeatedly choosing arms in some intelligent manner.  
- 
-We examine this variant of the problem in both the fixed budget setting, wherein one attempts to maximize performance with limited resources, and the fixed confidence setting, wherein one attempts to minimize budget while meeting a performance constraint.
+We focus on the pure exploration version of the infinitely-armed bandit problem, wherein one seeks one of the best arms without penalty for trying sub-optimal arms along the way. The challenge is to quickly identify an arm with “near best” mean reward by repeatedly testing arms in some intelligent manner. We provide good general strategies to solve this problem in both the fixed budget setting, wherein one attempts to maximize performance with a certain number of tests, and the fixed confidence setting, wherein one attempts to minimize the number of tests needed to meet a certain performance target.
 
-We also present an application focused on training boosted decision trees faster than the state-of-the-art 
-algorithm using a method inspired by our pure exploration work mentioned 
-above.
-Lastly we present an application to dose finding in phase I clinical 
-trials of cancer treatments.
+We also report two real-world applications. The first aims to train greedy-optimal boosted decision trees faster than state-of-the-art algorithms using a novel bandit-inspired algorithm. Our algorithm minimizes the number of training documents used to measure each possible decision tree split while ensuring that we identify the split which would score the best were all documents used. We show that our algorithm empirically almost matches a lower bound on algorithms of its class, and approaches a more general lower bound on the number of documents needed for any class of algorithms.
+
+Lastly we report an application to dose finding in phase I clinical trials of cancer treatments. We develop a multi-objective bandit algorithm for balancing conflicting needs: the need to efficiently find the best dose level to treat future patients, the need to avoid giving trial patients unsafe doses, and the need to give trial patients large enough doses for effective treatment during the trial. Our method typically beats state-of-the-art methods in balancing the first two of these competing concerns well.
 %\end{center}
 
  \newpage
@@ -80,11 +69,14 @@ trials of cancer treatments.
    % \Large
     \vspace{0.9cm}
     \textbf{Acknowledgements} \\
-    To be added.
-%    ``If we affirm one single moment, we thus affirm not only ourselves but all existence. For nothing is self-sufficient, neither in us ourselves nor in things; and if our soul has trembled with happiness and sounded like a harp string just once, all eternity was needed to produce this one event and in this single moment of affirmation all eternity was called good, redeemed, justified, and affirmed.''
+``If we affirm one single moment, we thus affirm not only ourselves but all existence. For nothing is self-sufficient, neither in us ourselves nor in things; and if our soul has trembled with happiness and sounded like a harp string just once, all eternity was needed to produce this one event and in this single moment of affirmation all eternity was called good, redeemed, justified, and affirmed.''
 
-%— Nietzsche, Friedrich, The Will to Power
+— Nietzsche, Friedrich, The Will to Power
 \end{center}
+
+I would like to thank Javed Aslam, my advisor, for helping to bring out the best in me, and always having time for me. I also would like to thank Emilie Kaufmann for not only being a great mentor for the few years but also a gracious host during my time in France, and making me feel I am part of the bandit community.  I also would like to thank those I love, my family, my collaborators, and my committee members. 
+
+
  \newpage
 
 \fancyhead{}
@@ -123,7 +115,7 @@ question.
 
 How would one go about choosing a near-best option from an effectively infinite set of options when one has a finite amount of time to make a decision and imperfect knowledge of the quality of the options?
 Such problems are well-modeled by the ``pure exploration" variant of the classical multi-armed bandit problem.
-We ultimately wrote two theoretical bandit model papers addressing this
+We ultimately wrote two theoretical bandit model papers (one being wrapped up at the time of writing this thesis) addressing this
 question,
 and also a paper presenting an improved boosted decision tree training
 algorithm using insights derived from my theoretical work.
@@ -137,7 +129,7 @@ We examined this problem in both the fixed budget setting, wherein one attempts 
 and the fixed confidence setting, wherein one attempts to minimize budget while meeting a quality constraint on the selected arm.
 
 More formally, the goal of an infinitely armed bandit algorithm in the pure exploration setting is to return an $\epsilon$-good arm with probability at least $1-\delta$.
-The complexity of the problem depends on $\epsilon, \delta$ and the so-called reservoir distribution $\nu$ from which the means of the arms are drawn iid. While most previous work focus  on specific cases of $\nu$ our analysis makes no assumption on the reservoir.
+The complexity of the problem depends on $\epsilon, \delta$ and the so-called reservoir distribution $\nu$ from which the means of the arms are drawn i.i.d. While most previous work focus  on specific cases of $\nu$ our analysis makes no assumption on the reservoir.
 
 Chapter~\ref{fixedconfidence} addresses the fixed confidence setting of this problem.
 It proposes a new PAC-like $(\alpha,\epsilon,\delta)$ framework
@@ -154,7 +146,7 @@ and proposed an algorithm whose sample complexity is within a $\log(1/\delta)$ f
 This  $\log(1/\delta)$ gap is commonly found in 
 state-of-the-art algorithms for infinitely-armed bandits,
 and it is not yet clear whether this gap can be closed without
-assumptions about the reservoir distribution. Our work in the fixed confidence setting was published ~\citep{aziz2018pure}.
+assumptions about the reservoir distribution. This work in the fixed confidence setting was published in ALT 2018 ~\citep{aziz2018pure}.
 
 
 In the fixed budget setting, Chapter~\ref{fixedbudget},
@@ -164,13 +156,8 @@ $\log_2(n)$ rounds. In each round
 the same number of samples is drawn from each surviving arm,
 the half with worst empirical performance are removed,
 and the number of samples per arm is doubled in the next round.
-We show that running Successive Halving with $n$ randomly sampled arms and a budget of $n\log_2(n)$ pulls--where arms start being discarded after being pulled just once--achieves the same theoretical sample complexity guarantees of the more complicated 
-state-of-the-art variant Hyperband\citep{li2017hyperband} up to
-poly-logarithmic factors, but with better empirical performance.
-Our analysis is novel in that it accounts for arms being discarded far before concentration of measure kicks in.
-In exhaustive experimental studies, we showed that our algorithm is not only superior on most reservoir distributions (including those derived from finite-armed problems) but also against algorithms designed to make use of knowledge about the reservoirs which our algorithm does not have.
-We also contribute an information theoretic lower bound for the infinite-armed bandit problem. The upper and lower bounds match up to polynomial factors of $\log(1/\delta)$ and other logarithmic factors. This work ~\citep{aziz19alt}
-is currently under review.
+We show that running Successive Halving with $n$ randomly sampled arms and a budget of $n\log_2(n)$ pulls--where arms start being discarded after being pulled just once. In exhaustive experimental studies, we showed that our algorithm is not only superior on most reservoir distributions (including those derived from finite-armed problems) but also against algorithms designed to make use of knowledge about the reservoirs which our algorithm does not have.
+We also contribute an information theoretic lower bound for the infinite-armed bandit problem. As of the writing of this thesis, my collaborators, Kevin Jamieson and Javed Aslams, and I are working on proving the correctness of the algorithm. 
 
 In Chapter~\ref{AP-Boost}, we return to the original research question of
 efficiently training boosted decision trees with large feature sets~.
@@ -184,13 +171,15 @@ is near-optimal within this family of algorithms.
 We further derived a lower bound applicable to any algorithm solving the
 task, and we demonstrate that our algorithm empirically achieves
 performance close to this best-achievable lower bound.
-The pre-print \citep{aziz19dtree} online provides results for trees split based on accuracy. We have also implemented our algorithm for GINI,
-and are preparing an update with these results.
+In this thesis, we provide results for trees split based on accuracy. My collaborators, Jesse Anderton and Javed Aslam, and I preparing an update with GINI results for resubmission.
 %We are also considering adding results for
 %XGBoost~\citep{Chen:2016:XST:2939672.2939785} as a final contribution.
 
 Our multi-armed work also led to dose finding in clinical trials. We studied, Chapter~\ref{dosefinding}, the problem of finding the optimal dosage in a phase I clinical trial through the multi-armed bandit lens. We advocated the use of Thompson Sampling, a flexible algorithm that can accommodate different types of monotonicity assumptions on the toxicity and efficacy of the doses. We proposed two designs inspired by state-of-the-art multi armed bandit algorithms for which we provided finite-time upper bounds on the error probability or the number of sub-optimal dose selections, which is unprecedented for dose finding algorithms. Through a large simulation study, we then showed that variants of Thompson Sampling outperform state-of-the-art dose identification algorithms in different types of trials, in particular testing the most toxic doses fewer times and recommending the optimal doses more times.
-This work is under review \citep{aziz19dose}.
+
+\subsection {A few other potential applications}
+\paragraph {Recommender Systems}
+\paragraph {Hyper-parameter tuning}
 
 \newpage
 \section{The Fixed Confidence Setting}\label{fixedconfidence}

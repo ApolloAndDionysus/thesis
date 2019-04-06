@@ -1,6 +1,6 @@
 %!TEX root = main.tex
 
-\subsection{Introduction}\label{intro}
+\section{Introduction}\label{intro}
 Consider a multi-armed bandit problem with $n$ arms where the $j$th pull from the $i$th arm emits an independent random variable $X_{i,j} \in [0,1]$ with $\mu_i:=\E[X_{i,j}]$. 
 Given $\epsilon,\delta \in (0,1)$, how many total pulls must an algorithm make in order to return an arm $\widehat{i} \in \{1,\dots,n\}$ with a \emph{small}\footnote{While non-standard in stochastic bandits, seeking small means significantly simplifies notation in the infinite-armed bandit setting; we translate all prior results to this equivalent perspective.} mean that satisfies $\mu_{\widehat{i}} \leq \displaystyle\min_{j} \mu_j + \epsilon$ with probability at least $1-\delta$?
 Much effort has gone into answering this and closely related questions resulting in a rich collection of algorithms.
@@ -11,9 +11,9 @@ But each algorithm starts the same:  \textit{Pull each arm $i \in \{1,\dots,n\}$
 % \end{quote}
 %
 %
-\begin{wrapfigure}{r}{.4\textwidth}
+\begin{wrapfigure}{r}{0.45\textwidth}
 % \vspace{-2.5em}
-\includegraphics[width=.4\textwidth]{fixedbudget/figures/folder5/new_yorker.png}
+\includegraphics[width=.45\textwidth]{fixedbudget/figures/folder5/new_yorker.png}
 \caption{$3,795$ arms. Difference of the recommended and optimal arm's mean as a function of total pulls. }
 \label{fig:newyorker}
 \vspace{-1.5em}
@@ -21,7 +21,7 @@ But each algorithm starts the same:  \textit{Pull each arm $i \in \{1,\dots,n\}$
 %
 %
 
-In this work we are interested in problems where the number of arms $n$ is so large that it is dwarfed by any available budget of total pulls.
+In this work we are interested in problems where the number of arms $n$ is so large that it is dwarfed by any available budget of total pulls. Furthermore, we make no assumptions about the so-called armed reservoir.
 Necessarily, we are interested in problems where the budget necessary to identify an $\epsilon$-good arm among the $n$ arms with probability $1-\delta$ is \emph{independent} of $n$. 
 % Ignoring $\log\log$ factors, it is known that $B = O\left( \sum_{i=1}^n \max\{ (\mu_1 - \mu_i)^{-2}, \epsilon^{-2} \} \right)$ total pulls are \emph{sufficient}.
  % which one notes is always $\Omega(n)$ scaling at least linearly with the number of arms $n$. 
@@ -47,15 +47,17 @@ Consider the pure-exploration infinite-armed bandit game.
 \begin{figure}
 \centering
 \fbox{
-	\begin{minipage}{.8\textwidth}
+	\begin{minipage}{.95\textwidth}
 	\textbf{Pure-exploration Infinite-armed bandit game}
 	\hrule
 	\vspace*{.05in}
 	\textbf{Input} $\epsilon,\delta \in (0,1)$ and reservoir distribution $\nu_0$\\
-	\textbf{Initialize} Draw $\{\mu_i\}_i \overset{iid}{\sim} \nu_0$ and set $N_i(t) := \sum_{s=1}^t \1\{I_s = i\}$ for all $t \in \mathbb{N}$\\
+	\textbf{Initialize} Draw $\{\mu_i\}_i \overset{iid}{\sim} \nu_0$ 
+	    and set $N_i(t) := \sum_{s=1}^t \1\{I_s = i\}$ for all $t \in \mathbb{N}$\\
 	\textbf{for} $t=1,2,\dots$\\
 	\hspace*{.25in} Player chooses $I_t \in \mathbb{N}$ \\
-	\hspace*{.25in} Nature reveals $X_{I_t,N_{I_t}(t)} \in \R$ where $\E[X_{I_t,N_{I_t}(t)} | I_t ] = \mu_{I_t}$ \\
+	\hspace*{.25in} Nature reveals $X_{I_t,N_{I_t}(t)} \in \R$ 
+	    where $\E[X_{I_t,N_{I_t}(t)} | I_t ] = \mu_{I_t}$ \\
 	\hspace*{.25in} Player recommends $J_t \in \mathbb{N}$
 	\end{minipage}
 }
@@ -79,7 +81,7 @@ Consider the pure-exploration infinite-armed bandit game.
 
 
 
-\subsection{Prior Work}\label{prior_work}
+\subsection{Prior work}\label{prior_work}
 
 The main objective of this work is \emph{pure-exploration} where different arms are sampled different numbers of times with the goal of choosing $J_t$ such that the \emph{simple regret} $\mu_{J_t}-\mu_* \leq \epsilon$ for as small $t$ as possible. 
 Contrast this with \emph{exploration-vs-exploitation} where the objective is to pull different arms to minimize the \emph{cumulative regret} of all the plays of the arms pulled: $\sum_{s=1}^t \mu_{I_s} - \mu_*$.
@@ -160,14 +162,14 @@ While Hyperband is state-of-the-art, hedging over these $\log_2(n)$ copies of Su
 
 
 \subsection{Main Contributions}
-In this work we show that running just one version of Successive Halving, named ISHA, with $n$ arms and a budget of $n\log_2(n)$ pulls--where arms start being discarded after being pulled just once--achieves the same theoretical sample complexity guarantees of Hyperband up to poly-logarithmic factors, but the algorithm is considerably simpler and performs better empirically.
-That is, for any reservoir distribution $\nu_0$ and $\epsilon,\delta$, for sufficiently large $n$ this procedure returns an $\epsilon$-good arm with probability at least $1-\delta$.
-Remark~2 also characterizes the expected simple regret $\E[J_{\tau}]-\mu_*$. 
-Our analysis accounts for arms being discarded far before concentration of measure kicks in, requiring a novel analysis that may inspire future works.
-In exhaustive experimental studies, we show that our proposed algorithm is not only superior on most reservoir distributions (including those derived from finite-armed problems) but also against algorithms that were designed specifically for the reservoirs we evaluated them on, like parameterizations \eqref{eqn:beta_distribution}-\eqref{eqn:mostbiasedcoin_reservoir}.
+In this work we show that running just one version of Successive Halving, named ISHA, with $n$ arms and a budget of $n\log_2(n)$ pulls--where arms start being discarded after being pulled just once achieves better simple regret performance than the state-of-the-art Hyperband, but the algorithm is considerably simpler.
+
+We further show that our proposed algorithm is not only superior on most reservoir distributions (including those derived from finite-armed problems) but also against algorithms that were designed specifically for the reservoirs we evaluated them on, like parameterizations \eqref{eqn:beta_distribution}-\eqref{eqn:mostbiasedcoin_reservoir}.
+
+We conjecture that for any reservoir distribution $\nu_0$ and $\epsilon,\delta$, and for sufficiently large $n$ this procedure returns an $\epsilon$-good arm with probability at least $1-\delta$.
 
 Our second contribution is an information theoretic \emph{lower bound} for the infinite-armed bandit problem. 
-Specifically, for any reservoir distribution $\nu$ and any fixed $\epsilon,\delta \in (0,1)$ we prove a lower bound on the expected number of samples any algorithm must make in order to identify an $\epsilon$-good arm with probaility at least $1-\delta$ that depends on $\nu,\epsilon,\delta$. 
-The upper and lower bounds match the expression of \eqref{eqn:rough_sample_complexity} up to polynomial factors of $\log(1/\delta)$ and other logarithmic factors.  
+Specifically, for any reservoir distribution $\nu$ and any fixed $\epsilon,\delta \in (0,1)$ we prove a lower bound on the expected number of samples any algorithm must make in order to identify an $\epsilon$-good arm with probability at least $1-\delta$ that depends on $\nu,\epsilon,\delta$. 
+The conjectured upper bound and the lower bound match the expression of \eqref{eqn:rough_sample_complexity} up to possible logarithmic factors.  
 
 

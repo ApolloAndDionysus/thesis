@@ -1,96 +1,96 @@
 %!TEX root = main.tex
 
 \subsection{Additional Proofs}\label{sec:appendix_upper_lemmas}
-\subsubsection{Proof of Lemma~\ref{lem:concentration_in_k}}\label{sec:concentration_in_k_proof}
-\begin{lemma}
-Assume Assumption~\ref{asm:subgauss} holds.
-We have
-\begin{align*}
-\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \bigcup_{i \in S_{\ell}} \left\{ |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right\} \right) \leq \delta/2
-\end{align*}
-\end{lemma}
-\begin{proof}
-By Assumption~\ref{asm:subgauss} and a Chernoff bound, recalling that for the $i$th arm $\widehat{\mu}_{i,\ell}$ is empirical mean of $2^\ell$ iid draws from $\phi(\mu_i)$, we have 
-\begin{align*}
-\P\left( |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right) &\leq 2 \exp( -2^{\ell} (\Delta_\ell/2)^2/2 R ) = 2 \frac{\delta}{n \log_2(n) 2^{-\ell+2}} = \frac{\delta /2}{ |S_\ell| \log_2(n)}
-\end{align*}
-By a union bound and conditioning on the elements in $S_\ell$
-\begin{align*}
-\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \bigcup_{i \in S_{\ell}} \left\{ |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right\} \right)  &\leq \sum_{\ell=0}^{\log_2(n)-1} \E\left[ \P\left( \bigcup_{i \in S_{\ell}} \left\{ |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right\} \Big| S_\ell \right) \right] \\ 
-&\leq \sum_{\ell=0}^{\log_2(n)-1} \E\left[  \sum_{i \in S_{\ell}} \P\left( |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right) \right] \\
-&\leq \sum_{\ell=0}^{\log_2(n)-1} \E\left[  \sum_{i \in S_{\ell}} \frac{\delta /2}{ |S_\ell| \log_2(n)} \right]  \leq \delta/2
-\end{align*}
-
-\end{proof}
-
-\subsubsection{Proof of Lemma~\ref{lem:good_arms_in_set_k}}\label{sec:good_arms_in_set_k_proof}
-\begin{lemma}
-For any $\ell=0,1,\dots,\log_2(n)-1$ if  $n \geq \xi_{n,\ell} := \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then 
-% If $n \geq \max_{\ell =0,1,\dots, \log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then
-\begin{align*}
-\P\left(\min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \right) \leq \tfrac{\delta}{2 \log_2(n)}.
-\end{align*}
-Moreover, $\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \left\{ \min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \right\} \right)\leq\delta/2$ whenever $n \geq \max_{\ell=0,1,\dots,\log_2(n)-1} \xi_{n,\ell}$.
-\end{lemma}
-\begin{proof}
-By a union bound we have
-\begin{align*}
-\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \left\{ \min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \right\} \right) 
-&\leq  \sum_{\ell=0}^{\log_2(n)-1} \P(\min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell)
-\end{align*}
-so it suffices to show
-\begin{align*}
-\P(\min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell) &=
-\E\left[ \P\left( \min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \Big| S_\ell \right) \right] \\
-&=  \P\left( \min_{i =1,\dots, |S_\ell|} \mu_i > \mu_* + \Delta_\ell \Big| \{\mu_i \}_{i=1}^{|S_\ell|} \overset{iid}{\sim} \nu_\ell \right)  \\
-&=  \P\left( \mu_i > \mu_* + \Delta_\ell \Big| \mu_i \overset{iid}{\sim} \nu_\ell \right)^{|S_\ell|} \\
-&=  \left( 1- \nu_\ell( \mu_* + \Delta_\ell) \right)^{|S_\ell|}  \\
-&\leq  \exp\left( - n 2^{-\ell}\nu_\ell( \mu_* + \Delta_\ell) \right) \\
-&\leq  \frac{\delta}{2\log_2(n)}
-\end{align*}
-where the second-to-last line uses the identity $n 2^{-\ell} = |S_\ell|$ and that $1-x \leq e^{-x}$ for all $x\geq0$, and the last line plugs in the assumed condition on $n$.
-\end{proof}
-
-\subsubsection{Proof of Lemma~\ref{lem:core_lemma}} \label{sec:core_lemma_proof}
-\begin{lemma}
-Assume Assumption~\ref{asm:stochastic_ordering} holds.
-For any $k$ and $x\in \R$ we have
-\begin{align*}
-\nu_{k+1}(x) &= 2 \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) \, \nu_k(x)\\
-&\geq \nu_k(x).
-\end{align*}
-Moreover, for any $k$ and $x < y$ we have $\frac{\nu_{k+1}(x)}{\nu_k(x)} \geq \frac{\nu_{k+1}(y)}{\nu_k(y)}$.
-% \begin{align*}
-% \frac{\nu_{k+1}(x)}{\nu_k(x)} \geq \frac{\nu_{k+1}(y)}{\nu_k(y)}.
-% \end{align*}
-\end{lemma} 
-\begin{proof}
-By Bayes' rule
-\begin{align*}
-\nu_{k+1}(x) &= \P( \mu_i \leq x \, | \, \mu_i \in S_{k+1} )\\
-&= \P( \mu_i \leq x \, | \, \mu_i \in S_{k+1}, \mu_i \in S_{k} )\\
-&= \frac{ \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) \P( \mu_i \leq x \, | \, \mu_i \in S_{k}) }{ \P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k}) }  \\
-&= \nu_k(x) \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})}.
-\end{align*}
-By definition, $\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k}) = \frac{1}{2}$. 
-On the other hand, ignoring ties (which are broken randomly) we have $\mu_i \in S_{k+1} \iff \widehat{\mu}_{i,k} \leq \tau$.
-Thus, by assumption 1,
-\begin{align*}
-\P( \mu_i \in S_{k+1} \, | \, \mu_i > x, \mu_i \in S_{k} ) \leq \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ).
-\end{align*}
-Applying the law of total probability to $\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})$ we have
-\begin{align*}
-\hspace{1in}&\hspace{-1in}\frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})}\\
-&= \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{ \nu_k(x) \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) + (1-\nu_k(x)) \P( \mu_i \in S_{k+1} \, | \, \mu_i > x, \mu_i \in S_{k} )}\\
-&\geq \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{ \nu_k(x) \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) + (1-\nu_k(x)) \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )} \\
-&= 1.
-\end{align*}
-To obtain the final result, note that
-\begin{align*}
-\frac{\nu_{k+1}(x)}{\nu_k(x)} &= \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})} \\
-&\geq \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq y, \mu_i \in S_{k} )}{\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})} = \frac{\nu_{k+1}(y)}{\nu_k(y)}
-\end{align*}
-\end{proof}
+%\subsubsection{Proof of Lemma~\ref{lem:concentration_in_k}}\label{sec:concentration_in_k_proof}
+%\begin{lemma}
+%Assume Assumption~\ref{asm:subgauss} holds.
+%We have
+%\begin{align*}
+%\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \bigcup_{i \in S_{\ell}} \left\{ |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right\} \right) \leq \delta/2
+%\end{align*}
+%\end{lemma}
+%\begin{proof}
+%By Assumption~\ref{asm:subgauss} and a Chernoff bound, recalling that for the $i$th arm $\widehat{\mu}_{i,\ell}$ is empirical mean of $2^\ell$ iid draws from $\phi(\mu_i)$, we have 
+%\begin{align*}
+%\P\left( |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right) &\leq 2 \exp( -2^{\ell} (\Delta_\ell/2)^2/2 R ) = 2 \frac{\delta}{n \log_2(n) 2^{-\ell+2}} = \frac{\delta /2}{ |S_\ell| \log_2(n)}
+%\end{align*}
+%By a union bound and conditioning on the elements in $S_\ell$
+%\begin{align*}
+%\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \bigcup_{i \in S_{\ell}} \left\{ |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right\} \right)  &\leq \sum_{\ell=0}^{\log_2(n)-1} \E\left[ \P\left( \bigcup_{i \in S_{\ell}} \left\{ |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right\} \Big| S_\ell \right) \right] \\ 
+%&\leq \sum_{\ell=0}^{\log_2(n)-1} \E\left[  \sum_{i \in S_{\ell}} \P\left( |\widehat{\mu}_{i,\ell} - \mu_i| \geq \Delta_\ell/2 \right) \right] \\
+%&\leq \sum_{\ell=0}^{\log_2(n)-1} \E\left[  \sum_{i \in S_{\ell}} \frac{\delta /2}{ |S_\ell| \log_2(n)} \right]  \leq \delta/2
+%\end{align*}
+%
+%\end{proof}
+%
+%\subsubsection{Proof of Lemma~\ref{lem:good_arms_in_set_k}}\label{sec:good_arms_in_set_k_proof}
+%\begin{lemma}
+%For any $\ell=0,1,\dots,\log_2(n)-1$ if  $n \geq \xi_{n,\ell} := \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then 
+%% If $n \geq \max_{\ell =0,1,\dots, \log_2(n)-1} \frac{\log(2 \log_2(n)/\delta)}{2^{-\ell} \nu_\ell(\mu_* + \Delta_\ell)}$ then
+%\begin{align*}
+%\P\left(\min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \right) \leq \tfrac{\delta}{2 \log_2(n)}.
+%\end{align*}
+%Moreover, $\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \left\{ \min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \right\} \right)\leq\delta/2$ whenever $n \geq \max_{\ell=0,1,\dots,\log_2(n)-1} \xi_{n,\ell}$.
+%\end{lemma}
+%\begin{proof}
+%By a union bound we have
+%\begin{align*}
+%\P\left( \bigcup_{\ell=0}^{\log_2(n)-1} \left\{ \min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \right\} \right) 
+%&\leq  \sum_{\ell=0}^{\log_2(n)-1} \P(\min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell)
+%\end{align*}
+%so it suffices to show
+%\begin{align*}
+%\P(\min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell) &=
+%\E\left[ \P\left( \min_{i \in S_\ell} \mu_i > \mu_* + \Delta_\ell \Big| S_\ell \right) \right] \\
+%&=  \P\left( \min_{i =1,\dots, |S_\ell|} \mu_i > \mu_* + \Delta_\ell \Big| \{\mu_i \}_{i=1}^{|S_\ell|} \overset{iid}{\sim} \nu_\ell \right)  \\
+%&=  \P\left( \mu_i > \mu_* + \Delta_\ell \Big| \mu_i \overset{iid}{\sim} \nu_\ell \right)^{|S_\ell|} \\
+%&=  \left( 1- \nu_\ell( \mu_* + \Delta_\ell) \right)^{|S_\ell|}  \\
+%&\leq  \exp\left( - n 2^{-\ell}\nu_\ell( \mu_* + \Delta_\ell) \right) \\
+%&\leq  \frac{\delta}{2\log_2(n)}
+%\end{align*}
+%where the second-to-last line uses the identity $n 2^{-\ell} = |S_\ell|$ and that $1-x \leq e^{-x}$ for all $x\geq0$, and the last line plugs in the assumed condition on $n$.
+%\end{proof}
+%
+%\subsubsection{Proof of Lemma~\ref{lem:core_lemma}} \label{sec:core_lemma_proof}
+%\begin{lemma}
+%Assume Assumption~\ref{asm:stochastic_ordering} holds.
+%For any $k$ and $x\in \R$ we have
+%\begin{align*}
+%\nu_{k+1}(x) &= 2 \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) \, \nu_k(x)\\
+%&\geq \nu_k(x).
+%\end{align*}
+%Moreover, for any $k$ and $x < y$ we have $\frac{\nu_{k+1}(x)}{\nu_k(x)} \geq \frac{\nu_{k+1}(y)}{\nu_k(y)}$.
+%% \begin{align*}
+%% \frac{\nu_{k+1}(x)}{\nu_k(x)} \geq \frac{\nu_{k+1}(y)}{\nu_k(y)}.
+%% \end{align*}
+%\end{lemma} 
+%\begin{proof}
+%By Bayes' rule
+%\begin{align*}
+%\nu_{k+1}(x) &= \P( \mu_i \leq x \, | \, \mu_i \in S_{k+1} )\\
+%&= \P( \mu_i \leq x \, | \, \mu_i \in S_{k+1}, \mu_i \in S_{k} )\\
+%&= \frac{ \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) \P( \mu_i \leq x \, | \, \mu_i \in S_{k}) }{ \P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k}) }  \\
+%&= \nu_k(x) \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})}.
+%\end{align*}
+%By definition, $\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k}) = \frac{1}{2}$. 
+%On the other hand, ignoring ties (which are broken randomly) we have $\mu_i \in S_{k+1} \iff \widehat{\mu}_{i,k} \leq \tau$.
+%Thus, by assumption 1,
+%\begin{align*}
+%\P( \mu_i \in S_{k+1} \, | \, \mu_i > x, \mu_i \in S_{k} ) \leq \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ).
+%\end{align*}
+%Applying the law of total probability to $\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})$ we have
+%\begin{align*}
+%\hspace{1in}&\hspace{-1in}\frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})}\\
+%&= \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{ \nu_k(x) \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) + (1-\nu_k(x)) \P( \mu_i \in S_{k+1} \, | \, \mu_i > x, \mu_i \in S_{k} )}\\
+%&\geq \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{ \nu_k(x) \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} ) + (1-\nu_k(x)) \P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )} \\
+%&= 1.
+%\end{align*}
+%To obtain the final result, note that
+%\begin{align*}
+%\frac{\nu_{k+1}(x)}{\nu_k(x)} &= \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq x, \mu_i \in S_{k} )}{\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})} \\
+%&\geq \frac{\P( \mu_i \in S_{k+1} \, | \, \mu_i \leq y, \mu_i \in S_{k} )}{\P(\mu_i \in S_{k+1} \, | \, \mu_i \in S_{k})} = \frac{\nu_{k+1}(y)}{\nu_k(y)}
+%\end{align*}
+%\end{proof}
 
 \subsubsection{Proof of Lemma~\ref{lem:exp_N1}}
 
