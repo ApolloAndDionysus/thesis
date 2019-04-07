@@ -1,52 +1,20 @@
-% biomsample_bib.tex
+%\documentclass[twoside,11pt]{article}
 %
-% v1.0 released 12th December 2006 (Dr. S. Sharma, Prof. N. Saxena, and Dr. S. Tahir)
-%
-% The biomsample.tex file has been amended to highlight
-% the proper use of LaTeX2e code with the class file
-% and using natbib cross-referencing.
-%
-%\documentclass[useAMS,usenatbib]{biom}
-%\documentclass[useAMS,usenatbib,referee]{biom}
-%\documentclass[referee]{biom}
-%
-%
-%  Papers submitted to Biometrics should ALWAYS be prepared
-%  using the referee option!!!!
-%
-%
-% If your system does not have the AMS fonts version 2.0 installed, then
-% remove the useAMS option.
-%
-% useAMS allows you to obtain upright Greek characters.
-% e.g. \umu, \upi etc.  See the section on "Upright Greek characters" in
-% this guide for further information.
-%
-% If you are using AMS 2.0 fonts, bold math letters/symbols are available
-% at a larger range of sizes for NFSS release 1 and 2 (using \boldmath or
-% preferably \bmath).
-%
-% The usenatbib command allows the use of Patrick Daly's natbib package for
-% cross-referencing.
-%
-% If you wish to typeset the paper in Times font (if you do not have the
-% PostScript Type 1 Computer Modern fonts you will need to do this to get
-% smoother fonts in a PDF file) then uncomment the next line
-% \usepackage{Times}
-%%%%% AUTHORS - PLACE YOUR OWN MACROS HERE %%%%%
 %\def\bSig\mathbf{\Sigma}
 %
-%\usepackage{rotating}
+%\usepackage{jmlr2e}
+%
 %\usepackage{macrosArticle}
 %%\usepackage{ulem}
 %\usepackage[normalem]{ulem}
 %\usepackage{xcolor}
 %\usepackage{booktabs}
-%
+%\usepackage{longtable}
 %\newcommand{\MTD}{\mathrm{MTD}}
 %\newcommand{\Opt}{\mathrm{Opt}}
 %
-%%\usepackage[figuresright]{rotating}
+%\usepackage[figuresright]{rotating}
+%
 %\newcommand{\limInf}{\underline{\lim}}
 %\newcommand{\eff}{\text{eff}}
 %\newcommand{\tox}{\text{tox}}
@@ -73,279 +41,218 @@
 %    }%
 %}%
 %
-%% Define numbers used for Web Appendices and Web Tables
-%\def \refWAProofSH {Web Appendix A}
-%\def \refWAProofTS {Web Appendix B}
-%\def \refWAResults {Web Appendix C}
-%\def \refWTTox {Web Table 1}
-%\def \refWTEffa {Web Table 2}
-%\def \refWTEffb {Web Table 3}
-%\def \refWTEffs {Web Tables 2 and 3}
-
-
-%% \raggedbottom % To avoid glue in typesetteing, sbs>>
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%% \raggedbottom % To avoid glue in typesetteing, sbs>>
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 %\setcounter{footnote}{2}
-
-%\title[On Multi-Armed Bandit Designs for Phase I Clinical Trials]{On Multi-Armed Bandit Designs for Phase I Clinical Trials}
-
-%\author{Maryam Aziz$^{1,*}$\email{azizm@ccs.neu.edu},
-%   Emilie Kaufmann$^{2,**}$\email{emilie.kaufmann@univ-lille.fr}, and
-%   Marie-Karelle Riviere$^{3,***}$\email{marie-karelle.riviere@sanofi.com} \\
-%   $^{1}$Northeastern University, Boston, MA, U.S.A. \\
-%   $^{2}$CNRS \& ULille, UMR 9189 CRIStAL, Inria SequeL, Lille, France \\
-%   $^{3}$Sanofi, Chilly-Mazarin, France}
+%
+%% Heading arguments are {volume}{year}{pages}{date submitted}{date published}{paper id}{author-full-names}
+%
+%%\jmlrheading{1}{2019}{1-31}{4/00}{10/00}{meila00a}{Maryam Aziz, Emilie Kaufmann and Marie-Karelle Riviere}
+%% Short headings should be running head and authors last names
+%
+%%\ShortHeadings{On Multi-Armed Bandit Designs for Phase I Clinical Trials}{Aziz, Kaufmann and Riviere}
+%
+%\firstpageno{1}
+%
 %
 %\begin{document}
-
-%\date{{\it Received September} 2018. 
-%%{\it Revised February} 2005.\newline 
-%%{\it Accepted March} 2005.
-%}
 %
-%\pagerange{\pageref{firstpage}--\pageref{lastpage}} \pubyear{2018}
+%\title{On Multi-Armed Bandit Designs for Phase I Clinical Trials}
 %
-%\volume{???}
-%\artmonth{???}
-%\doi{???}
+%\author{\name Maryam Aziz \email{azizm@ccs.neu.edu} \\
+%	  \addr Northeastern University \\
+%	  Boston, MA, USA \\
+%	   \AND 
+%     \name Emilie Kaufmann \email{emilie.kaufmann@univ-lille.fr } \\
+%	\addr CNRS \& Univ. Lille, CRIStAL (UMR 9189), Inria SequeL \\
+%	Lille, France \\
+%     \AND
+%    \name  Marie-Karelle Riviere \email{eldamjh@gmail.com} \\
+%     \addr Sanofi \\
+%      Chilly-Mazarin, France
+%	   }
+%%\editor{}
 %
-%%  This label and the label ``lastpage'' are used by the \pagerange
-%%  command above to give the page range for the article
+%\maketitle
 %
-%\label{firstpage}
 %
-%%  pub the summary here
-
-%\begin{abstract}
-We study the problem of finding the optimal dosage in a Phase I clinical trial through the multi-armed bandit lens. We advocate the use of the Thompson Sampling principle, a flexible algorithm that can accommodate different types of monotonicity assumptions on the toxicity and efficacy of the doses. We first propose two designs inspired by state-of-the-art multi armed bandit algorithms for which we provide finite-time upper bounds on the error probability or the number of sub-optimal dose selections, which is unprecedented for dose finding algorithms. Through a large simulation study, we then show that variants of Thompson Sampling outperform state-of-the-art dose identification algorithms in different types of trials, in particular testing the most toxic doses fewer times and recommending the optimal doses more times than those algorithms do.
+%
+%\begin{abstract}%
+We study the problem of finding the optimal dosage in a phase I clinical trial through the multi-armed bandit lens. We advocate the use of the Thompson Sampling principle, a flexible algorithm that can accommodate different types of monotonicity assumptions on the toxicity and efficacy of the doses. For the simplest version of Thompson Sampling, based on a uniform prior distribution for each dose, we provide finite-time upper bounds on the number of sub-optimal dose selections, which is unprecedented for dose finding algorithms. Through a large simulation study, we then show that Thompson Sampling based on more sophisticated prior distributions outperform state-of-the-art dose identification algorithms in different types of phase I clinical trials.  %in particular testing the most toxic doses fewer times and recommending the optimal doses more times than those algorithms do.
 %\end{abstract}
 
-%
-%  Please place your key words in alphabetical order, separated
-%  by semicolons, with the first letter of the first word capitalized,
-%  and a period at the end of the list.
-%
 
 %\begin{keywords}
-%Phase I Clinical Trials;
-%Maximum Tolerated Dose;
-%Molecularly Targeted Agents; 
-%Multi-Armed Bandits;
-%Thompson Sampling.
+%Multi-Armed Bandits; Phase I Clinical Trials; Thompson Sampling; Bayesian methods.
 %\end{keywords}
 %
 %\maketitle
 
 \subsection{Introduction}
 
-Multi-armed bandit models were introduced in the 1930's as a simple model for Phase II clinical trials in which one control treatment is tried against one alternative \citep{Thompson33}. While they are nowadays widely used for completely different applications (e.g. recommender systems \citep{LiCLS10News} or cognitive radios \citep{Anandkumar11}), there has been a surge of interest in using them for clinical trials (see \cite{Villar15BCT}). In this paper, we focus on phase I clinical trials for single-agent in oncology, for which an adaptation of the original bandit algorithms could be of interest.  
+Multi-armed bandit models were originally introduced in the 1930's as a simple model for phase II clinical trials in which one control treatment is tried against one alternative \cite{Thompson33}. While those models are nowadays widely studied with completely different applications in mind (e.g. online advertisement \cite{LiChapelle11}, recommender systems \cite{LiCLS10News} or cognitive radios \cite{Anandkumar11}), there has been a surge of interest in using bandits for clinical trials (see \cite{Villar15BCT}). In this chapter, we focus on phase I clinical trials for single-agent in oncology, for which an adaptation of the original bandit algorithms could be of interest.  
 
-Phase I trials are the first stage of testing in human subjects. Their goal is to evaluate the safety (and feasibility) of the treatment and identify its side effects. For non-life-threatening diseases, phase I trials are usually conducted on human volunteers. In life-threatening diseases such as cancer or AIDS, phase I studies are conducted with patients because of the aggressiveness and possible harmfulness of the treatments, possible systemic treatment effects, and the high interest in the new drug's efficacy in those patients directly. The aim of a phase I dose-finding study is to determine an appropriate dose level to use in further phases of the clinical trials. 
+Phase I trials are the first stage of testing in human subjects. Their goal is to evaluate the safety (and feasibility) of the treatment and identify its side effects. For non-life-threatening diseases, phase I trials are usually conducted on human volunteers. In life-threatening diseases such as cancer or AIDS, phase I studies are conducted with patients because of the aggressiveness and possible harmfulness of the treatments, possible systemic treatment effects, and the high interest in the new drug's efficacy in those patients directly. The aim of a phase I dose-finding study is to \emph{determine the most appropriate dose level that should be used in further phases of the clinical trials}. 
 
-Until recently, cytotoxic agents were the main agent of anti-tumor drug development. A common assumption for these agents is that both toxicity and efficacy of the treatment increase monotonically with the dose \citep{chevret06}. Hence, only toxicity is required to determine the optimal dose which is then the Maximum Tolerated Dose (MTD), defined as the highest dose with acceptable toxicity. From a statistical perspective, the MTD is often defined as the dose level closest to an acceptable targeted toxicity probability fixed prior to the trial onset \citep{faries94,storer89}. However, Molecularly Targeted Agents (MTAs) have emerged as a new treatment option in oncology that have changed the practice of cancer patient care \citep{Postel-Vinay09,letourneau10,letourneau11,letourneau12}. Previously-common assumptions do not necessarily hold for MTAs. Although toxicity is still assumed to be increasing with the dose, it may be so low that the trial cannot be driven by toxicity occurrence only. Efficacy needs to be studied jointly with toxicity. In addition, for some mechanisms of action, a plateau of efficacy can be observed when increasing the dose \citep{hoering11}, for instance when the targeted receptors are saturated. In this paper, we aim at providing a unified approach that can be used both for trials involving cytotoxic agents and MTAs.
+Until recently, cytotoxic agents were the main agent of anti-tumor drug development. A common assumption for these agents is that both toxicity and efficacy of the treatment are monotonically increasing with the dose \cite{chevret06}. Hence, only toxicity is required to determine the optimal dose which is then the Maximum Tolerated Dose (MTD), defined as the highest dose with acceptable toxicity. From a statistical perspective, the MTD is often defined as the dose level closest to an acceptable targeted toxicity probability fixed prior to the trial onset \cite{faries94,storer89}. However, Molecularly Targeted Agents (MTAs) have emerged as a new treatment option in oncology that have changed the practice of cancer patient care \cite{Postel-Vinay09,letourneau10,letourneau11,letourneau12}. Previously-common assumptions do not necessarily hold for MTAs. Although toxicity is still assumed to be increasing with the dose, it may be so low that the trial cannot be driven by toxicity occurrence only. Efficacy needs to be studied jointly with toxicity, so that the most appropriate dose is not just the MTD. In particular, for some mechanisms of action, a plateau of efficacy can be observed when increasing the dose \cite{hoering11}, for instance when the targeted receptors are saturated. In this chapter, we aim at providing a unified approach that can be used both for trials involving cytotoxic agents and MTAs.
 
-Phase I cytotoxic clinical trials in oncology involve several ethical concerns. Therefore, in order to gather information about dose toxicity it is not possible to include a large number of patients and randomize them at each different dose level considered in the trial. Patients treated with dose levels over the MTD would be exposed to very high toxicity, and patients treated at low dose levels would be given ineffective doses. In addition, the total sample size is often limited. For these reasons, the doses should be allocated sequentially, taking into account the outcomes of the previous allocated doses, with two objectives in mind: finding the MTD (which is crucial for the next stages of the trial) and treating as many trial participants as possible with this MTD. This trade-off between treatment (curing patients during the study) and experimentation (finding the best treatment) is a common issue in clinical trials. By viewing the MTD identification problem as a particular multi-armed bandit problem, this trade-off can be rephrased as a trade-off between rewards and error probability, two performance measures often considered in the bandit literature. %and that are known to be antagonistic (see \cite{Bubeckal11,ESAIM17}). 
+Phase I cytotoxic clinical trials in oncology involve several ethical concerns. Therefore, in order to gather information about the dose-toxicity relationship it is not possible to include a large number of patients and randomize them at each different dose level considered in the trial. Patients treated with dose levels over the MTD would be exposed to very high toxicity, and patients treated at low dose levels would be administrated ineffective dose levels. In addition, the total sample size is often very limited. For these reasons, the doses to be allocated should be selected sequentially, taking into account the outcomes of the previous allocated doses, with ideally two objectives in mind: finding the MTD (which is crucial for the next stages of the trial) and treating as many trial participants as possible with this MTD. This trade-off between treatment (curing patients during the study) and experimentation (finding the best treatment) is a common issue in clinical trials. By viewing optimal dose identification as a particular multi-armed bandit problem, this trade-off can be rephrased as a trade-off between  rewards and error probability, two performance measures that are well-studied in the bandit literature and that are known to be somewhat antagonistic (see \citep{Bubeckal11,ESAIM17}). 
 
-% As the total number of patients is small and all dose levels cannot be explored, the models proposed by statisticians in phase I are limited. It is important to note that the aim is not to estimate the entire dose-toxicity relationship, but to correctly estimate locally around the MTD the toxicity probabilities in order to recommend a suitable dose level at the end of the trial.
+In this chapter, we investigate the use of Thompson Sampling \citep{Thompson33}, a Bayesian algorithm that has been successfully used for reward maximization in bandit models, for phase I clinical trial. Our first contribution is a theoretical study in the context of MTD identification showing that the simplest version of Thompson based on independent prior distributions for each arm asymptotically minimizes the number of sub-optimal allocations during the trial. Our second contribution is to show that Thompson Sampling using more sophisticated prior distributions can compete with state-of-the art dose finding algorithms. We indeed show that the algorithm can exploit the monotonicity assumption on the toxicity probabilities that are common for MTD identification, but also deal with more complex assumptions on both the toxicity and efficacy probabilities that are relevant for trials involving MTAs. Through extensive experiments on simulated clinical trials we show that our Thompson Sampling variants typically outperforms state-of-the-art dose finding algorithms. Finally, we propose a discussion revisiting the treatment versus experimentation tradeoff through a bandit lens, and explain why adaptation of existing best arm identification designs \citep{Bubeck10BestArm,Karnin13} seem currently less promising. % for phase I clinical trials.
 
-The contribution of this paper is twofold. First, we show how to apply state-of-the-art bandit algorithms to the MTD identification problem, with provable (finite-time) guarantees for the error probability or the number of sub-optimal selections. Then we focus on a particular strategy called Thompson Sampling and show that it can leverage the common monotonicity assumption on the toxicity probabilities and compete with state-of-the art MTD identification methods. We further show that this algorithm is flexible enough to deal with more complex assumptions on both the toxicity and efficacy probabilities, and could thus be used in trials involving MTAs.   
+The chapter is structured as follows. In Section~\ref{sec:Bandits}, we present a multi-armed bandit (MAB) model for the MTD identification problem and introduce the Thompson Sampling algorithm. In Section~\ref{sec:Analysis}, we propose an analysis of independent Thompson Sampling: We provide finite-time upper-bounds on the number of sub-optimal selections, which are matching an (asymptotic) lower bound on those quantities. Then in Section \ref{sec:TS}, we show that Thompson Sampling can leverage the usual monotonicity assumptions in dose-finding clinical trials. %, which makes it a good candidate for dose finding studies. 
+In Section~\ref{sec:Experiments}, we report the results of a large simulation study to assess the quality of the proposed design. Finally in Section~\ref{sec:Discussion}, we propose a discussion on the use of alternative bandit methods. %, namely best arm identification algorithms. 
+                  
+\subsection{Maximum Tolerated Dose Identification as a Bandit Problem}\label{sec:Bandits}
 
-The paper is structured as follows. We present the MTD identification problem and its links with multi-armed bandits in Section \ref{sec:Bandits}. Moreover, we propose two algorithms that are adaptations of state-of-the art bandit designs and provide some theoretical guarantees for them. In Section \ref{sec:TS}, we show that Thompson Sampling can leverage the usual monotonicity assumptions, which makes it a good candidate for dose finding studies. In Section~\ref{sec:Experiments}, we report the results of a large simulation study in order to evaluate the operational characteristics of the proposed design. Finally, we conclude in Section \ref{sec:Conclusion}.
+In this section, we propose a simple statistical model for the MTD identification problem in phase I clinical trial, and show that it can be viewed as a particular multi-armed bandit problem.
 
-\subsection{Bandit Algorithms for MTD Identification} \label{sec:Bandits}
+A dose finding study involves a number $K$ of dose levels that have been chosen by physicians based on preliminary experiments ($K$ is usually a number between $3$ and $10$). Denoting by $p_k$ the (unknown) toxicity probability of dose $k$, the Maximum Tolerated Dose (MTD) is defined as the dose with a toxicity probability closest to a target:
+\[k^* \in \argmin{k \in \{1,\dots,K\}} |\theta - p_k|,\]
+where $\theta$ is the pre-specified targeted toxicity probability (typically between 0.2 and 0.35). For clinical trials in life-threatening diseases, efficacy is often assumed to be increasing with toxicity, hence the MTD is the most appropriate dose to further investigate in the rest of the trial. However, we shall see in Section~\ref{sec:TS} that under different assumptions the optimal dose may be defined differently. 
 
-Let $K$ be the number of dose levels chosen by physicians for the clinical trial based on preliminary experiments ($K$ is usually a number between $3$ and $10$). Denoting by $p_k$ the (unknown) toxicity probability of dose $k$, the MTD is defined as the dose with a toxicity probability closest to a target:
-%$k^* \in \argmin{k \in \{1,\dots,K\}} |\theta - p_k|,$
-\[k^* \in \argminin{k \in \{1,\dots,K\}} |\theta - p_k|,\]
-where $\theta$ is the pre-specified targeted toxicity probability (typically between 0.2 and 0.35). 
+\subsubsection{A (Bandit) Model for MTD Identification}
 
-Dose finding algorithms proceed sequentially: at round $t$ a dose $D_t \in \{1,\dots,K\}$ is selected and administered to a patient for whom a toxicity response is observed. A binary outcome $X_t$ is revealed where $X_t = 1$ indicates that a harmful side-effect occurred.
-% (Dose Limiting Toxicity, DLT). 
-We assume that $X_t$ is drawn from a Bernoulli distribution with mean $p_{D_t}$ and is independent from previous observations. The selection of the next dose level to be administered is sequential in that it uses the past toxicity observations to determine the dose to administer to the next patient. More formally, $D_t$ is $\cF_{t-1}$-measurable where $\cF_t= \sigma(D_1,X_1,\dots,D_t,X_t)$ is the $\sigma$-field generated by the observations made with the first $t$ patients. Along with this selection rule, a ($\cF_{t}$-measurable) recommendation rule $\hat{k}_t$ indicates which dose would be recommended as the MTD, if the experiments were to be stopped after $t$ patients. Usually in clinical trials the total number of patients $n$ is fixed in advance and the objective is to ensure that the dose $\hat{k}_n$ recommended at the end of the trial is close to the MTD $k^*$. 
+A MTD identification algorithm proceeds sequentially: at round $t$ a dose $D_t \in \{1,\dots,K\}$ is selected and administered to a patient for whom a toxicity response is observed. A binary outcome $X_t$ is revealed where $X_t = 1$ indicates that a harmful side-effect occurred and $X_t=0$ indicates than no harmful side-effect occurred. We assume that $X_t$ is drawn from a Bernoulli distribution with mean $p_{D_t}$ and is independent from previous observations. The \emph{selection rule} for choosing the next dose level to be administered is sequential in that it uses the past toxicity observations to determine the dose to administer to the next patient. More formally, $D_t$ is $\cF_{t-1}$-measurable where $\cF_t= \sigma(D_1,X_1,\dots,D_t,X_t)$ is the $\sigma$-field generated by the observations made with the first $t$ patients. Along with this selection rule, a ($\cF_{t}$-measurable) \emph{recommendation rule} $\hat{k}_t$ indicates which dose would be recommended as the MTD, if the experiments were to be stopped after $t$ patients. 
 
-This sequential interaction protocol is reminiscent of a stochastic multi-armed bandit (MAB) problem (see \cite{Bubeck:Survey12} for a recent survey). In a MAB model an agent sequentially chooses an arm (e.g. dose) and observes a realization of an underlying probability distribution (e.g. a Bernoulli distribution over toxicity responses for the chosen dose). We propose two MTD identification strategies, Sequential Halving and Thompson Sampling, inspired by state-of-the-art algorithms for two different bandit problems.  
-
-\subsubsection{A Best Arm Identification Design for MTD Identification}
-
-As described above, the MTD identification problem appears as a variant of the fixed-budget Best Arm Identification (BAI) problem introduced by \cite{Bubeck10BestArm,Bubeckal11}. In contrast to the standard BAI problem, which seeks the arm with largest mean (e.g. the most toxic dose), the focus is on identifying the arm whose mean is the closest to the threshold $\theta$. 
-A typical objective in best arm identification is to minimize the misidentification or error probability defined for the dose finding problem as $e_n := \bP\left(\hat{k}_n \neq k^*\right)$.
-
-\begin{algorithm}
-\begin{algorithmic}
-\STATE \textbf{Input:} Sample size (budget) $n$, target toxicity $\theta$
-\STATE \textbf{Initialization:} Set of dose levels $S_0 \leftarrow \{1, \dots, K\}$;
-  \FOR{$r \leftarrow 0$ to $\lceil\log_2(K)\rceil-1$}
-    \STATE Allocate each dose $k \in S_r$ to $t_r = \left\lfloor\frac{n}{|S_r|\lceil\log_2(K)\rceil}\right\rfloor$ patients; 
-    \STATE Based on their response compute $\hat p_k^r$, the empirical toxicity of dose $k$ based on these $t_r$ samples;
-    \STATE Compute $S_{r+1}$ the set of $\lceil|S_r|/2\rceil$ arms with 
-        smallest $\hat d_k^r:=|\theta - \hat{p}_k^r|$
-  \ENDFOR
-\STATE \textbf{Output:} the unique arm in  $S_{\lceil{\log_2(K)}\rceil}$
-\end{algorithmic}
-\caption{Sequential Halving (SH) for MTD Identification\label{alg-ST}}
-\end{algorithm}
-
-Related problems have been recently studied in the bandit literature. \cite{Locatelli16Thres} introduce the Thresholding Bandit Problem, which seeks to identify all arms with mean above a threshold $\theta$ using a fixed budget $n$, while  \cite{Garivier17DF} study the MTD identification problem under the fixed-confidence setting: given a risk parameter $\delta$, the goal is identify a dose $\hat{k}_\tau$  such that $\bP\left(\hat{k}_\tau \neq k^*\right) \leq \delta$, using as few samples $\tau$ as possible. Here we propose an adaptation of the \texttt{Sequential Halving} (SH) algorithm of \cite{Karnin13} for MTD Identification problem with a fixed number of patients $n$, stated below as Algorithm~\ref{alg-ST}. SH proceeds in phases. In each of $\log_2(K)$ phases, each remaining dose is allocated to the same number of patients and their empirical toxicities (that is, the average of the toxicity responses) are computed. At the end of each phase the empirical worst half of the doses are eliminated. For MTD identification, 
-we eliminate the doses whose empirical toxicity are furthest from the threshold $\theta$
-rather than the doses with the smallest empirical means (as in the vanilla Sequential Halving algorithm).
-Note that by design of the algorithm, the total number of allocated doses is indeed smaller than the prescribed budget $n$.  
+Usually in clinical trials the total number of patients $n$ is fixed in advance and the first objective is to ensure that the dose $\hat{k}_n$ recommended at the end of the trial is close to the MTD, $k^*$, but there is also an incentive to treat as many patient as possible with the MTD during the trial. Letting $N_k(t) = \sum_{s=1}^t\ind_{(k_s = k)}$ be the number of time dose $k$ has been given to one of the first $t$ patients, this second objective can be formalized as that of minimizing $N_k(n)$ for $k\neq k^*$.  In the clinical trial literature,  empirical evaluations of dose finding designs usually report both the empirical distribution of the recommendation strategy $\hat{k}_n$ (that should be concentrated on the MTD) and estimates of $\bE[N_k(n)]/n$ for all dose $k$ to assess the quality of the selection strategy in terms of allocating MTD as often as possible. 
 
 
-% I don't see how it works in practice as you cannot allocate patients t_r times to each doses ?? 
-% E : I tried to be more precise rephrasing the things in terms of doses and patients 
+The sequential interaction protocol described above is reminiscent of a stochastic multi-armed bandit (MAB) problem (see \cite{BanditBook18} for a recent survey). A MAB model refers to a situation in which an agent sequentially chooses arms (here doses) and gets to observe a realization of an underlying probability distribution (here a Bernoulli distribution with mean being the probability that the chosen dose is toxic). Different objectives have been considered in the bandit literature, but most of them are related to \emph{learning the arm with largest mean}, whereas in the context of clinical trials we are rather concerned with the arm which is the closest to some threshold. 
 
-Building on the analysis of \cite{Karnin13}, we prove in Appendix~\ref{sec:SHproof} this upper bound on the error probability of Sequential Halving for MTD identification.  
+\subsubsection{Thompson Sampling for MTD Identification}
 
-\begin{theorem}\label{thm:SH}
-Algorithm~\ref{alg-ST} satisfies 
+Early works on bandit models \citep{Robbins52,LaiRobbins85bandits} mostly consider a \emph{reward maximization} objective: The samples $(X_t)$ are viewed as rewards, and the goal is to maximize the sum of these rewards, which boils down to choosing the arm with largest mean as often as possible. This problem was originally introduced in the 1930s in the context of phase II clinical trials \citep{Thompson33}. In this context, each arm models the response to a particular treatment, and maximizing rewards amounts to giving the treatment with largest probability of success to as many patients as possible. This suggests a phase II trial is designed for treating as many patients as possible with the best treatment rather than identifying it. The trade-off between treatment and identification is also relevant for MTD identification: besides finding the MTD another objective is to treat as many patients as possible with it during the trial.
+
+Reward maximization in a Bernoulli bandit model is a well-understood problem. In particular, it is known since \citep{LaiRobbins85bandits} that any algorithm that performs well on every bandit instance should select each sub-optimal arm $k$ more than $C_k\log(n)$ times, where $C_k$ is some constant, in a regime of large values of $n$. Algorithms with finite-time upper bounds on the number of sub-optimal selections have been exhibited \citep{Aueral02,Audibertal09UCBV}, some of which are matching the aforementioned lower bound on the number of sub-optimal selections \citep{KLUCBJournal}. In the context of MTD identification, we are also concerned about \emph{ minimizing the number of sub-optimal selections} but with a different notion of optimal arm: the MTD instead of the arm with largest mean. 
+
+Algorithm for maximizing rewards in a bandit model mostly fall in two categories: frequentist algorithms, based on upper-confidence bounds (UCB) for the unknown means of the arms (first proposed by \cite{KatRob:95Gauss,Aueral02}) and Bayesian algorithms, that exploit a posterior distribution on the means (see, e.g. \cite{AISTATS12}). Among those, Thompson Sampling (TS, \citep{Thompson33}) is a popular approach, known for its practical successes beyond simple bandit problems \citep{AGContext13,Agrawal17TSRL}.Variants of Thompson Sampling have been notably studied for phase II clinical trials involving two treatments (see \cite{Thall07} and references therein). Some theoretical properties have also been established for this algorithm, showing in particular that it is asymptotically matching the Lai and Robbins lower bound in Bernoulli bandit models \citep{ALT12,AGAISTAT13}. 
+
+
+%Alternative to Thompson Sampling for rewards maximization in classical bandits are the family of Upper Confidence Bounds algorithms, originally introduced by \cite{LaiRobbins85bandits,Agrawal:95} and popularized by \cite{Aueral02}. Given the available observations from each arm, a confidence interval for each mean $p_k$ is build and such \emph{optimistic} algorithms select the arm with largest mean in the \emph{best statistically plausible model}, in which each mean would be equal to its upper confidence bound. However, we did not find a way to adapt those algorithms to the dose finding problem, as the notion of best statistically possible model is not obvious to adapt. Hence, Thompson Sampling seems a more promising approach in this context. 
+
+
+
+Thompson Sampling, also known as probability matching, implements the following simple Bayesian heuristic. Given a prior distribution over the arms, at each round an arm is selected at random according to its posterior probability of being optimal. In this chapter, we advocate the use of Thompson Sampling for dose finding, using the appropriate notion of optimality. In particular, Thompson Sampling for MTD identification consists in selecting a dose at random according to its posterior probability of being the MTD. Given a prior distribution $\Pi^0$ on the vector of toxicity probabilities, $\bm p = (p_1,\dots,p_K) \in [0,1]^K$, a posterior distribution $\Pi^t$ can be computed by taking into account the first $t$ observations. A possible implementation of Thompson Sampling consists of drawing a sample $\bm \theta(t) = (\theta_1(t),\dots,\theta_K(t))$ from the posterior distribution $\Pi^t$ and selecting at round $t+1$ the dose that is the MTD in the sampled model: $D_{t+1} = \text{argmin}_{k} \ |\theta_k(t) - \theta|$. There are several possible choices for the recommendation rule $\hat k_t$, which are discussed in the upcoming sections.
+
+We first study in the next section the most simple variant of this algorithm, based on a uniform prior distribution over each arm, and later propose the use of more sophisticated prior distributions. 
+
+
+\subsection{Independent Thompson Sampling: an Asymptotically Optimal Algorithm} \label{sec:Analysis}
+
+Inspired by the bandit literature, we introduce the simplest version of Thompson Sampling, that assumes independent uniform prior distributions  on the probability of toxicity of each dose. We refer to this algorithm as {Independent Thompson Sampling} and propose some theoretical guarantees for this algorithm.
+
+\subsubsection{The Algorithm}
+
+The prior distribution on $\bm{p} = (p_1,\dots,p_K)$ is $\Pi^0 = \bigotimes_{i=1}^{K} \pi_k^0$, where $\pi_k^0 = \cU([0,1])$ is a uniform distribution. Letting $\pi_k^t$ be the posterior distribution of $p_k$ given the observations from the first $t$ patients, the posterior distribution also has a product form, $\Pi^t =\bigotimes_{i=1}^{K} \pi_k^t$. The posterior distribution on each arm can further be made explicit: $\pi_k^t$ is a Beta distribution, more precisely $\text{Beta}(S_k(t) + 1, N_k(t) - S_k(t)+1)$ where $S_k(t) = \sum_{s=1}^t X_s \ind_{(A_s = k)}$ is the sum of rewards obtained from arm $k$ and $A_s$ is the arm pulled at time $s$. 
+
+The selection rule of Independent Thompson Sampling is simple: a sample from the posterior distribution on the toxicity probability of each dose is generated, and the dose for which the sample is closest to the threshold is selected: 
+\[\left\{\begin{array}{cl}
+& \forall k \in \{1,K\}, \  \theta_k(t) \sim \pi_k^t \\
+& D_{t+1} = \text{argmin}_{k} \ |\theta_k(t) - \theta|.
+\end{array}\right.\]
+Several recommendation rules may be used for Independent Thompson Sampling. As the randomization induces some exploration, recommending $\hat{k}_t = D_{t+1}$ is not a good idea. Inspired by what is proposed by 
+\cite{Bubeckal11} for assigning a recommendation rule to rewards maximizing algorithms, a first idea is to recommend $\hat{k}_t= \text{argmin}_{k} \ |\hat{\mu}_k(t) - \theta|$, where $\hat{\mu}_k(t)$ is the empirical mean of dose $k$ after the $t$-th patient of the study. Leveraging the fact that TS is supposed to allocate the MTD most of the time, another idea  is to either select $\hat{k}_t= \text{argmax}_{k} \ N_k(t)$ or to pick $\hat{k}_t$ uniformly at random among the allocated doses.
+
+
+\subsubsection{Control of the Number of Sub-Optimal Selections}
+
+For the classical rewards maximization problem, the first finite-time analysis of Thompson Sampling for Bernoulli bandits dates back to \cite{AGCOLT12} and was further improved by \cite{ALT12,AGAISTAT13}. 
+In Section~\ref{proof:TS}, building on the analysis of \cite{AGAISTAT13}, we prove the following for Thompson Sampling applied to MTD identification. 
+
+\begin{theorem}\label{thm:TS}  Introducing for every $k\neq k^*$ the quantity  
+\[d_k^* := \argmin{d \in \{p_{k^*},2\theta - p_{k^*}\}} \ |p_k - d |,\]
+Independent Thompson Sampling satisfies the following. For all $\epsilon >0$, there exists a constant $C_{\epsilon,\theta,\bm p}$ (depending on $\epsilon$, the threshold $\theta$ and the toxicity probabilities) such that 
 \begin{align*}
-  \bP\left(\hat{k}_n \neq k^*\right) \leq 9 \log_2 K \cdot \exp \left(
-  - \frac{n}{8 H_2 (\bm p)\log_2 K}
-  \right),
+\forall k : |p_k - \theta| &\neq |\theta - p_{k^*}|,
+\\
+\bE[N_{k}(n)]  &\leq \frac{1 + \epsilon}{\mathrm{kl}(p_k,d_k^*)} \log(n) + C_{\epsilon,\theta,\bm p},
 \end{align*}
-where $H_2(\bm p):= \max_{k \ne k^*} {k}{\Delta_{[k]}^{-2}}$ where $\Delta_k = |p_k - \theta| - |p_{k^*} - \theta|$ and $\Delta_{[1]} \leq \Delta_{[2]} \leq \dots \leq \Delta_{[K]}$.
-%\[\Delta_k = \left\{\begin{array}{cc}
-%|p_k - p_{k^*}| & \text{if dose $k$ and dose $k^*$ are on the same side of the threshold} \\
-%|p_k - (2\theta - p_{k^*})| & \text{if dose $k$ and dose $k^*$ are separated by the threshold}                    
-%                    \end{array}
-%                   \right.\]
+
 \end{theorem}
 
-This \emph{non-asymptotic upper bound on the error probability} of Sequential Halving that is exponentially decreasing with $n$ is an interesting theoretical safety net for the algorithm. Note that for the state-of-the-art designs it is not known whether such results can be obtained; the only results available provide conditions for \emph{consistency}. For example \cite{ShenOQuigley96,CheungChappell02} exhibit some conditions on the toxicity probabilities under which a classical design called the CRM is such that $\hat{k}_n$ converges almost surely to $k^*$, when the number of samples $n$ tends to infinity. 
+Theorem~\ref{thm:TS} shows that the total number of allocations to a sub-optimal dose in a trial involving $n$ patient is logarithmic in $n$, which justifies that the MTD is given most of the time, at least for large values of $n$ as the constant in front of $\log(n)$ can be large.  
+The lower bound given in Theorem~\ref{thm:LB} below furthermore shows that Independent Thompson Sampling actually achieves the \emph{minimal number of sub-optimal allocations} when $n$ grows large. 
 
-% \todo[inline]{Please check, I think there are additionnal conditions to be satisfied for the consistency (add a ref after checking the content ?)\\
-% MK: we did not write which are the conditions. The papers mentionned exhibit two sets of conditions more or less stringent. I think this paragraph and ref are ok.
-% Cheung YK, Chappell R. A simple technique to evaluate model sensitivity in the Continual
-% Reassessment Method. Biometrics 2002;58:671–674.\\
-% Shen L, O’Quigley J. Consistency of the continual reassessment method under model mispecification.
-% Biometrika 1996;83:395–405.}
-
-
-More precisely, Theorem~\ref{thm:SH} says that a study with more than $n = 8 H_2(\bm p) \log_2 K\log\left(9\log_2(K)/\delta\right)$ patients will identify the MTD with probability larger than $1-\delta$. However, this number is typically much larger than the number of patients involved in a medical study. The complexity term $H_2(\bm p)$ is large when some doses have a distance to the threshold $\theta$ which is very close to the closest distance $|p_{k^*} - \theta|$. Moreover, a shortcoming of Sequential Halving is that due to the uniform exploration within each phase each dose is selected at least $n / (K\log_2(K))$ times, even the largest, possibly harmful ones. This may be unethical in a  clinical trial without prior knowledge that too-toxic doses have already been eliminated. This is why we now turn our attention towards the adaptation of bandit algorithms aimed at maximizing rewards, which by design select the bad doses less often and may be more desirable for patients. We shall compare those experimentally to Sequential Halving in Section~\ref{sec:Experiments}.
-% MK: I don't understand why you present this algorithm if you say then that it is unapplicable in practice ??
-% E: it is the most natural algorithm that bandit people may come up with, its analysis is non-trivial, and if you would gave me a large enough sample size, it would even be one of the best things to do... 
-
-% The complexity term $H_2(\bm p)$, that is similar to the one introduced by \cite{Bubeck10BestArm} for classical best arm identification, represents the difficulty of the problem in terms of the difference of distances from $p_k$ and $p_{k^*}$ to the toxicity threshold $\theta$. When $\theta$ is between $p_{k^*}$ and $p_{k}$ the gap is smaller, i.e. the problem is harder, than the best arm identification gap of $|p_{k^*} - p_{k}|$ commonly used in the literature. Note that $k$ in the numerator represents the number of arms with a gap of $\Delta_k$ or smaller, which the algorithm will eventually need to distinguish from $p_{k^*}$.
-
-
-% Interestingly, the sampling rule of APT is not based on eliminations, but rather on the following idea. For a given arm, if one were to test $H_0 :(\mu = \theta)$ versus $H_1 :(\mu \neq \theta)$, under a Gaussian assumption, the (GLRT) test statistic to reject $H_0$ would be $T_n = \frac{n}{2}(\theta - \hat{\mu}_n)^2$. Hence, to speed up the learning, one needs to draw the arm for which the test statistic is smaller (some evidence is still to be gained for such an arm, and gathering new samples with make the test statistic higher). The sampling rule rewrites
-% \[A_{t+1} = \argmin{k \in \{1,\dots,K\}} \ \sqrt{N_k(t)} |\hat{p}_k(t) - \theta|,\]
-% where $\hat{p}_k(t)$ is the empirical toxicity observed when allocating dose $k$. The analysis of APT shows that each arm is roughly drawn in inverse proportion of their squared gaps to the threshold, $|p_k - \theta|$, and provides an upper bound on the probability of error in identifying the subset of arms with means below $\theta$. This does not directly yield an upper bound on the error probability $e_n = \bP(\hat{k}_n \neq k^*)$.
-                  
-
-\subsubsection{A Reward Maximizing Design for MTD Identification}
-
-Another objective, called reward maximization, has been extensively studied in the bandit literature, much earlier than best arm identification \cite{Thompson33,Robbins52,LaiRobbins85bandits}. In this context, the samples $(X_t)$ are viewed as rewards, and the goal is to maximize the sum of these rewards, which boils down to choosing the arm with largest mean as often as possible. This problem was originally introduced in the 1930s for phase II clinical trials. Each arm models the response to a particular treatment, and maximizing rewards amounts to giving the treatment with largest probability of success to as many patients as possible. This suggests a phase II trial designed for treating as many patients as possible with the best treatment rather than identifying it. This trade-off between treatment and identification is also relevant for dose finding: besides finding the MTD another objective is to treat as many patients as possible with it during the trial.
-
-Reward maximization in a Bernoulli bandit model is a well-understood problem. It is known since \cite{LaiRobbins85bandits} that any algorithm that performs well on every bandit instance should select each sub-optimal arm $k$ more than $C_k\log(n)$ times, where $C_k$ is some constant, in a regime of large values of $n$. Algorithms with finite-time upper bounds on the number of sub-optimal selections have been exhibited \cite{Aueral02}, some of which matching the aforementioned lower bound on the number of sub-optimal selections \cite{KLUCBJournal}. In the context of MTD identification, it also makes sense to aim for \emph{a minimal number of sub-optimal allocations}, where a sub-optimal allocation occurs when a patient receives a dose that is not the MTD. This claim is supported by a common practice in the clinical trial literature: empirical evaluation of dose finding designs usually report both the empirical distribution of the recommendation strategy $\hat{k}_n$ (that should be concentrated on the MTD) and estimates of $\bE[N_k(n)]/n$ for all dose $k$ to assess the quality of the selection strategy in terms of allocating MTD as often as possible, where $N_k(t) := \sum_{s=1}^t \ind_{(D_s = k)}$ is the number of times dose $k$ was allocated among the first $t$ patients.
-
-
-
-In Theorem~\ref{thm:LB} below, we provide a counterpart of the Lai and Robbins lower bound for classic bandits, showing that a MTD identification procedure that behaves well for every possible set of toxicity probabilities in terms of sub-optimal selections should at least select each sub-optimal dose logarithmically. Its proof follows standard change-of-measure arguments (see \cite{GMS18}). 
-
-
-\begin{theorem}\label{thm:LB} We define a uniformly efficient design as a design satisfying for all possible toxicity probabilities $\bm p$, for all $\alpha \in ]0,1[$, for all $k : |\theta - p_k| \neq |\theta - p_{k^*}|$, $\bE[N_k(n)] = o(n^\alpha)$ when $n$ goes to infinity. 
-
-Any uniformly efficient design satisfies 
+\begin{theorem}\label{thm:LB} We define a uniformly efficient design as a design satisfying for all possible toxicity probabilities $\bm p$, for all $\alpha \in ]0,1[$, for all $k : |\theta - p_k| \neq |\theta - p_{k^*}|$, $\bE[N_k(n)] = o(n^\alpha)$ when $n$ goes to infinity. Any uniformly efficient design satisfies 
 \begin{align*}
 \liminf_{n \rightarrow \infty} &\frac{\bE[N_k(n)]}{\log(n)}
 	\geq \frac{1}{\mathrm{kl}(p_k,d_k^*)},
-\\
-	\ \text{where } \ d_k^* &:= \argminin{d \in \{p_{k^*},2\theta - p_{k^*}\}} \ |p_k - d |
 \end{align*}
 and $\mathrm{kl}(x,y) = x\log(x/y)+(1-x)\log((1-x)/(1-y))$ is the binary Kullback-Leibler divergence.
 \end{theorem}
 
 
-
-% In a classical bandit problem, maximizing rewards is equivalent to minimizing a quantity called regret, defined as the difference between the expected cumulated rewards of an oracle strategy always selecting the arm with highest mean and the expected cumulated rewards of the strategy. If $p^*$ denote the largest mean, the regret can be rewritten
-% \[R_n = p^* T - \bE\left[\sum_{t=1}^n X_t\right] = \sum_{k=1}^K (p^* - p_k) \bE[N_k(n)],\]
-% where $N_k(n) = \sum_{t=1}^n\ind_{(D_t = k)}$ is the number of selections of arm $k$ up to horizon $n$. Hence to achieve low regret, sub-optimal arms (for which $p^* - p_k > 0$) should not be selected too often. For the dose finding problem, one could propose some notion of reward and regret as well, that would enforce the selection of doses as close as possible to $\theta$. A possible objective is for example to maximize $\sum_{t=1}^n (1-|\theta - p_{D_t}|)$. In any case, what matters in this perspective is to minimize the number of sub-optimal selections, that is $\bE[N_k(n)]$ for $k$ that is different from the MTD $k^*$. Note that these quantities only depend on the selection rule, not on the recommendation rule. 
-% % Explain what is an oracle strategy? I think vocabulary should be defined
-% 
-% For the classical rewards maximization problem, many algorithms come with finite-time upper bounds on the number of sub-optimal selections \cite{Aueral02,Audibertal09UCBV}, some of which are even matching an asymptotic lower bound given by \cite{LaiRobbins85bandits}, like kl-UCB \cite{KLUCBJournal}. 
-
-While asymptotic, such a result may provide a guideline for validating algorithms, just as the Lai and Robbins lower bound did for classical bandits. We now propose a candidate matching algorithm, known as Thompson Sampling (TS) \cite{Thompson33} or probability matching. TS implements a simple Bayesian heuristic: given a prior distribution over the arms, at each round an arm is selected at random according to its posterior probability of being optimal. Thompson Sampling has been successfully used for reward maximization in bandit models, in which the optimal arm is the arm with largest mean. Variants of Thompson Sampling have been notably studied for phase II clinical trials involving two treatments (see \cite{Thall07} and references therein). 
-
-In this paper, we advocate the use of Thompson Sampling for MTD identification, using the appropriate notion of optimality: Thompson Sampling for MTD identification consists in selecting a dose at random according to its posterior probability of being the MTD. Inspired by the bandit literature, we introduce the simplest version of Thompson Sampling that assumes independent uniform prior distributions $\pi_k^0$ on the probability of toxicity of each dose $k$. This algorithm, referred to as \texttt{Independent Thompson Sampling}, can easily be implemented by sampling $\pi_k^t$, the posterior distribution of $p_k$ after $t$ patients (which is a conjuguate Beta distribution). A sample from each posterior distribution is drawn and the dose for which the sample was closest to the threshold is selected: 
-\[\left\{\begin{array}{cl}
-& \forall k \in \{1,K\}, \  \theta_k(t) \sim \pi_k^t \\
-& D_{t+1} = \text{argmin}_{k} \ |\theta_k(t) - \theta|.
-\end{array}\right.\]
-Several recommendation rules may be used for Independent Thompson Sampling. As the randomization induces some exploration, $\hat{k}_t = D_{t+1}$ is not a good idea. However one may use $\hat{k}_t= \text{argmax}_{k \in \{1,\dots,K\}} \ N_k(t)$ (as the algorithm is supposed to select the MTD often, see Theorem~\ref{thm:TS}) or $\hat{k}_t= \text{argmin}_{k} \ |\hat{\mu}_k(t) - \theta|$, with $\hat{\mu}_k(t)$ the empirical mean of dose $k$ after the $t$-th patient of the study. 
+Theorem~\ref{thm:LB} is a counterpart of the Lai and Robbins lower bound for classic bandits \citep{LaiRobbins85bandits}. It shows that a MTD identification procedure that behaves well in terms of sub-optimal selections should at least select each sub-optimal dose logarithmically. Its proof follows standard change-of-measure arguments (see \cite{GMS18}). 
 
 
-% \todo[inline]{M: but we no longer use the above recommendation rule in our experiments. mentioning it might raise questions. maybe also mention why it might not be a good recommendation rule? e.g. it does not directly take advantage of increasing structure as our current recommendation rule does? Or TS due to its exploratory nature might not select the MTD the most if $n$ is small or if there are other doses close to MTD which might be selected as often as or more even than the MTD?}
+\subsubsection{Control of the Error Probability}
 
-For the classical rewards maximization problem, the first regret analysis of Thompson Sampling for Bernoulli bandits dates back to \cite{AGCOLT12} and was further improved by \cite{ALT12,AGAISTAT13}. %who show that TS is asymptotically optimal, as the number of selections of each sub-optimal arm matches the asymptotic lower bound given by \cite{LaiRobbins85bandits}. 
-In Appendix~\ref{proof:TS}, building on the analysis of \cite{AGAISTAT13}, we prove the following for Thompson Sampling applied to MTD identification. 
+If the recommendation rule $\hat{k}_n$ consists of selecting uniformly at random a dose among the doses that were allocated during the trial,  $\{D_1,\dots,D_n\}$, it follows from Theorem~\ref{thm:TS} that 
+\begin{equation}\bP\left(\hat k_n \neq k^*\right) = \sum_{k \neq k^*} \frac{\bE[N_k(n)]}{n} \leq \frac{D\ln(n)}{n},\label{UpperBoundError}\end{equation}
+where $D$ is a (possibly large) problem-dependent constant. Hence finite-time upper bounds on the number of sub-optimal selection lead to \emph{non-asymptotic upper bound on the error probability} of the design. Note that for the state-of-the-art dose-finding designs it is not known whether such results can be obtained; the only results available provide conditions for \emph{consistency}. For example \cite{ShenOQuigley96,CheungChappell02} exhibit some conditions on the toxicity probabilities under which a classical design called the CRM is such that $\hat{k}_n$ converges almost surely to $k^*$. 
 
-\begin{theorem}\label{thm:TS}  Let $d_k^*$ be the quantity defined in Theorem~\ref{thm:LB}. For all $\epsilon >0$, there exists a constant $C_{\epsilon,\theta,\bm p}$ (depending on $\epsilon$, the threshold $\theta$ and the toxicity probabilities) such that for all $k$:  $|p_k - \theta| \neq |\theta - p_{k^*}|$, under \texttt{Independent Thompson Sampling},\[
-\bE[N_{k}(n)]  \leq \frac{1 + \epsilon}{\mathrm{kl}(p_k,d_k^*)} \log(n) + C_{\epsilon,\theta,\bm p}.\]
-\end{theorem}
-
-Theorem~\ref{thm:TS} shows that Independent Thompson Sampling asymptotically attains the minimal number of sub-optimal selections given in Theorem~\ref{thm:LB}. Ideally, a good design for MTD identification should be supported by a control of both the error probability $e_n$ and the number of sub-optimal selections $\bE[N_k(n)]$. However these two performance measures are known to be antagonistic for classical bandit problems. Indeed, \cite{Bubeckal11} shows that the smaller the regret (a quantity related to the number of sub-optimal selections), the larger the error probability. Such a trade-off may also exist for the MTD identification problem. However, the precise statement of such a result would be meaningful for large values of the number of patients $n$, which is of little interest for a real clinical trial as it can only involve a small number of patients. In practice, we believe that designs aimed at minimizing the number of sub-optimal selections are also interesting to use for MTD identification, provided they are used in combination with an appropriate recommendation rule. 
-
-% ensures that with a budget of $n$, each dose $k\neq k^*$ is drawn only of order $\log(n)$ times, with a multiplicative constant that increases with the proximity of $p_k$ from the MTD $p_{k^*}$ or its symmetric dose $2\theta - p_{k^*}$. As TS mostly selects the MTD, a natural recommendation rule that can be used together with this sampling rule is to define . No upper bound on the error probability of the resulting algorithm has been provided in the best arm identification literature, however it is acknowledged to work well in practice.  
-% 
-% Alternative to Thompson Sampling for rewards maximization in classical bandits are the family of Upper Confidence Bounds algorithms, originally introduced by \cite{LaiRobbins85bandits,Agrawal:95} and popularized by \cite{Aueral02}. Given the available observations from each arm, a confidence interval for each mean $p_k$ is build and such \emph{optimistic} algorithms select the arm with largest mean in the \emph{best statistically plausible model}, in which each mean would be equal to its upper confidence bound. However, we did not find a way to adapt those algorithms to the dose finding problem, as the notion of best statistically possible model is not obvious to adapt. Hence, Thompson Sampling seems a more promising approach in this context. 
-
-By using uniform and independent priors on each toxicity probability, Independent Thompson Sampling is the simplest possible implementation of Thompson Sampling. We now explain in Section~\ref{sec:TS} that using a more sophisticated prior distribution allows the algorithm to leverage some particular constraints of the dose finding problem, like increasing toxicities or a plateau of efficacy.  
+This being said, the upper bound \eqref{UpperBoundError} is not very informative, as a very large number of patients is needed to have is at least smaller than 1, and one could expect to have an upper bound that is exponentially decreasing with $n$. As we shall see in Section~\ref{sec:Discussion}, an adaptation of a best arm identification algorithm \citep{Karnin13} leads to such an upper bound, but may be less desirable for clinical trials from an ethical point of view. This is why we rather chose to investigate in what follows several variants of Thompson Sampling coupled with an appropriate recommendation rule. 
 
 
 
-\subsection{Thompson Sampling under Monotonicity Constraints}\label{sec:TS}
+By using uniform and independent priors on each toxicity probability, Independent Thompson Sampling is the simplest possible implementation of Thompson Sampling. We now explain that using a more sophisticated prior distribution allows the algorithm to leverage some particular constraints of the dose finding problem, like increasing toxicities or a plateau of efficacy.  
 
-Both Sequential Halving and Independent Thompson Sampling are adaptations of state-of-the-art bandit algorithms for identifying the MTD that do not leverage any prior knowledge on (e.g.) the ordering of the arms' means. While it can be argued that when testing drugs combinations, no natural ordering between the doses exists (see, e.g., \cite{Mozgunov17CT}), in most cases some monotonicty assumptions can speed up the learning process. 
+
+
+\subsection{Exploiting Monotonicity Constraints with Thompson Sampling}\label{sec:TS}
+
+Independent Thompson Sampling is an adaptation of a state-of-the-art bandit algorithm for identifying the MTD that does not leverage any prior knowledge on (e.g.) the ordering of the arms' means. While it can be argued that when testing drugs combinations, no natural ordering between the doses exists (see, e.g., \cite{Mozgunov17CT}), in most cases some monotonicity assumptions can speed up the learning process. 
 
 A typical assumption in phase I studies is that both efficacy and toxicity are increasing with the dose. We show in Section~\ref{sec:TSIncreasing} that Thompson Sampling using an appropriate prior is competitive to state-of-the-art approaches leveraging the monotonicity. In Section \ref{sec:TSEff}, we further show that Thompson Sampling is a flexible method that can be useful under more complex monotonicity assumptions. More specifically, we show it can also handle an efficacy ``plateau,'' where efficacy may be non-increasing after a certain dose level.   
 
 \subsubsection{Thompson Sampling for Increasing Toxicities}\label{sec:TSIncreasing}
 
 In a phase I study in which both toxicity and efficacy are increasing with the dose, the MTD is the most relevant dose to allocate in further stages. Assuming $p_1 \leq \dots \leq p_k$, we now focus on algorithms leveraging this extra information. 
-To exploit this structure, \emph{escalation procedures} have been developed in the literature, the most famous being the ``3+3'' design \cite{storer89}, adjusted for $\theta=0.33$ (in short it allocates the smallest dose to 3 to 6 patients and escalates to the next dose the estimated toxicity --based on this very small number of patients-- is strictly smaller than $1/3$). 
-% In this design, adjusted for $\theta = 0.33$, the lowest dose is first given to 3 patients. If no patient experiences toxic effects, one escalates to the next dose and repeats the process. If one patient experiences toxicity, the dose is given to 3 more patients, and if less than two patients among the 6 experience toxicity, one escalates to the next dose. Otherwise the trial is stopped, which is also the case if 2 out of the first 3 patients experience a toxic effect. Upon stopping, the previous dose is recommended as the MTD, or all doses are decided too toxic if one stops at the first dose level. 
-Although it is clear that the guarantees in terms of error probability (or sub-optimal selections) are very weak, ``3+3'' is still often used in practice.
+To exploit this structure, \emph{escalation procedures} have been developed in the literature, the most famous being the ``3+3'' design \cite{storer89}. In this design, adjusted for $\theta = 0.33$, the lowest dose is first given to 3 patients. If no patient experiences toxic effects, one escalates to the next dose and repeats the process. If one patient experiences toxicity, the dose is given to 3 more patients, and if less than two patients among the 6 experience toxicity, one escalates to the next dose. Otherwise the trial is stopped, which is also the case if from the beginning 2 out of the 3 patients experience a toxic effect. Upon stopping, the previous dose is recommended as the MTD, or all doses are decided too toxic if one stops at the first dose level. Although it is clear that the guarantees in terms of error probability (or sub-optimal selections) are very weak, ``3+3'' is still often used in practice.
 
 Alternative to this first design are variants of the Continuous Reassessment Method (CRM), proposed by \cite{OQuigley90CRM}. The CRM uses a Bayesian model that combines a parametric dose/toxicity relationship with a prior on the model parameters. Under this model, CRM appears as a greedy strategy that selects at each round the dose whose expected toxicity under the posterior distribution is closest to the threshold. We propose in this section several variants of Thompson Sampling based on the same Bayesian model, but that favor (slightly) more exploration. 
 
-\paragraph{A Bayesian model for increasing toxicities} In the CRM literature, several parametric models that yield an increasing toxicity have been considered. In this paper, we choose a two-parameter logistic model that is among the most popular. Under this model, each dose $k$ is assigned an \emph{effective dose} $u_k$ (that is usually not related to a true dose expressed in a mass or volume unit) and the toxicity probability of dose $k$ is
+\paragraph{A Bayesian model for increasing toxicities} In the CRM literature, several parametric models that yield an increasing toxicity have been considered. In this chapter, we choose a two-parameter logistic model that is among the most popular. Under this model, each dose $k$ is assigned an \emph{effective dose} $u_k$ (that is usually not related to a true dose expressed in a mass or volume unit) and the toxicity probability of dose $k$ is given by 
 \begin{align*}
 p_k(\beta_0,\beta_1) &= \psi(k,\beta_0,\beta_1),
 \\
  \text{ where } \
 &\psi(k,\beta_0,\beta_1) = \frac{1}{1 + e^{-\beta_0-\beta_1u_k}}.
 \end{align*}
-A typical choice of prior is $\beta_0 \sim \mathcal{N}(0,100)$ and $\beta_1 \sim \mathrm{Exp}(1)$. It is worth noting that this model also relies on the effective doses $u_1,\dots,u_K$ that are usually chosen depending on some \emph{prior toxicities} set by physicians, $p^0_1 \leq p^0_2 \leq \dots \leq p^0_K$. Letting $\overline{\beta_0}$, $\overline{\beta_1}$ be the prior mean of each parameter, the effective doses are calibrated so that for all $k$, $\psi(k,\overline{\beta_0},\overline{\beta_1}) = p_k^0$. If there is no medical prior knowledge about the toxicity probabilities, some heuristics for choosing them in a robust way have been developed (see Chapter 9 of \cite{CRMBook}).%, that aim at maximizing the chances that CRM is consistent. \red clarify this ! \black 
+A typical choice of prior is 
+\[
+\beta_0 \sim \mathcal{N}(0,100) \ \ \text{and} \ \ \beta_1 \sim \mathrm{Exp}(1). \]
+It is worth noting that this model also heavily relies on the effective doses $u_1,\dots,u_K$ that are usually chosen depending on some \emph{prior toxicities} set by physicians, $p^0_1 \leq p^0_2 \leq \dots \leq p^0_K$. Letting $\overline{\beta_0}$, $\overline{\beta_1}$ be the prior mean of each parameter, the effective doses are calibrated such that for all $k$, $\psi(k,\overline{\beta_0},\overline{\beta_1}) = p_k^0$. If there is no medical prior knowledge about the toxicity probabilities, some heuristics for choosing them in a robust way have been developed (see Chapter 9 of \cite{CRMBook}).%, that aim at maximizing the chances that CRM is consistent. \red clarify this ! \black 
   
-Given observations from the different doses one can compute the posterior distribution over the parameters $\beta_0$ and $\beta_1$; that is, their conditional distribution given the observations. Although there is no closed form for these posterior distributions, they can be easily sampled from using Hamiltonian Monte-Carlo Markov Chain algorithms (HMC) as the log-likelihood under these models is differentiable. In practice, we use the Stan implementation of this Monte-Carlo sampler \citep{StanManual}, and use (many) samples to approximate integrals under the posterior when needed.    
+Under this model, given some observations from the different doses one can compute the posterior distribution over the parameters $\beta_0$ and $\beta_1$; that is, the conditional distribution of these parameters given the observations. Although there is no closed form for these posterior distributions, they can be easily sampled from using Hamiltonian Monte-Carlo Markov Chain algorithms (HMC) as the log-likelihood under these models is differentiable. In practice, we use the Stan implementation of these Monte-Carlo sampler \citep{StanManual}, and use (many) samples to approximate integrals under the posterior when needed.    
  
-\subsubsection{Thompson Sampling}\label{sec:CRMvsTS}
+\paragraph{Thompson Sampling.}
+
 Thompson Sampling selects a dose at random according to its posterior probability of being the MTD. Under the two-parameter Bayesian logistic model presented above, letting $\pi_t$ denote the posterior distribution on $(\beta_0,\beta_1)$ after the first $t$ observations, the posterior probability that dose $k$ is the MTD is
 \begin{align*}
-{q}_k(t) &: = \bP\Big(\left. k = \argminin{\ell} |\theta - p_\ell(\beta_0,\beta_1)| \right| \cF_t\Big)
+{q}_k(t) &: = \bP\left(\left. k = \argmin{\ell} |\theta - p_\ell(\beta_0,\beta_1)| \right| \cF_t\right)
 \\
-&= \int_{\R} \ind{\Big(k = \argminin{\ell} |\theta - p_\ell(\beta_0,\beta_1)|\Big)} d\pi_t(\beta_0,\beta_1).
+&= \int_{\R} \ind{\left(k = \argmin{\ell} |\theta - p_\ell(\beta_0,\beta_1)|\right)} d\pi_t(\beta_0,\beta_1).
 \end{align*}
 
 A first possible implementation of Thompson Sampling that we use in our experiments consists of computing approximations $\hat{q}_k(t)$ of the probabilities ${q}_k(t)$ (using posterior samples) and selecting at round $t+1$ a dose $D_{t+1} \sim \hat{\bm q}(t)$, i.e. such that $\bP\left(D_{t+1} = k | \cF_t\right) = \hat{q}_k(t)$.
 A second implementation of Thompson Sampling (that may be computationally easier) consists of drawing one sample from the posterior distribution of $(\beta_0,\beta_1)$, and selecting the MTD in the sampled model:  
 \begin{align}
          \left(\tilde \beta_0(t), \tilde \beta_1(t)\right) & \sim \pi_t, \nonumber\\
-          D_{t+1}^{\text{TS}} & \in \argminin{k \in \{1,\dots,K\}} \ \left|\theta - p_k\left(\tilde \beta_0(t),\tilde \beta_1(t)\right)\right|.\label{eq:SampleTS}
+          D_{t+1}^{\text{TS}} & \in \argmin{k \in \{1,\dots,K\}} \ \left|\theta - p_k\left(\tilde \beta_0(t),\tilde \beta_1(t)\right)\right|.\label{eq:SampleTS}
 \end{align}
 It is easy to see that this algorithm concides with Thompson Sampling in that $\bP\left(D_{t+1}^{\text{TS}} = k | \cF_t\right) = {q}_k(t)$. We will present below a variant of Thompson Sampling based on the first implementation (${\mathrm{TS}\_\mathrm{A}}$) and a variant based on the second implementation (${\mathrm{TS}(\epsilon)}$).
 
 Due to the randomization, Thompson Sampling performs more exploration than the ``greedy'' CRM \citep{OQuigley90CRM} method, which selects at time $t$ the MTD under the model parameterized by $(\hat\beta_0,\hat\beta_1)$, the posterior means of the two parameters, given by
-\begin{align}\label{eq:CRMPostMean}
-\hat{\beta}_0(t) &= \int_\R \beta_0 d\pi_{t}(\beta_0,\beta_1), 
-\ \ \ \hat{\beta}_1(t) = \int_\R \beta_1 d\pi_{t}(\beta_0,\beta_1).
-\end{align}
+\begin{equation}\label{eq:CRMPostMean}
+\hat{\beta}_0(t) = \int_\R \beta_0 d\pi_{t}(\beta_0,\beta_1) \ \ \ \ \ \text{and} \ \ \ \ \ \hat{\beta}_1(t) = \int_\R \beta_1 d\pi_{t}(\beta_0,\beta_1).
+\end{equation}
 More formally, the sampling rule of the CRM is
 \begin{align*}
-D_{t+1}^{\text{CRM}} \in \argminin{k \in \{1,\dots,K\}} \left|\theta - p_k(\hat\beta_0(t),\hat\beta_1(t))\right|.
+D_{t+1}^{\text{CRM}} \in \argmin{k \in \{1,\dots,K\}} \left|\theta - p_k(\hat\beta_0(t),\hat\beta_1(t))\right|.
 \end{align*}
 The recommendation rule for CRM after $t$ patients is identical to the next dose that would be sampled under this design, that is $\hat{k}_t^{\text{CRM}} = D_{t+1}^{\text{CRM}}$. However, as Thompson Sampling is more exploratory, we propose the use of the recommendation rule $\hat{k}_t^{\text{TS}} = \text{argmin}_k \ |\theta - p_k(\hat\beta_0(t),\hat\beta_1(t))|$, which coincides with the recommendation rule of the CRM.
 
@@ -362,7 +269,7 @@ The recommendation rule for CRM after $t$ patients is identical to the next dose
 % \end{align*}
 % The recommendation rule for CRM after $t$ patients is identical to the next dose that would be sampled under this design, that is $\hat{k}_t = D_{t+1}$. In all this work, we consider this ``plug-in'' variant of the CRM, that has been shown to perform very closely to the vanilla CRM \todo{insert medical ref}.
 
-\subsubsection{Two variants of Thompson Sampling}
+\paragraph{Two variants of Thompson Sampling.}
 
 The randomized aspect of Thompson Sampling makes it likely to sample from large or small doses, without respecting some ethical constraints of phase I clinical trials. Indeed, patients should not be exposed to too-high dose levels; overdosing should be controlled. Hence, we also propose two ``regularized'' versions of TS. The first depends on a parameter $\epsilon>0$ set by the user that ensures that the expected toxicity of the recommended dose remains within $\epsilon$ of the toxicity of the empirical MTD. The second restricts the doses to be tested to a set of \emph{admissible doses}. These algorithms are formally defined below, and their performance is evaluated in Section~\ref{sec:Experiments}.
 
@@ -381,11 +288,10 @@ The randomized aspect of Thompson Sampling makes it likely to sample from large 
 
 
 \paragraph{$\bm{\mathrm{TS}(\epsilon)}$}  We first compute $\hat\beta_0(t),\hat{\beta}_1(t)$ from \eqref{eq:CRMPostMean} as well as toxicity of the dose that is closest to $\theta$ under this model (that is the toxicity of the dose selected by the CRM): 
-\begin{align*}
-\hat{p}(t+1) &= p_{\hat k_{t}}(\hat\beta_0(t),\hat\beta_1(t)),
-\\ 
-\text{with} \ \ \ \hat k_{t} &=\argminin{k}\left|\theta - p_k(\hat\beta_0(t),\hat\beta_1(t))\right| 
-\end{align*}
+\[
+\hat{p}(t) = p_{\hat k_{t}}(\hat\beta_0(t),\hat\beta_1(t)), \ \ \
+\text{with} \ \ \ \hat k_{t} =\argmin{k}\left|\theta - p_k(\hat\beta_0(t),\hat\beta_1(t))\right| 
+\]
 Next we sample $\tilde \beta_0(t), \tilde{\beta}_1(t)$ from the posterior distribution $\pi_t$
 and select a candidate dose level $D_{t+1}$ using \eqref{eq:SampleTS}.
 If the predicted toxicity level $p_{D_{t+1}}(\hat\beta_0(t),\hat{\beta}_1(t))$ is not in the
@@ -398,15 +304,13 @@ In order to guarantee that the algorithm terminates, we only reject up to
 \[\bP\left(D_{t+1} = k | \cF_{t}\right) = \frac{\hat{q}_k(t) \ind_{\left(k \in \cA_t\right)}}{\sum_{\ell \in \cA_t} \hat{q}_{\ell}(t)},\] where $\cA_t$ is the set of admissible doses after $t$ rounds meeting the following two criteria:
 \begin{enumerate}
     \item dose $k$ has either already been tested, or is the next-smallest dose which has not yet been tested    
-    \item the posterior probability that the toxicity of dose $k$ exceeds the toxicity of the dose closest to $\theta$ is smaller than some threshold $c_1$ 
-% \begin{align*}
-%    \bP\Bigg(
-%     &\psi(k,\beta_0,\beta_1) > \psi(k',\beta_0,\beta_1), 
-%     \text{where}
-% \\
-% 	&k' = \argmin{k' \in \{1,\dots,K\}}\left|\theta - \psi(k', \beta_0,\beta_1)\right|
-%     \Bigg| \cF_{t} \Bigg) \leq c_1.
-% \end{align*}
+    \item the posterior probability that the toxicity of dose $k$ exceeds the toxicity of the dose closest to $\theta$ is smaller than some threshold:
+\[
+   \bP\Bigg(
+    \psi(k,\beta_0,\beta_1) > \psi(k',\beta_0,\beta_1), 
+    \text{where} k' = \argmin{k' \in \{1,\dots,K\}}\left|\theta - \psi(k', \beta_0,\beta_1)\right|
+    \Bigg| \cF_{t} \Bigg) \leq c_1.
+\]
    % \item the posterior probability that the toxicity of dose $k$ exceeds the toxicity of $\hat k_{t+1}$ is smaller than some threshold, 
   %  \begin{equation}
    % \bP\left(
@@ -426,10 +330,10 @@ $\cA_t$ is inspired by the admissible set of \cite{MKR17} described in detail in
 %That is not something that we find easily in the literature and that is admitted. You can add the same example as in my paper:
 %As another example, the efficacy of PTK/ZK (an orally active inhibitor of vascular endothelial growth factor receptor tyrosine kinases) virtually does not change with the dose once it reaches the threshold (or plateau) of 1000 mg, which is below the MTD. [Ellis, LM. Antiangiogenic therapy: more promise and, yet again, more questions. J Clin Oncol 2003; 21: 3897–3899. ; Morgan, B, Thomas, AL, Drevs, J Dynamic contrast-enhanced magnetic resonance imaging as a biomarker for the pharmacological response of PTK787/ZK 222584, an inhibitor of the vascular endothelial growth factor receptor tyrosine kinases, in patients with advanced colorectal cancer and liver metastases: results from two phase I studies. J Clin Oncol 2003; 21: 3955–3964.] Further increasing the dose of PTK/ZK to the MTD does not improve its efficacy.
 
-It has been established that efficacy is not always increasing with the dose. Motivated by some concrete examples discussed in their paper, \cite{MKR17} consider a model in which effectiveness can plateau after some unknown level, while toxicity still increases with dose level. In these models, MTD identification is no longer relevant and the objective is rather to identify the smallest dose with maximal efficacy and with toxicity no more than $\theta$. Formally, introducing $\text{eff}_k$ the efficacy probability of dose $k$, the objective is to identify
-\[k^* = \min\Big\{ k : \eff_k = \max_{\ell : p_\ell \leq \theta} \ \text{eff}_\ell\Big\}  \]
+In some particular trials, it has been established that efficacy is not always increasing with the dose. Motivated by some concrete examples discussed in their paper, \cite{MKR17} consider a model in which the dose effectiveness can plateau after some unknown level, while toxicity still increases with dose level. In these models, MTD identification is no longer relevant and the objective is rather to identify the smallest dose with maximal efficacy and with toxicity no more than $\theta$. More formally, introducing $\text{eff}_k$ the efficacy probability of dose $k$, the objective is to identify
+\[k^* = \min\left\{ k : \eff_k = \max_{\ell : p_\ell \leq \theta} \ \text{eff}_\ell\right\}  \]
 
-In a dose finding study involving efficacy, at each time step $t$ a dose $D_t$ is allocated to the $t$-th patient, and the toxicity $X_t$ and efficacy $Y_t$ are observed. With these two-dimensional observations, it is less clear how to define a notion of reward. However as we shall see, the Thompson Sampling approach, initially introduced for reward maximization in bandit models, can also be applied here, and it bears some similarities to the method developed by \cite{MKR17}.
+In a dose finding study involving efficacy, at each time step $t$ a dose $D_t$ is allocated to the $t$-th patient, and the toxicity $X_t$ is observed, as well as the efficacy $Y_t$. With these two-dimensional observations, it is less clear how to define a notion of reward, as in the previous case. However as we shall see, the Thompson Sampling approach, initially introduced for reward maximization in bandit models, can also be applied here, and it bears some similarities to the method developed by \cite{MKR17}.
 
 \paragraph{A Bayesian model for toxicity and efficacy} Thompson Sampling requires a Bayesian model for both the dose/toxicity and the dose/efficacy relationship that enforces an increasing toxicity and a increasing then plateau efficacy. We will use the model proposed by \cite{MKR17}, that we now describe.
 
@@ -460,10 +364,12 @@ Efficacy also follows a logistic model, with an additional parameter $\tau$ that
 \end{align}
 where $v_k$ is the \emph{effective efficacy} of dose $k$. Given $(t_1,\dots,t_K)$ such that $\sum_{i=1}^K t_i = 1$, a probability distribution on $\{1,\dots,K\}$, the three parameters $(\gamma_0,\gamma_1,\tau)$ are independent and drawn from the following prior distributions:     
 \[\gamma_0 \sim \mathcal{N}(0,100), \ \ \ \gamma_1 \sim \text{Exp}(1), \ \ \  \tau  \sim (t_1,\dots,t_K).\]
-The prior on $\tau$ may be provided by a physician or set to $(1/K,\dots,1/K)$ in case one has no prior information. Just like the effective doses $u_k$ (that we may now call effective toxicities), the effective efficacies $v_k$ are calculated using prior efficacies $\eff^0_1 \leq \dots \leq \eff^0_K$ via $
-v_k = ( \log\left({ \eff^0_k }/({1 - \eff^0_k}) \right)
-    - \overline{\gamma}_0)  \overline{\gamma}_1,
-$ with $\overline{\gamma}_0 = 0$ and $\overline{\gamma}_1 = 1$ the prior means of $\gamma_0$ and $\gamma_1$. 
+The prior on $\tau$ may be provided by a physician or set to $(1/K,\dots,1/K)$ in case one has no prior information. Just like the effective doses $u_k$ (that we may now call effective toxicities), the effective efficacies $v_k$ are calculated using prior efficacies $\eff^0_1 \leq \dots \leq \eff^0_K$:
+\begin{align*}
+v_k &= \left( \log\left( \frac{ \eff^0_k }{1 - \eff^0_k} \right)
+    - \overline{\gamma}_0 \right) \bigg/ \overline{\gamma}_1,
+\end{align*}
+where $\overline{\gamma}_0 = 0$ and $\overline{\gamma}_1 = 1$ are the prior means of the parameters $\gamma_0$ and $\gamma_1$. 
 
 % We formally define below the likelihood and posterior density of the efficacy parameters, given 
 % the efficacy data gathered in the first $t$ rounds,
@@ -480,128 +386,204 @@ $ with $\overline{\gamma}_0 = 0$ and $\overline{\gamma}_1 = 1$ the prior means o
 Generating samples from the posterior distribution of $(\gamma_0,\gamma_1,\tau)$ is a bit more involved than it was for $(\beta_0,\beta_1)$ as it cannot be handled directly with HMC given that $(\gamma_0,\gamma_1)$ are continuous and $\tau$ is discrete. Thus, we proceed in the following way: we first draw samples from $p(\gamma_0,\gamma_1 |\mathcal{D}^{\eff}_t)$, which can be performed with HMC (and requires marginalizing out the discrete parameter $\tau$, following the example of change point models given in the Stan manual \citep{StanManual}). Then we sample $\tau$ conditionally to $\gamma_0,\gamma_1,\mathcal{D}^{\eff}_t$.
 
 
-\subsubsection{Thompson Sampling}
+\paragraph{Thompson Sampling.}
 
-The principle of Thompson Sampling, to randomly select doses according to their posterior probability of being optimal, can be applied in this more complex model with the corresponding definition of optimality. Given a vector $\bm\psi = (\psi_1,\dots,\psi_K)$ of increasing toxicity probabilities and a vector $\bm\phi = (\phi_1,\dots,\phi_K)$ of increasing then plateau efficacy probabilities, the optimal dose is 
+Recall that the principle of Thompson Sampling is to randomly select doses according to their posterior probability of being optimal. This idea can also be applied in this more complex model, using the corresponding definition of optimality. Given a vector $\bm\psi = (\psi_1,\dots,\psi_K)$ of increasing toxicity probabilities and a vector $\bm\phi = (\phi_1,\dots,\phi_K)$ of increasing then plateau efficacy probabilities, the optimal dose is 
 \begin{align}\label{optEmp}
-{\mathrm{Opt}}(\bm{\psi},\bm{\phi}) : = \min\Big\{
-    k : \phi_k = \max_{\ell : \psi_\ell \leq \theta} \phi_\ell \Big\}.
+{\mathrm{Opt}}(\bm{\psi},\bm{\phi}) : = \min\left\{
+    k : \phi_k = \max_{\ell : \psi_\ell \leq \theta} \phi_\ell \right\}.
 \end{align}
 
-The posterior probability that dose $k$ is optimal is 
+The posterior probability of dose $k$ to be optimal in that case is 
 \[{q}_k(t) := \bP\left( \left.k = \Opt\left( \psi(\bm\cdot, \beta_0,\beta_1),\phi(\bm\cdot, \gamma_0,\gamma_1,\tau)\right) \right|\cF_{t}\right)\]
 and in our experiments, we implement Thompson Sampling by computing approximations $\hat{q}_k(t)$ from the quantities $q_k(t)$ (based on posterior samples) and then selecting a dose $D_{t+1}\sim \bm{\hat{q}}(t)$ where  $\bm{\hat{q}}(t) = (\hat{q}_1(t),\dots,\hat{q}_K(t))$. Just like in the previous model, an alternative implementation of Thompson Sampling would sample parameters from their posterior distributions and select the optimal dose in this sampled model. More formally, letting 
 \begin{equation}\tilde{\beta}_0(t), \tilde{\beta}_1(t) \ \ \ \text{and} \ \ \ \tilde{\gamma}_0(t), \tilde{\gamma}_1(t), \tilde{\tau}(t),\label{eq:PosteriorSamples}\end{equation}
-be samples from the posterior distributions after $t$ observations of the toxicity and efficacy parameters respectively, one can compute $\tilde{\psi}_k(t) = \psi(k,\tilde{\beta}_0(t),\tilde{\beta}_1(t))$ and $\tilde{\phi}_k(t) = \phi(k,\tilde{\gamma}_0(t),\tilde{\gamma}_1(t),\tilde{\tau}(t))$ for every dose $k$. Given the toxicity and efficacy vectors $\bm{\tilde{\psi}}(t) = (\tilde{\psi}_1(t),\dots,\tilde{\psi}_K(t))$ and $\bm {\tilde{\phi}}(t) = (\tilde{\phi}_1(t),\dots,\tilde{\phi}_K(t))$, this implementation of Thompson Sampling selects at round $t+1$ $D_{t+1}^{\text{TS}} = \Opt\left(\bm{\tilde{\psi}}(t), \bm{\tilde{\phi}}(t)\right)$.
+be samples from the posterior distributions after $t$ observations of the toxicity and efficacy parameters respectively, one can compute $\tilde{\psi}_k(t) = \psi(k,\tilde{\beta}_0(t),\tilde{\beta}_1(t))$ and $\tilde{\phi}_k(t) = \phi(k,\tilde{\gamma}_0(t),\tilde{\gamma}_1(t),\tilde{\tau}(t))$ for every dose $k$. Given the toxicity and efficacy vectors  
+\begin{align*}
+\bm{\tilde{\psi}}(t) &= \left(\tilde{\psi}_1(t),\dots,\tilde{\psi}_K(t)\right)
+\\
+\text{and} \ \ \bm {\tilde{\phi}}(t) &= \left(\tilde{\phi}_1(t),\dots,\tilde{\phi}_K(t)\right),
+\end{align*}
+this implementation of Thompson Sampling selects at round $t+1$ $D_{t+1}^{\text{TS}} = \Opt\left(\bm{\tilde{\psi}}(t), \bm{\tilde{\phi}}(t)\right)$.
 
 \paragraph{Recommendation rule.}Here also we expect Thompson Sampling to be too exploratory for dose recommendation. Hence, we base our recommendation on estimated values. Given the posterior means 
-$\hat{\beta}_0(t), \hat{\beta}_1(t),\hat{\gamma}_0(t),\hat{\gamma}_1(t)$ and $\hat{\tau}(t)$ the mode of the posterior distribution of the breakpoint, we compute  
-$\hat{\psi}_k(t) = \psi(k,\hat{\beta}_0(t),\hat{\beta}_1(t))$ and $\hat{\phi}_k(t) = \phi(k,\hat{\gamma}_0(t),\hat{\gamma}_1(t),\hat{\tau}(t))$ and let $\hat{k}_t = \Opt\left(\bm{\hat{\psi}}(t), \bm{\hat{\phi}}(t)\right)$.
+$\hat{\beta}_0(t), \hat{\beta}_1(t),\hat{\gamma}_0(t),\hat{\gamma}_1(t)$ (obtained based on posterior samples) and $\hat{\tau}(t)$ the mode of the posterior distribution of the breakpoint (see the next section for its computation), we compute  
+$\hat{\psi}_k(t) = \psi(k,\hat{\beta}_0(t),\hat{\beta}_1(t))$ and $\hat{\phi}_k(t) = \phi(k,\hat{\gamma}_0(t),\hat{\gamma}_1(t),\hat{\tau}(t))$ and recommend $\hat{k}_t = \Opt\left(\bm{\hat{\psi}}(t), \bm{\hat{\phi}}(t)\right)$.
 
 
-\subsubsection{A Variant of Thompson Sampling using Adaptive Randomization}
+\paragraph{A Variant of Thompson Sampling using Adaptive Randomization.}
 
-Interestingly, the need for randomization in the context of plateau efficacy has already been observed by \cite{MKR17}. More precisely, as we explain below, the algorithm $\mathrm{MTA}$-$\mathrm{RA}$ described in that work can be viewed as an hybrid approach between Thompson Sampling and CRM. 
+Interestingly, the need for randomization in the context of plateau efficacy has already been observed by \cite{MKR17}. More precisely, as we explain below, the algorithm $\mathrm{MTA}$-$\mathrm{RA}$ described in that work can be viewed as an hybrid approach between Thompson Sampling and a CRM approach. 
 
-In addition to the use of \emph{adaptive randomization}, the $\mathrm{MTA}$-$\mathrm{RA}$ algorithm introduces a notion of the \emph{admissible set}. The set of admissible doses after $t$ patients, denoted by $\cA_t$, is the set of dose levels $k$ meeting all of the following criteria:
+Additionally to the use of \emph{adaptive randomization}, the $\mathrm{MTA}$-$\mathrm{RA}$ algorithm also introduces a notion of the \emph{admissible set}. The set of admissible doses after $t$ patients, denoted by $\cA_t$, is the set of dose levels $k$ meeting all of the following criteria:
 \begin{enumerate}
     \item dose $k$ has either already been tested, or is the next-smallest dose which has not yet been tested
-    \item the posterior probability that the toxicity of dose $k$ exceeds $\theta$ is smaller than some threshold: $\bP\left(\psi(k,\beta_0,\beta_1) > \theta | \cF_{t}\right) \leq c_1$
-    \item if the dose has been tested more than $3$ times, the posterior probability that the efficacy is larger than $\xi$ is larger than some threshold: $\bP\left(\phi(k,\gamma_0,\gamma_1,\tau) > \xi | \cF_{t}\right) \geq c_2$
+    \item the posterior probability that the toxicity of dose $k$ exceeds $\theta$ is smaller than some threshold: 
+    \begin{equation}\bP\left(\psi(k,\beta_0,\beta_1) > \theta | \cF_{t}\right) \leq c_1\label{eq:CritTox}\end{equation}
+    \item if the dose has been tested more than $3$ times, the posterior probability that the efficacy is larger than $\xi$ is larger than some threshold: 
+    \begin{equation}\bP\left(\phi(k,\gamma_0,\gamma_1,\tau) > \xi | \cF_{t}\right) \geq c_2\label{eq:CritEff}\end{equation}
 \end{enumerate}
-The admissible set can be computed using posterior samples from $(\beta_0,\beta_1)$ to check the second criterion and posterior samples from $(\gamma_0,\gamma_1,\tau)$ to check the third. 
+Practical computation of the admissible set can be performed using posterior samples from $(\beta_0,\beta_1)$ to check the criterion \eqref{eq:CritTox} and posterior samples from $(\gamma_0,\gamma_1,\tau)$ to check the criterion \eqref{eq:CritEff}. 
 
-The $\mathrm{MTA}$-$\mathrm{RA}$ algorithm works in two steps. The first step exploits the \emph{posterior distribution of the breakpoint}, $t_k(t) :=\bP\left(\tau=k | \cD_{t}^{\eff}\right)$, using randomization to pick a value $\hat{\tau}(t)$ close to the mode of this distribution. That is, given an estimate $(\hat{t}_k(t))_{k=1,\dots,K}$ of the posterior distribution of $\tau$, let
+The $\mathrm{MTA}$-$\mathrm{RA}$ algorithm works in two steps. The first step exploits the \emph{posterior distribution of the breakpoint}, $t_k(t) :=\bP\left(\tau=k | \cD_{t}^{\eff}\right)$, and uses randomization to pick a value $\hat{\tau}(t)$ close to the mode of this distribution. More precisely, given $(\hat{t}_k(t))_{k=1,\dots,K}$ an estimate of the posterior distribution of $\tau$, let
 \[
-\mathcal{R}_t := \Big\{
+\mathcal{R}_t := \left\{
     k : \left| \max_{1 \le \ell \le K}(\hat{t}_\ell(t)) - \hat{t}_k(t) \right| \le s_1,
     1 \le k \le K
-\Big\}
+\right\}
 \]
 be a set of candidate values for the position of the breakpoint. Then under $\mathrm{MTA}$-$\mathrm{RA}$, 
 \[\bP\left(\hat{\tau}(t) = k |\cF_t\right) = \frac{\hat{t}_k(t)\ind_{\left(k \in \cR_t\right)}}{\sum_{\ell \in \cR_t} \hat{t}_\ell(t)}. \]
 The threshold $s_1$ is often adapted such that it is larger in the beginning of the trial when we have high uncertainty about the estimates, but it grows smaller as the trial continues. The second step of $\mathrm{MTA}$-$\mathrm{RA}$ doesn't employ randomization. Based on posterior samples from $(\gamma_0,\gamma_1)$ conditionally to $\tau$ being equal to the sampled value $\hat{\tau}(t)$, efficacy estimates $\hat{\phi}_k$ are produced (taking the mean of the values of $\phi(k,\tilde{\gamma_0},\tilde{\gamma_1},\hat{\tau}(t))$ for many samples $\tilde{\gamma_0},\tilde{\gamma_1}$) and finally the selected dose is 
-\[ D_{t+1}^{\text{MTA-RA}} = \inf \Big\{ k \in \mathcal{A}_t : \hat{\phi}_k = \max_{j \in \mathcal{A}_t} \hat{\phi}_j\Big\}.\]
+\[ D_{t+1}^{\text{MTA-RA}} = \inf \left\{ k \in \mathcal{A}_t : \hat{\phi}_k = \max_{j \in \mathcal{A}_t} \hat{\phi}_j\right\}.\]
 
-If $\hat{\tau}(t)$ were replaced by a point estimate (e.g. the mode of the breakpoint posterior distribution $\bm{\hat t}(t)$), MTA-RA would be close to a CRM approach that computes estimates of all the parameters and acts greedily with respect to those estimated parameters (additionally constrained to choose a dose in the admissible set). However, the first step of MTA-RA bears similarities with the first step of a Thompson Sampling implementation that would sample a parameter $\tau$ from the $\bm{\hat t}(t)$ (and later sample the other parameters conditionally to that value and act greedily in the sampled model). The difference is the use of \emph{adaptive} randomization, in which the sample is not exactly drawn from $\bm{\hat t}(t)$, but is constrained to fall in some set (here $\cR_t$) that depends on previous observations. 
+If $\hat{\tau}(t)$ were replaced by a point estimate (e.g. the mode of the breakpoint posterior distribution $\bm{\hat t}(t)$), MTA-RA would be close to a CRM approach that computes estimates of all the parameters and acts greedily with respect to those estimated parameters (with the additional constraint that the chosen dose has to remain in the admissible set). However, the first step of MTA-RA bears similarities with the first step of a Thompson Sampling implementation that would sample a parameter $\tau$ from the $\bm{\hat t}(t)$ (and later sample the other parameters conditionally to that value and act greedily in the sampled model). The difference is the use of \emph{adaptive} randomization, in which the sample is not exactly drawn from $\bm{\hat t}(t)$, but is constrained to fall in some set (here $\cR_t$) that depends on previous observations. 
 
 \paragraph{The $\bm{\mathrm{TS}\_\mathrm{A}}$ algorithm.} We believe that using adaptive randomization is a good idea to control the amount of exploration performed by Thompson Sampling, which leads us to propose the $\mathrm{TS}\_\mathrm{A}$ algorithm, that incorporates the constraint to select a dose that belongs to the admissible set $\cA_t$. More formally, $\mathrm{TS}\_\mathrm{A}$ selects a dose at random according to   
 \[\bP\left(D_{t+1} = k | \cF_{t}\right) = \frac{\hat{q}_k(t) \ind_{\left(k \in \cA_t\right)}}{\sum_{\ell \in \cA_t} \hat{q}_{\ell}(t)},\]
 where we recall that $\hat{q}_k(t)$ is an estimate of the posterior probability that dose $k$ is optimal. Compared to the variant of $\mathrm{TS}\_\mathrm{A}$  for increasing toxicities that is proposed in Section~\ref{sec:TSIncreasing}, the difference here is the appropriate definition of the admissible set, that involves both toxicity and efficacy probabilities.
 
 
-% \paragraph{Practical remark.} Approximations $\hat{t}_k(t)$ of the breakpoint distribution can be computed using that
-% \begin{align*}
-% &t_k(t) = 
-% \\
-% &{t_k \int \frac{L(\mathcal{D}^{eff}_t | \gamma_0,\gamma_1,k)}{\sum_{s=1}^K t_s L(\mathcal{D}^{eff}_t | \gamma_0,\gamma_1,s)} p(\gamma_0,\gamma_1 | \mathcal{D}^{eff}_t) d\gamma_0 d\gamma_1},
-% \end{align*}
-% where $L(\mathcal{D}^{eff}_t | \gamma_0,\gamma_1,s)$ is the likelihood of the efficacy observations when the efficacy model parameters are $(\gamma_0,\gamma_1,s)$ and $p(\gamma_0,\gamma_1 | \mathcal{D}^{eff}_t)$ is the density of the distribution of $(\gamma_0,\gamma_1)$ given the observations. $\hat{t}_k(t)$ can be thus be obtained by Monte-Carlo estimation based on samples from $p(\gamma_0,\gamma_1 | \mathcal{D}^{eff}_t)$. 
-% 
+\paragraph{Practical remark.} Approximations $\hat{t}_k(t)$ of the breakpoint distribution can be computed using that
+\[
+t_k(t) = {t_k \int \frac{L(\mathcal{D}^{eff}_t | \gamma_0,\gamma_1,k)}{\sum_{s=1}^K t_s L(\mathcal{D}^{eff}_t | \gamma_0,\gamma_1,s)} p(\gamma_0,\gamma_1 | \mathcal{D}^{eff}_t) d\gamma_0 d\gamma_1},
+\]
+where $L(\mathcal{D}^{eff}_t | \gamma_0,\gamma_1,s)$ is the likelihood of the efficacy observations when the efficacy model parameters are $(\gamma_0,\gamma_1,s)$ and $p(\gamma_0,\gamma_1 | \mathcal{D}^{eff}_t)$ is the density of the distribution of $(\gamma_0,\gamma_1)$ given the observations. $\hat{t}_k(t)$ can be thus be obtained by Monte-Carlo estimation based on samples from $p(\gamma_0,\gamma_1 | \mathcal{D}^{eff}_t)$. 
 
 
 
 \subsection{Experimental Evaluation}\label{sec:Experiments}
 
-We evaluate the proposed algorithms first in the context of increasing efficacy and then with an efficacy plateau.
-Following common practice in phase I clinical trials, we use a start-up phase for all designs (starting from the smallest dose and escalating until the first toxicity is observed).
-We use cohorts of size 3, meaning the same dose is allocated to 3 patients at a time and the model is updated after seeing the outcome. 
+We now present an empirical evaluation of the variants of Thompson Sampling introduced in the chapter first in the context of increasing efficacy and then with the presence of a plateau of efficacy. In both groups of experiments, we adjusted our designs to some common practices in phase I clinical trials. We used a start-up phase for all designs (starting from the smallest dose and escalating until the first toxicity is observed) and we also used cohorts of patients of size 3. This means that the same dose is allocated to 3 patients at a time and the model is updated after seeing the outcome for these 3 patients. 
+
+\subsubsection{MTD Identification}
+
+In this set of experiments, we evaluate the performance of the three algorithms introduced in Section~\ref{sec:TSIncreasing}, $\mathrm{TS}$, $\mathrm{TS}(\epsilon)$ and $\mathrm{TS}\_\mathrm{A}$, and compare them to the 3+3 and $\mathrm{CRM}$ baseline. We experiment with the value $\epsilon = 0.05$ for $\mathrm{TS}(\epsilon)$ and set the parameter of $\mathrm{TS}\_\mathrm{A}$ to $c_1 = 0.8$. We also include $\mathrm{Independent \ TS}$ as proposed in Section~\ref{sec:Bandits}, which is agnostic to the increasing structure. 
+ 
+In Tables~\ref{tbl-tox}~and~\ref{tbl-tox-b} we provide results for nine different scenarios in which there are $K=6$ doses with a target toxicity $\theta = 0.30$, budget $n=36$ and prior toxicities\[p = [0.06 \ \ 0.12 \ \ 0.20 \ \ 0.30 \ \ 0.40 \ \ 0.50].\]
+For each scenario and algorithm, we report the percentage of allocation to each dose and the percentage of the recommendations of each dose when $n=36$, estimated over $N=2000$ repetitions. For the 3+3 design, only the recommendation percentages are displayed, as the percentage of allocations would be computed based on a number of patients smaller than 36 (as a 3+3 based trial involves some random stopping). This design is also the only one that would stop and recommend none of the doses if they are all judged too toxic: we add this fraction of no recommendation in the table. 
+
+\medskip
+
+For each scenario (corresponding to different increasing toxicity probabilities) the MTD is underlined
+%in Table~\ref{tbl-tox}
+and we mark in bold the fraction of recommendation or allocation of the MTD that are superior to what is achieved by the CRM. We now comment on the performance of the algorithms on those scenarios.
+
+\paragraph{Dose recommendation.}  $\mathrm{TS}(\epsilon)$ outperforms CRM 6 out of 9 times, while $\mathrm{TS}\_\mathrm{A}$ does so 5 out of 9 times. As expected, $\mathrm{Independent \ TS}$, which does not leverage the increasing structure, does not have a remarkable performance. This algorithm would need a larger budget to have a good empirical performance. With $n=36$ in most cases this strategy is not doing much better than selecting the doses uniformly at random. One can also observe that the 3+3 design (that may however require less than 36 patients in the trial) performs very bad in terms of dose recommendation.
+
+\paragraph{Dose allocation.} While $\mathrm{TS}\_\mathrm{A}$ and $\mathrm{TS}(\epsilon)$ do not always have higher allocation percentage at the optimal (underlined) dose compared to CRM, a scan of the dose allocation results in Table~\ref{tbl-tox}~and~\ref{tbl-tox-b} shows that the addition of the admissible set $\cA$ and $\epsilon$ regularity to the Thompson Sampling method consistently reduces the allocation percentage of higher toxicity doses. $\mathrm{TS}\_\mathrm{A}$ performs best in this regard (it is more cautious with allocating higher doses) across all algorithms (e.g. it consistently has superior performance compared to CRM), while $\mathrm{TS}(\epsilon)$ has comparable performance with CRM. We believe this result is of interest in trials where toxicity is an ethical concern.
 
 \input{dosefinding/tbl_toxicity}
 
-\subsubsection{MTD Identification}
-We first evaluate the three algorithms introduced in Section~\ref{sec:TSIncreasing}, $\mathrm{TS}$, $\mathrm{TS}(\epsilon)$ and $\mathrm{TS}\_\mathrm{A}$, and compare them to the $\mathrm{CRM}$ baseline. We use $\epsilon = 0.05$ for $\mathrm{TS}(\epsilon)$ and $c_1 = 0.8$ for $\mathrm{TS}\_\mathrm{A}$. We also include the two algorithms proposed in Section~\ref{sec:Bandits}, $\mathrm{Sequential \ Halving}$ and
- $\mathrm{Independent \ TS}$, that are agnostic to the increasing structure. 
+\clearpage
+
+\subsubsection{Maximizing Efficacy Under Toxicity Constraints in Presence of a Plateau} \label{subsec:toxOnlyExp}
+
+In this set of experiments, we evaluate the performance of the two algorithm introduced in Section~\ref{sec:TSEff}, $\mathrm{TS}$ and $\mathrm{TS}\_\mathrm{A}$, and compare them to the $\mathrm{MTA}$-$\mathrm{RA}$ algorithm. We use the experimental setup of \cite{MKR17}: several scenarios with $K=6$ doses, budget $n=60$, $\theta = 0.35$, toxicity and efficacy priors
+\begin{align*}
+\bm{p^0} &= [0.02, 0.06, 0.12, 0.20, 0.30, 0.40]
+\\
+\text{ and } \ \ \bm{\mathrm{eff}^0} &= [0.12, 0.20, 0.30, 0.40, 0.50, 0.59].
+\end{align*}
+Furthermore, we use the same parameters for the admissible set and the implementation of $\mathrm{MTA}$-$\mathrm{RA}$ as those chosen by \cite{MKR17}: $\xi=0.2$, $c_1=0.9$, $c_2=0.4$, and $s_1=.2\left(1-\frac{I}{n}\right)$, where $I$ is the number of samples used so far. These parameters are defined above in the main text.
  
-Table~\ref{tbl-tox} provides results for four different scenarios in which there are $K=6$ doses with a target toxicity $\theta = 0.30$, budget $n=36$ and prior toxicities $p = [0.06$ $\ \ 0.12$ $\ \ 0.20$ $\ \ 0.30$ $\ \ 0.40 \ \ 0.50]$.
-We report the percentage of allocation to and recommendation of each dose when $n=36$, estimated over $N=2000$ repetitions.
-The MTD of each scenario is underlined, and results for the MTD that are superior to what is achieved by the CRM are marked in bold. Five additional scenarios can be found in Table~\ref{tbl-tox-2}.
 
-\paragraph{Dose recommendation}  $\mathrm{TS}(\epsilon)$ and $\mathrm{TS}\_\mathrm{A}$ outperform CRM 3 out of 4 times (in scenarios of Table~\ref{tbl-tox-2}, $\mathrm{TS}(\epsilon)$ and $\mathrm{TS}\_\mathrm{A}$ outperform CRM 3 out of 5 times and 2 out of 5 times, respectively). As expected, $\mathrm{Sequential \ Halving}$ and
- $\mathrm{Independent \ TS}$, that do not leverage the increasing structure, do not have a remarkable performance. Those algorithms would need a larger budget to have a good empirical performance. With $n=36$, those strategies seldom do much better than selecting the doses uniformly at random.  
-
-\paragraph{Dose allocation} While $\mathrm{TS}\_\mathrm{A}$ and $\mathrm{TS}(\epsilon)$ do not always have higher allocation percentage at the optimal (underlined) dose compared to CRM,
-%a scan of the dose allocation results in Table~\ref{tbl-tox} shows that
-the addition of the admissible set $\cA$ and $\epsilon$ regularity to the Thompson Sampling method consistently reduces the allocation of more toxic doses. $\mathrm{TS}\_\mathrm{A}$ is the most cautious with allocating higher doses across all algorithms, while $\mathrm{TS}(\epsilon)$ is comparable with CRM. This is of particular interest where toxicity is an ethical concern.
-
-\subsubsection{Maximizing Efficacy in the Presence of a Plateau} \label{subsec:toxOnlyExp}
-
-We here compare $\mathrm{TS}$ and $\mathrm{TS}\_\mathrm{A}$
-from Section~\ref{sec:TSEff} to $\mathrm{MTA}$-$\mathrm{RA}$.
-Following \cite{MKR17}, we test several scenarios with $K=6$ doses, budget $n=60$, $\theta = 0.35$, toxicity and efficacy priors
-$\bm{p^0} = [0.02,$ $0.06,$ $0.12,$ $0.20,$ $0.30,$ $0.40]$ and
-$\bm{\mathrm{eff}^0} = [0.12,$ $0.20,$ $0.30,$ $0.40,$ $0.50,$ $0.59]$.
-We use the same parameters for the admissible set and the implementation of $\mathrm{MTA}$-$\mathrm{RA}$ as in \cite{MKR17}: $\xi=0.2$, $c_1=0.9$, $c_2=0.4$, and $s_1=.2\left(1-\frac{I}{n}\right)$, where $I$ is the number of samples used so far. These parameters are defined above.
- 
 \input{dosefinding/tbl_efficacy}
 
-Table~\ref{tbl-eff} provides results on several scenarios (with more in Table~\ref{tbl-eff-2} ). We report allocations to and recommendations of each dose, and how often the trials stopped early, over $N=2000$ repetitions with $n=60$.
-Optimal doses are underlined by a plain line; a dashed line identifies doses with toxicity above $\theta$. Results where
-our algorithms recommend the optimal decision more often than 
-$\mathrm{MTA}$-$\mathrm{RA}$ are in bold.
+%\clearpage
 
-\paragraph{Dose recommendation}  
-Recall our assumption that efficacy increases monotonically in toxicity up to a point and then plateaus. We present experimental results on several scenarios, some of which are borrowed from \cite{MKR17}, on which this plateau assumption is not always exactly met. In most of these scenarios, $\mathrm{TS}\_\mathrm{A}$ outperforms $\mathrm{MTA}$-$\mathrm{RA}$. 
+In Tables~\ref{tbl-eff}~and~\ref{tbl-eff-b} we provide results on several scenarios. We report the percentage of allocation to each dose, the percentage of recommendation of each dose when $n=60$, and the percentage of time the trials stopped early (E-Stop), estimated over $N=2000$ repetitions.
+Optimal doses are underlined by a plain line while a dashed line identifies doses whose toxicity is larger than $\theta$. We mark in bold cases where
+our algorithms makes the optimal decision (in terms of the percentage of recommendation) more often than the
+$\mathrm{MTA}$-$\mathrm{RA}$ baseline.
 
-In scenario 1 (and 6-10 in Table~\ref{tbl-eff-2}) an efficacy plateau exists at a reasonable toxicity, so the optimal dose corresponds to the plateau breakpoint. Our algorithms make the optimal decision more often than $\mathrm{MTA}$-$\mathrm{RA}$: $\mathrm{TS}$ 4 out of 6 times and $\mathrm{TS}\_\mathrm{A}$ 5 out of 6 times. In scenario 2 (and scenario 11 in Table~\ref{tbl-eff-2b}) the plateau starts when the toxicity is already too high, hence the optimal dose is before the plateau. In scenario 2,  $\mathrm{TS}\_\mathrm{A}$ and $\mathrm{TS}$ both outperform $\mathrm{MTA}$-$\mathrm{RA}$, while in scenario 11 $\mathrm{MTA}$-$\mathrm{RA}$ has a slight advantage over $\mathrm{TS}$. 
+\paragraph{Dose recommendation.}  
+Recall that the modeling assumption here is that efficacy increases monotonically in toxicity up to a point and then it plateaus. We present experimental results on several scenarios, some of which are borrowed from \cite{MKR17}, on which this plateau assumption is not always exactly met. In most of these scenarios, $\mathrm{TS}\_\mathrm{A}$ outperforms the $\mathrm{MTA}$-$\mathrm{RA}$ algorithm.
 
-Scenarios 3 (and 12 in Table~\ref{tbl-eff-2b}) has no true efficacy plateau, but there is a ``breakpoint'' (underlined) after which efficacy increases slowly while toxicity increases quickly. This dose may be a good trade-off between efficacy and toxicity worth exploring in further phases. $\mathrm{TS}\_\mathrm{A}$ identifies this dose more often than $\mathrm{MTA}$-$\mathrm{RA}$, but $\mathrm{TS}$ does slightly worse. 
+In scenarios 1 through 4 and in scenarios 12 and 13, there is a plateau of efficacy starting at a reasonable toxicity: in this case the optimal dose corresponds to the plateau breakpoint. Our algorithms make the optimal decision compared to $\mathrm{MTA}$-$\mathrm{RA}$ consistently: $\mathrm{TS}$ 4 out of 6 times and $\mathrm{TS}\_\mathrm{A}$ 5 out of 6 times. In scenarios 5 and 6 the plateau of efficacy starts when the toxicity is already too high, hence the optimal dose is before than the plateau. In scenario 5,  $\mathrm{TS}\_\mathrm{A}$ and $\mathrm{TS}$ both outperform $\mathrm{MTA}$-$\mathrm{RA}$, while on scenario 6 $\mathrm{MTA}$-$\mathrm{RA}$ has a slight advantage over $\mathrm{TS}$. 
+% In scenario 1 (and scenarios 6-10 in \refWTEffa) an efficacy plateau exists at a reasonable toxicity, so the optimal dose corresponds to the plateau breakpoint. Our algorithms make the optimal decision more often than $\mathrm{MTA}$-$\mathrm{RA}$: $\mathrm{TS}$ 4 out of 6 times and $\mathrm{TS}\_\mathrm{A}$ 5 out of 6 times. In scenario 2 (and scenario 11 in \refWTEffb) the plateau starts when the toxicity is already too high, hence the optimal dose is before the plateau. In scenario 2,  $\mathrm{TS}\_\mathrm{A}$ and $\mathrm{TS}$ both outperform $\mathrm{MTA}$-$\mathrm{RA}$, while in scenario 11 $\mathrm{MTA}$-$\mathrm{RA}$ has a slight advantage over $\mathrm{TS}$. 
 
-Lastly, we study the case of no clear optimal dose in scenarios 4 and 5 (and scenario 13 in Table~\ref{tbl-eff-2b}). In scenario 4 most doses, including the entire quasi-plateau, are too toxic, and we prefer to stop early or at most recommend dose 1 (the only dose meeting the toxicity constraint but with low efficacy). By this view, $\mathrm{TS}$ and $\mathrm{TS}\_\mathrm{A}$ outperform $\mathrm{MTA}$-$\mathrm{RA}$. Our algorithms most often either stop early or recommend dose 1, while in comparison $\mathrm{MTA}$-$\mathrm{RA}$ recommends dose 2 a large fraction (0.332) of the time. In scenarios 5 and 13 all doses are either too toxic or ineffective, so a good algorithm would stop early. %While in scenario 8 dose 3 meets the toxicity constraint, its efficacy is too small when compared to its high toxicity for any medical purpose. In scenario 9, all doses are too toxic, including the dose at the plateau point. 
-$\mathrm{TS}\_\mathrm{A}$ does this more often than $\mathrm{MTA}$-$\mathrm{RA}$ in both scenarios and $\mathrm{TS}$ in one of the two scenarios. 
+% Scenario 3 (and scenario 12 in \refWTEffb) has no true efficacy plateau, but there is a ``breakpoint'' (underlined) after which efficacy increases slowly while toxicity increases quickly. This dose may be a good trade-off between efficacy and toxicity worth exploring in further phases. $\mathrm{TS}\_\mathrm{A}$ identifies this dose more often than $\mathrm{MTA}$-$\mathrm{RA}$, but $\mathrm{TS}$ does slightly worse. 
+
+In scenario 7 and 8 there is no true plateau of efficacy, however in both cases there exists a ``breakpoint'' (underlined) after which the efficacy is increasing very slowly while the toxicity is increasing significantly. This breakpoint can thus be argued to be a good trade-off between efficacy and toxicity and should be investigated in further phases. In these two scenarios $\mathrm{TS}\_\mathrm{A}$ identifies this pseudo-optimal dose more often than $\mathrm{MTA}$-$\mathrm{RA}$, while  $\mathrm{TS}$ has a slightly worse performance. 
+
+Lastly, we study the case when there is no clear optimal or near-optimal dose, i.e. scenarios 9-11. In scenario 9 wherein most doses, including the entire quasi-plateau, are too toxic, we would like to stop early or at most recommend dose 1 (the only dose meeting the toxicity constraint but whose efficacy is not very high). Under this interpretation, $\mathrm{TS}$ and $\mathrm{TS}\_\mathrm{A}$ outperform $\mathrm{MTA}$-$\mathrm{RA}$. Note that our algorithms most often either stop early or recommend dose 1, while in comparison $\mathrm{MTA}$-$\mathrm{RA}$ recommends the toxic dose 2 a large fraction (0.332) of the time. In scenarios 10 and 11 in which all doses are either too toxic or ineffective a good algorithm would stop early with no recommendation. %While in scenario 8 dose 3 meets the toxicity constraint, its efficacy is too small when compared to its high toxicity for any medical purpose. In scenario 9, all doses are too toxic, including the dose at the plateau point. 
+$\mathrm{TS}\_\mathrm{A}$ makes this optimal decision more often than $\mathrm{MTA}$-$\mathrm{RA}$ in both scenarios and $\mathrm{TS}$ in one of the two scenarios. 
 
 
 
-\paragraph{Dose allocation}
-While $\mathrm{TS}$ and $\mathrm{TS}\_\mathrm{A}$ allocate the optimal dose less often than $\mathrm{MTA}$-$\mathrm{RA}$, the admissible set $\cA$ in Thompson Sampling consistently reduces the percentage of too-toxic dose allocation. $\mathrm{TS}\_\mathrm{A}$ is also more cautious in allocating higher doses than $\mathrm{MTA}$-$\mathrm{RA}$. Notably, the fraction of allocation to doses with toxicities above $\theta$ (underlined with a dashed line) is always smaller for $\mathrm{TS}\_\mathrm{A}$ than for $\mathrm{MTA}$-$\mathrm{RA}$. Thus, not only is $\mathrm{TS}\_\mathrm{A}$ good in terms of recommending the right dose, it also avoids too-toxic doses more consistently.
+\paragraph{Dose allocation.}
+While $\mathrm{TS}$ and $\mathrm{TS}\_\mathrm{A}$ have lower allocation percentage at the optimal (underlined) dose compared to $\mathrm{MTA}$-$\mathrm{RA}$, the addition of the admissible set $\cA$ to the Thompson Sampling method consistently reduces the percentage of dose allocation at doses that are too toxic. Furthermore, $\mathrm{TS}\_\mathrm{A}$ is more cautious in allocating higher doses compared to $\mathrm{MTA}$-$\mathrm{RA}$. Our experiments notably reveal that the fraction of allocation to doses whose toxicity is larger than $\theta$ (that are underlined with a dashed line) is always smaller for $\mathrm{TS}\_\mathrm{A}$ than for $\mathrm{MTA}$-$\mathrm{RA}$. Hence, not only is $\mathrm{TS}\_\mathrm{A}$ very good in terms of recommending the right dose, it also manages to avoid too-toxic doses more consistently.
 
 % \todo[inline]{The results on scenario 6 may suggest (or make me hope) that the algorithms were fed with $\theta = 0.3$}
 % \todo[inline]{M: I double checked. I used $\theta = 0.35$. I believe what's happening is that TS-A is very cautious with higher (closer to the toxicity threshold) toxicities. Something similar is happening in SC13 in the appendix. In almost every other scenario the toxicities before and at the efficacy breaking point are way smaller than the toxicity threshold so they are easier for TS-A. Also, in SC5 TS-A recommends the optimal dose (with toxicity 0.25) and the dose before it equally often, while it allocates the dose before the optimal dose more often. Another sign of less risk taking. MTA-RA makes most of its mistake on the higher toxicity (.4) dose... So not sure it would help even if $\theta$ was $0.35$ }
 
-\subsection{Conclusion}\label{sec:Conclusion}
-Motivated by the literature on multi-armed bandit models, this paper advocates the powerful Thompson Sampling principle for dose finding studies. This Bayesian randomized algorithm can be used in different contexts as it can leverage different prior information about the doses. For increasing toxicities and increasing or plateau efficacies, we propose variants of Thompson Sampling, notably $\mathrm{TS}\_\mathrm{A}$ which often outperforms our baselines in terms of recommendation of the optimal dose, while significantly reducing allocation to high toxicity doses. 
 
-Moreover, for two simple bandit-inspired MTD identification designs, Independent Thompson Sampling and Sequential Halving, we provided the first non-asymptotic theoretical guarantees for a dose finding design either in terms of mis-identification probability or in terms of the number of dose allocations. However our experiments revealed that those designs perform poorly with the small number of patients allowed in phase I clinical trials. Therefore finding a practical design with provable theoretical guarantees that go beyond consistency is an interesting future work. %We shall also investigate further the trade-off between recommendation and allocation.
+\subsection{Revisiting the Treatment versus Experimentation Trade-off}\label{sec:Discussion}
+
+Ideally, a good design for MTD identification should be supported by a control of both the error probability $e_n = \bP(\hat{k}_n \neq k^*)$ and the number of sub-optimal selections $\bE[N_k(n)]$ for $k\neq k^*$. These two quantities are respectively useful to check whether the design achieves a \emph{good identification of the optimal dose} and whether \emph{a large number of patients have been treated with the optimal dose}.   
+
+For classical bandits (in which $k^*$ is the arm with largest mean instead of the MTD), those two performance measures are known to be antagonistic. Indeed, \cite{Bubeckal11} shows that the smaller the regret (a quantity that can be related to the number of sub-optimal selections), the larger the error probability. Such a trade-off may also exist for the MTD identification problem. However, the precise statement of such a result would be meaningful for large values of the number of patients $n$, which is of little interest for a real clinical trial as it can only involve a small number of patients. In practice, we showed that adaptations of Thompson Sampling, a bandit design aimed at maximizing rewards, achieve good performance in terms of both allocation and recommendation. 
+
+Still, another natural avenue of research is to investigate the adaptation of bandit designs aimed at minimizing the error probability. Minimizing the error probability for MTD can be viewed as a variant of the fixed-budget Best Arm Identification (BAI) problem introduced by \cite{Bubeck10BestArm,Bubeckal11}. In contrast to the standard BAI problem that aims to identify the arm with largest mean (which would correspond here to the most toxic dose), the focus is on identifying the arm whose mean is closest to the threshold $\theta$. A state-of-the art fixed-budget BAI algorithm is Sequential Halving \citep{Karnin13}, and we propose in Algorithm~\ref{alg-ST} an adaptation to MTD identification. 
+
+Sequential Halving for MTD identification proceeds in phases. In each of the $\log_2(K)$ phases, all the remaining doses are allocated the same amount of times to patients and their empirical toxicity based on these allocations (that is, the average of the toxicity responses) is computed. At the end of each phase the empirical worst half of the doses is eliminated. For MTD identification, rather than the doses with the smallest empirical means (as the vanilla Sequential Halving algorithm would do), the doses whose empirical toxicity are the furthest away from the threshold $\theta$ are eliminated. Observe that by design of the algorithm, the total number of allocated doses is indeed smaller than the prescribed budget $n$.  
+
+
+\begin{algorithm}[H]
+\caption{Sequential Halving for MTD Identification}
+\label{alg-ST}
+\KwData{ budget $n$, target toxicity $\theta$ }
+\textbf{Initialization:} Set of dose levels $S_0 \leftarrow \{1, \dots, K\}$ \;
+  \For{$r \leftarrow 0$ to $\lceil\log_2(K)\rceil-1$}{
+    Allocate each dose $k \in S_r$ to $t_r = \left\lfloor\frac{n}{|S_r|\lceil\log_2(K)\rceil}\right\rfloor$ patients \; 
+    Based on their response compute $\hat p_k^r$, the empirical toxicity of dose $k$ based on these $t_r$ samples \;
+    Compute $S_{r+1}$ the set of $\lceil|S_r|/2\rceil$ arms with 
+        smallest $\hat d_k^r:=|\theta - \hat{p}_k^r|$ \;
+  }
+\Return the unique arm in  $S_{\lceil{\log_2(K)}\rceil}$ \;
+\end{algorithm}
+
+% I don't see how it works in practice as you cannot allocate patients t_r times to each doses ?? 
+% E : I tried to be more precise rephrasing the things in terms of doses and patients 
+
+Building on the analysis of \cite{Karnin13}, one can establish the following upper bound on the error probability of Sequential Halving for MTD identification. The proof can be found in Section~\ref{sec:SHproof}. 
+
+\begin{theorem}\label{thm:SH}
+The error probability of the \texttt{SH} algorithm is upper bounded as 
+\begin{align*}
+  \bP\left(\hat{k}_n \neq k^*\right) \leq 9 \log_2 K \cdot \exp \left(
+  - \frac{n}{8 H_2 (\bm p)\log_2 K}
+  \right),
+\end{align*}
+where $H_2(\bm p):= \max_{k \ne k^*} {k}{\Delta_{[k]}^{-2}}$ where $\Delta_k = |p_k - \theta| - |p_{k^*} - \theta|$ and $\Delta_{[1]} \leq \Delta_{[2]} \leq \dots \leq \Delta_{[K]}$.
+%\[\Delta_k = \left\{\begin{array}{cc}
+%|p_k - p_{k^*}| & \text{if dose $k$ and dose $k^*$ are on the same side of the threshold} \\
+%|p_k - (2\theta - p_{k^*})| & \text{if dose $k$ and dose $k^*$ are separated by the threshold}                    
+%                    \end{array}
+%                   \right.\]
+\end{theorem}
+A consequence of Theorem~\ref{thm:SH} is that in a trial involving more than $n = 8 H_2(\bm p) \log_2 K\log\left(9\log_2(K)/\delta\right)$ patients, Sequential Halving is guaranteed to identify the MTD with probability larger than $1-\delta$. However, this number is typically much larger than the number of patients involved in a medical study. Indeed the complexity term $H_2(\bm p)$ may be quite large, when some doses have a distance to the threshold $\theta$ which is very close to the closest distance $|p_{k^*} - \theta|$. 
+
+An important shortcoming of Sequential Halving is that due to the uniform exploration within each phase each dose is selected at least $n / (K\log_2(K))$ times, even the largest, possibly harmful ones. This is highly unethical in a  clinical trial without prior knowledge that too-toxic (or too ineffective) doses have already been eliminated. This problem of allocating too extreme doses is likely to be shared by adaptations of any other BAI algorithm, that are expected to select all the arms a linear number of time. For example, the APT algorithm proposed by \cite{Locatelli16Thres} to identify all arms with mean above a threshold $\theta$ using a fixed budget $n$ also selects all arms a linear number of time.
+
+To overcome this problem, an interesting avenue of research would be to try to incorporate monotonicity assumptions in BAI algorithms. \cite{Garivier17DF} recently proposed such an algorithm but in the fixed confidence setting: given a risk parameter $\delta$, the goal is identify a dose $\hat{k}_\tau$  such that $\bP(\hat{k}_\tau \neq k^*) \leq \delta$, using as few samples $\tau$ as possible. Note that in this setting, the stopping rule $\tau$ is random, which would require a clinical trial based on an adaptatively chosen number of patients.
+
+
+% Interestingly, the sampling rule of APT is not based on eliminations, but rather on the following idea. For a given arm, if one were to test $H_0 :(\mu = \theta)$ versus $H_1 :(\mu \neq \theta)$, under a Gaussian assumption, the (GLRT) test statistic to reject $H_0$ would be $T_n = \frac{n}{2}(\theta - \hat{\mu}_n)^2$. Hence, to speed up the learning, one needs to draw the arm for which the test statistic is smaller (some evidence is still to be gained for such an arm, and gathering new samples with make the test statistic higher). The sampling rule rewrites
+% \[A_{t+1} = \argmin{k \in \{1,\dots,K\}} \ \sqrt{N_k(t)} |\hat{p}_k(t) - \theta|,\]
+% where $\hat{p}_k(t)$ is the empirical toxicity observed when allocating dose $k$. The analysis of APT shows that each arm is roughly drawn in inverse proportion of their squared gaps to the threshold, $|p_k - \theta|$, and provides an upper bound on the probability of error in identifying the subset of arms with means below $\theta$. This does not directly yield an upper bound on the error probability $e_n = \bP(\hat{k}_n \neq k^*)$.
+
+
+\subsection{Conclusion}\label{sec:Conclusion}
+
+Motivated by the literature on multi-armed bandit models, we advocated the use of the powerful Thompson Sampling principle for dose finding studies. This Bayesian randomized algorithm can be used in different contexts as it can leverage different prior information about the doses. For increasing toxicities and increasing or plateau efficacies, we proposed variants of Thompson Sampling, notably the $\mathrm{TS}\_\mathrm{A}$ algorithm that often outperforms our baselines in terms of recommendation of the optimal dose, while significantly reducing the allocation to doses with high toxicity. 
+
+We provided theoretical guarantees for the simplest version of Thompson Sampling based on independent uniform priors on each dose toxicity, but advocated the use of more sophisticated priors for practical dose finding studies. We believe that finding a practical design for which we can also establish non-trivial finite-time performance guarantees is a crucial research question. 
+
+% 
+% 
+% Moreover, for two simple bandit-inspired MTD identification designs, Independent Thompson Sampling and Sequential Halving, we provided the first non-asymptotic theoretical guarantees for a dose finding design either in terms of mis-identification probability or in terms of the number of dose allocations. However our experiments revealed that those designs perform poorly with the small number of patients that is allowed in phase I clinical trials. Therefore finding a practical design with provable theoretical guarantees that go beyond consistency is an interesting future work. %We shall also investigate further the trade-off between recommendation and allocation.
 
 
 % \begin{itemize}
@@ -612,26 +594,37 @@ Moreover, for two simple bandit-inspired MTD identification designs, Independent
 
 %\backmatter
 
+%%%%%% include this section if you wish to acknowledge people,
+%%%%%% grant support, etc.
+
+%\section*{Acknowledgements} Emilie Kaufmann acknowledges the support of the French Agence Nationale de la Recherche (ANR) under grant ANR-16-CE40-0002 (BADASS project).
+
+%\todo[inline]{maybe add acknowledgements section}
+
+% The authors thank Professor A. Sen for some helpful suggestions,
+% Dr C. R. Rangarajan for a critical reading of the original version of the
+% paper, and an anonymous referee for very useful comments that improved
+% the presentation of the paper.\vspace*{-8pt}
+
 %%%%%% include this section only if your manuscript refers to supplementary
 %%%%%% materials -- see Instructions for Authors at 
 %%%%%% http://www.tibs.org/biometrics
 %\section*{Supplementary Materials}
-%Web Appendices and Tables referenced in Sections~\ref{sec:Bandits} and \ref{sec:Experiments} are
-% available
-%with this paper at the Biometrics website on Wiley Online Library.
+%\todo[inline]{maybe add supplementary section here and refer to the appendix here as the supplementary material }
+
+% Web Appendix 1 referenced in Section~\ref{ss:example} is available
+% with this paper at the Biometrics website on Wiley Online Library.
 % \vspace*{-8pt}
 
+\clearpage
 
-%%%%%% include this section if you wish to acknowledge people,
-%%%%%% grant support, etc.
+%\bibliographystyle{biom}
+%\bibliography{biblioBandits}
 
-% \section*{Acknowledgements}
-% Emilie Kaufmann is supported by the European CHIST-ERA project DELTA and the French Agence Nationale de la Recherche (ANR) under grant ANR-16-CE40-0002 (project BADASS).
-%  \vspace*{-8pt}
-
+\clearpage
 \input{dosefinding/appendix}
 
-%\label{lastpage}
+\label{lastpage}
 
 %\end{document}
 
