@@ -1046,13 +1046,13 @@ under assumptions on the tail of the reservoir.
     \STATE{draw arm $\arm^a \sim \ArmMeasure$}
     \STATE{sample arm $\arm^a$ once}
 \ENDFOR
-\STATE{$t = n$ (current number of samples drawn)}
+\STATE{$t = 1$ (current round number)}
 \STATE{$B(n) = \infty$ (stopping index)}
 \STATE{Compute confidence bounds $U_a(n)$ and $L_a(n)$}
 %\COMMENT{\texttt{KL-LUCB}; run until confidence interval overlap is small}
 \WHILE{$B(t) > \epsilon$}
 	\STATE{Draw arm $\arm^{\hat{a}(t)}$ and $\arm^{\hat{b}(t)}$}
-    \STATE{$t = t + 2$}
+    \STATE{$t = t + 1$}
     \STATE{Update confidence bounds, compute $\hat{a}(t)$ and $\hat{b}(t)$}
 	\STATE{$B(t) = U_{\hat{b}(t)}(t) - L_{\hat{a}(t)}(t)$}
 \ENDWHILE
@@ -1307,18 +1307,9 @@ we truncate our $Beta$ distributions to have support on the
 interval $]0, 0.95]$.
 We report the fraction of runs in which it fails to find an arm within $\epsilon$ of the top-$\alpha$
 fraction, the mean simple regret observed, and the mean budget used.
-We have also tried various minor modifications to this algorithm which appear to 
-reduce the sample complexity without much affecting its success rate or simple regret.
-These include drawing a sample only from the least-sampled of the two arms
-chosen at each round
-%increasing $\epsilon$ to reduce the budget used at the risk of 
-%returning an arm which is not from the top-$\alpha$ fraction,
-and updating confidence intervals only for those arms whose upper bounds overlap 
-with the top arm.
-However, we provide no performance guarantees for the algorithm with these 
-modifications.
-Note that our results are for the algorithm as stated in the chapter, and not with 
-any of these modifications.
+
+For the sake of computational efficiency we only update confidence intervals for those arms whose upper bounds overlap 
+with the top lower bound. 
 
 \begin{table}
 %\captionsetup{justification=centering}
