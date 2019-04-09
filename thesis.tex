@@ -129,7 +129,7 @@ We examined this problem in both the fixed budget setting, wherein one attempts 
 and the fixed confidence setting, wherein one attempts to minimize budget while meeting a quality constraint on the selected arm.
 
 More formally, the goal of an infinitely armed bandit algorithm in the pure exploration setting is to return an $\epsilon$-good arm with probability at least $1-\delta$.
-The complexity of the problem depends on $\epsilon, \delta$ and the so-called reservoir distribution $\nu$ from which the means of the arms are drawn i.i.d. While most previous work focus  on specific cases of $\nu$ our analysis makes no assumption on the reservoir.
+The complexity of the problem depends on $\epsilon, \delta$ and the so-called reservoir distribution $\nu$ from which the means of the arms are drawn i.i.d. While most previous work focus  on specific cases of $\nu$ we make no assumption on the reservoir.
 
 Chapter~\ref{fixedconfidence} addresses the fixed confidence setting of this problem.
 It proposes a new PAC-like $(\alpha,\epsilon,\delta)$ framework
@@ -156,8 +156,8 @@ $\log_2(n)$ rounds. In each round
 the same number of samples is drawn from each surviving arm,
 the half with worst empirical performance are removed,
 and the number of samples per arm is doubled in the next round.
-We show that running Successive Halving with $n$ randomly sampled arms and a budget of $n\log_2(n)$ pulls--where arms start being discarded after being pulled just once. In exhaustive experimental studies, we showed that our algorithm is not only superior on most reservoir distributions (including those derived from finite-armed problems) but also against algorithms designed to make use of knowledge about the reservoirs which our algorithm does not have.
-We also contribute an information theoretic lower bound for the infinite-armed bandit problem. As of the writing of this thesis, my collaborators, Kevin Jamieson and Javed Aslams, and I are working on proving the correctness of the algorithm. 
+We show that running Successive Halving with $n$ randomly sampled arms and a budget of $n\log_2(n)$ pulls, where arms start being discarded after being pulled just once, beats state-of-the-art Hyperband. In exhaustive experimental studies, we showed that our algorithm is not only superior on most reservoir distributions (including those derived from finite-armed problems) but also against algorithms designed to make use of knowledge about the reservoirs which our algorithm does not have.
+We also contribute an information theoretic lower bound for the infinite-armed bandit problem. As of the writing of this thesis, my collaborators, Kevin Jamieson and Javed Aslam, and I are working on proving the correctness of the algorithm. 
 
 In Chapter~\ref{AP-Boost}, we return to the original research question of
 efficiently training boosted decision trees with large feature sets~.
@@ -171,15 +171,12 @@ is near-optimal within this family of algorithms.
 We further derived a lower bound applicable to any algorithm solving the
 task, and we demonstrate that our algorithm empirically achieves
 performance close to this best-achievable lower bound.
-In this thesis, we provide results for trees split based on accuracy. My collaborators, Jesse Anderton and Javed Aslam, and I preparing an update with GINI results for resubmission.
+In this thesis, we provide results for trees split based on accuracy. My collaborators, Jesse Anderton and Javed Aslam, and I are preparing an update with GINI results.
 %We are also considering adding results for
 %XGBoost~\citep{Chen:2016:XST:2939672.2939785} as a final contribution.
 
-Our multi-armed work also led to dose finding in clinical trials. We studied, Chapter~\ref{dosefinding}, the problem of finding the optimal dosage in a phase I clinical trial through the multi-armed bandit lens. We advocated the use of Thompson Sampling, a flexible algorithm that can accommodate different types of monotonicity assumptions on the toxicity and efficacy of the doses. We proposed two designs inspired by state-of-the-art multi armed bandit algorithms for which we provided finite-time upper bounds on the error probability or the number of sub-optimal dose selections, which is unprecedented for dose finding algorithms. Through a large simulation study, we then showed that variants of Thompson Sampling outperform state-of-the-art dose identification algorithms in different types of trials, in particular testing the most toxic doses fewer times and recommending the optimal doses more times.
+Our multi-armed work also led to dose finding in clinical trials. My collaborators, Emilie Kaufmann and Marie-Karelle Riviere, and I  studied, Chapter~\ref{dosefinding}, the problem of finding the optimal dosage in a phase I clinical trial through the multi-armed bandit lens. We advocated the use of Thompson Sampling, a flexible algorithm that can accommodate different types of monotonicity assumptions on the toxicity and efficacy of the doses. We proposed two designs inspired by state-of-the-art multi armed bandit algorithms for which we provided finite-time upper bounds on the error probability or the number of sub-optimal dose selections, which is unprecedented for dose finding algorithms. Through a large simulation study, we then showed that variants of Thompson Sampling outperform state-of-the-art dose identification algorithms in different types of trials, in particular testing the most toxic doses fewer times and recommending the optimal doses more times.
 
-\subsection {A few other potential applications}
-\paragraph {Recommender Systems}
-\paragraph {Hyper-parameter tuning}
 
 \newpage
 \section{The Fixed Confidence Setting}\label{fixedconfidence}

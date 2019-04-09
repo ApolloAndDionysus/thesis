@@ -200,7 +200,7 @@ which is the case for $j$ superior to some $j_4$. Thus, for $j\geq j_4$,
 \subsection{Analysis of Sequential Halving: Proof of Theorem~\ref{thm:SH}}
 \label{sec:SHproof}
 
-Recall $\hat{d}_k^r = |\theta - \hat{p}_k^t|$ is the empirical distance from the toxicity of dose $k$ to the threshold, where $\hat{p}_k^r$ is the empirical average of the toxicity responses observed for dose $k$ during phase $r$ (based on $t_r$ samples). The central element of the proof is Lemma~\ref{lemma-inversion} below, that controls the probability that dose $k$ seems to be be closer to the threshold than the MTD $k^*$ in phase $r$. Its proof is more sophisticated than that of Lemma 4.2 in \cite{Karnin13} as several cases need to be considered. 
+Recall $\hat{d}_k^r = |\theta - \hat{p}_k^t|$ is the empirical distance from the toxicity of dose $k$ to the threshold, where $\hat{p}_k^r$ is the empirical average of the toxicity responses observed for dose $k$ during phase $r$ (based on $t_r$ samples). The central element of the proof is Lemma~\ref{lemma-inversion} below, that controls the probability that dose $k$ seems to be be closer to the threshold than the MTD $k^*$ in phase $r$. Its proof is more sophisticated than that of Lemma 4.2 in \cite{icml2013_karnin13} as several cases need to be considered. 
 %
 % LEMMA: lemma-inversion
 %
@@ -317,7 +317,7 @@ which proves Equation~\ref{toproofin4case} as $\Delta_k^2 =\min\left\{
 \end{proof}
 
 
-Building on Lemma~\ref{lemma-inversion}, the next step is to control the probability that the MTD is eliminated in phase $r$. The proof bears strong similarities with that of Lemma~4.3 in \cite{Karnin13}. It is given below for the sake of completeness. 
+Building on Lemma~\ref{lemma-inversion}, the next step is to control the probability that the MTD is eliminated in phase $r$. The proof bears strong similarities with that of Lemma~4.3 in \cite{icml2013_karnin13}. It is given below for the sake of completeness. 
 
 %
 % LEMMA: lemma-best-survives
@@ -339,7 +339,7 @@ where $k_r = K/2^{r + 2}$.
 %
 % THEOREM: correctness probability
 %
-The end of the proof of Theorem~\ref{thm:SH} is identical to than of Theorem~4.1 in \cite{Karnin13}, except that it uses our Lemma~\ref{lemma-best-survives}. We repeat the argument below with the appropriate modifications. 
+The end of the proof of Theorem~\ref{thm:SH} is identical to than of Theorem~4.1 in \cite{icml2013_karnin13}, except that it uses our Lemma~\ref{lemma-best-survives}. We repeat the argument below with the appropriate modifications. 
 %Clearly, the algorithm does not exceed the budget of $n$ arm pulls.
 % Also, if the best arm survives the execution, then the algorithm succeeds
 % as all other arms must be eliminated after $log_2 K$ rounds.

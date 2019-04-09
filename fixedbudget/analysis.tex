@@ -29,8 +29,14 @@ In words, our proposed algorithm is simple: for some $n \in \mathbb{N}$, the alg
 \caption{Successive Halving algorithm. The algorithm we propose for infinite-armed bandits is to choose $n \in \mathbb{N}$ so that $T = \lceil n \log_2(n) \rceil$. For anytime, double $n$ and repeat.}\label{alg-SH}
 \end{figure}
 
+
+The main dilemma of choosing $X$ for the lil'UCB-$X$ strategies in the introduction of this chapter, and more generally all infinite-armed bandit problems, is determining whether it is better to draw more arms from a reservoir distribution over arms in the hope of getting an arm with better mean reward, or to spend the remaining arm pull budget on identifying a ``good'' arm from among already-drawn arms.
+ISHA navigates this dilemma by focusing not on individual arms but on populations of arms, where at each round the ``fitter'' (i.e. lower empirical mean) arms are more likely to survive and so from round to round the population as a whole ``evolves,'' in the sense that while any individual ``good'' arm might get unlucky and be removed from the population, overall the average expected reward of the surviving arms tends to improve. This is approach is in contrast to state-of-the-art Hyperband's approach, which hedges over different initializations of Successive Halving in hope of accounting for various unknown arm reservoir distributions. Nonetheless, ISHA consistently outperforms Hyperband and tends to enjoy
+an increasing advantage as the budget increases.
+A typical example is shown in Figure~\ref{fig:isha_vs_hb_improvement}.
+
 \begin{wrapfigure}{r}{0.45\textwidth}
-% \vspace{-2.5em}
+ \vspace{-2.5em}
 \includegraphics[width=.45\textwidth]{fixedbudget/figures/NY.png}
 \caption{The New Yorker dataset. We plot the ratio of state-of-the-art 
 Hyperband's simple regret to ISHA's simple regret as a function of
@@ -38,12 +44,6 @@ budget. }
 \label{fig:isha_vs_hb_improvement}
 \vspace{-1.5em}
 \end{wrapfigure}
-
-The main dilemma of choosing $X$ for the lil'UCB-$X$ strategies in the introduction of this chapter, and more generally all infinite-armed bandit problems, is determining whether it is better to draw more arms from a reservoir distribution over arms in the hope of getting an arm with better mean reward, or to spend the remaining arm pull budget on identifying a ``good'' arm from among already-drawn arms.
-ISHA navigates this dilemma by focusing not on individual arms but on populations of arms, where at each round the ``fitter'' (i.e. lower empirical mean) arms are more likely to survive and so from round to round the population as a whole ``evolves,'' in the sense that while any individual ``good'' arm might get unlucky and be removed from the population, overall the average expected reward of the surviving arms tends to improve. This is approach is in contrast to state-of-the-art Hyperband's approach, which hedges over different initializations of Successive Halving in hope of accounting for various unknown arm reservoir distributions. Nonetheless, ISHA consistently outperforms Hyperband and tends to enjoy
-an increasing advantage as the budget increases.
-A typical example is shown in Figure~\ref{fig:isha_vs_hb_improvement}.
-
 
 % By allocating budget uniformly in each round of the algorithm to the
 % arms with highest empirical means from the last round,
