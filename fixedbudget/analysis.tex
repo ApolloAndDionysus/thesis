@@ -109,7 +109,7 @@ If Successive Halving of Figure~\ref{alg-SH} is run with $n$ arms and $T=\lceil 
 %\begin{align*}
 %\P( \mu_i \in S_{k+1} \, | \, \mu_i = x, \mu_i \in S_{k} ) \geq \P( \mu_i \in S_{k+1} \, | \, \mu_i = y, \mu_i \in S_{k} ) \quad \forall x \leq y.
 %\end{align*} 
-%Assumption~\ref{asm:stochastic_ordering} often holds for the class of single-parameter exponential families that are well-studied in the multi-armed bandit literature \citep{audibert2010best}.
+%Assumption~\ref{asm:stochastic_ordering} often holds for the class of single-parameter exponential families that are well-studied in the multi-armed bandit literature \citep{DBLP:conf/colt/AudibertBM10}.
 %Our second assumption is standard and allows us to rely on the concentration of measure phenomenon.
 %\begin{assumption}\label{asm:subgauss}
 %If $X \sim \phi(\ \cdot \ ; \mu)$ then $X-\mu$ is an i.i.d. mean-zero, $R$-sub-Gaussian random variable such that $\E[\exp(\lambda (X-\mu))] \leq \exp(\lambda^2 R /2 )$ for any $\lambda >0$.
@@ -353,7 +353,7 @@ Implicit in \cite{malloy2012quickest} is the assumption that there exists a non-
 Such an assumption is reasonable because observations from any particular arm are conditionally independent given the mean of the arm, and knowing the mean of one arm provides no information about the mean of another. 
 Thus, the number of times any particular arm is pulled depends \emph{only} on the observations from that arm, and because the means of the arms are drawn i.i.d. from $\nu_0$, each arm should be treated identically.
 Thus, the procedure will continue to discard arms until it finds one and commits to it for all time. 
-Of course, any such non-recalling strategy would require precise knoweldge of $\nu_0$ making it purely a thought experiment, but it is useful for a lower bound.
+Of course, any such non-recalling strategy would require precise knowledge of $\nu_0$ making it purely a thought experiment, but it is useful for a lower bound.
 Nevertheless, many algorithms for the regret setting of infinite-armed bandits make very strong assumptions and are non-recalling strategies (c.f., \cite{berry1997,bonald2013two,Chan2018Infinite}.
 
 % The only reason for exploration in bandits is to discover what \emph{else} is out there, but in this case the player knows $\nu$ exactly, so they already \emph{know} what else is out there. 
@@ -374,13 +374,13 @@ for any $\widetilde{\mu}$ with $\widetilde{\kappa} := \nu(\widetilde{\mu}) - \nu
 
 \noindent We related this lower bound to previously known upper bounds using Gaussian realizations (or Bernoullis near $1/2$) where $KL(\mu,\mu') \leq c (\mu-\mu')^2$: 
 
-\noindent\textbf{Continuous as $\mu \rightarrow \mu_*$:} Take $\widetilde{\kappa} = \sqrt{\delta}$. As $\delta \rightarrow 0$ we have $\widetilde{\mu} \rightarrow \mu_*+\epsilon$ to yield a sample compelxity of $\epsilon^{-2} \log(\tfrac{1}{ \delta \nu(\mu_*+\epsilon)}) + \frac{1}{\nu(\mu_*+\epsilon)} \int_{\mu_*+\epsilon} \frac{1}{(\mu-\mu_*)^2} d\nu(\mu)$.
+\noindent\textbf{Continuous as $\mu \rightarrow \mu_*$:} Take $\widetilde{\kappa} = \sqrt{\delta}$. As $\delta \rightarrow 0$ we have $\widetilde{\mu} \rightarrow \mu_*+\epsilon$ to yield a sample complexity of $\epsilon^{-2} \log(\tfrac{1}{ \delta \nu(\mu_*+\epsilon)}) + \frac{1}{\nu(\mu_*+\epsilon)} \int_{\mu_*+\epsilon} \frac{1}{(\mu-\mu_*)^2} d\nu(\mu)$.
 
 \noindent\textbf{Two spike, Equation~\ref{eqn:mostbiasedcoin_reservoir}:} Take $\widetilde{\kappa} = (1-\pi)$ to yield a sample complexity of $\epsilon^{-2} \log(\tfrac{1}{\pi \delta}) + \frac{1}{\pi \epsilon^2}$.
 
 \noindent\textbf{Polynomial-tail, Equation~\ref{eqn:beta_parameterization}:} $\nu(\mu_* + x) := \P( \mu \leq \mu_* + x) \propto x^\beta$. Take $\widetilde{\mu} = \mu_* + 2^{1/\beta} \epsilon$ so that $\widetilde{\kappa} = \nu(\mu_*+2^{1/\beta} \epsilon) - \nu(\mu_* + \epsilon) \propto \epsilon^\beta$ yielding a sample complexity of $\epsilon^{-2}\log(1/\delta) + \epsilon^{-\beta}$.
 
-We will only sketch the proof of Theorem~\ref{thm:fb-lb}, leaving the technical details to Section~\ref{sec:SHproof}.
+We will only sketch the proof of Theorem~\ref{thm:fb-lb}, leaving the technical details to Section~\ref{sec:appendix_upper_lemmas}.
 Since each arm is treated identically, one realizes that such a procedure is performing a sequence of composite binary hypothesis tests where the test decides to keep sampling or not given the observations up to the current time.
 Let $\P_\mu$ and $\E_\mu$ be the probability law of observations from an arm with mean $\mu$.
 It will be also convenient to define $\pi:=\nu(\mu_*+\epsilon)$.

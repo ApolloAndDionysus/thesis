@@ -1,0 +1,31 @@
+\begin{table*}[ht]
+\caption{Performance for MNIST Digits}
+\label{tbl:perf-mnist}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{lccccccccc}
+\toprule
+	& \multicolumn{3}{c}{100}
+	& \multicolumn{3}{c}{200}
+	& \multicolumn{3}{c}{300}
+	\\
+ & \# Assess. & Train & Test & \# Assess. & Train & Test & \# Assess. & Train & Test \\
+\midrule
+AP LazyBoost (0.5) & 6.63e+10 & 0.148 & 0.152 & 1.27e+11 & 0.097 & 0.098 & 1.84e+11 & 0.078 & 0.082 \\
+QB LazyBoost (0.5) & 7.06e+10 & 0.148 & 0.152 & 1.39e+11 & 0.097 & 0.098 & 2.05e+11 & 0.078 & 0.082 \\
+AP LazyBoost (0.9) & 1.16e+11 & 0.115 & 0.118 & 2.23e+11 & 0.077 & 0.082 & 3.24e+11 & 0.061 & 0.067 \\
+QB LazyBoost (0.9) & 1.24e+11 & 0.115 & 0.118 & 2.45e+11 & 0.077 & 0.082 & 3.62e+11 & 0.061 & 0.067 \\
+AP Wt. Trim (0.9) & 1.53e+11 & 0.901 & 0.902 & 3.07e+11 & 0.901 & 0.902 & 4.61e+11 & 0.901 & 0.902 \\
+QB Wt. Trim (0.9) & 1.53e+11 & 0.901 & 0.902 & 3.07e+11 & 0.901 & 0.902 & 4.61e+11 & 0.901 & 0.902 \\
+AP Wt. Trim (0.99) & 1.20e+11 & 0.113 & 0.115 & 2.24e+11 & 0.077 & 0.082 & 3.18e+11 & 0.060 & 0.070 \\
+QB Wt. Trim (0.99) & 1.25e+11 & 0.113 & 0.115 & 2.35e+11 & 0.077 & 0.082 & 3.33e+11 & 0.060 & 0.070 \\
+\bottomrule
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table*}
+

@@ -85,7 +85,7 @@
 Similar to Chapter~\ref{fixedconfidence}, we consider a multi-armed bandit game where the number of arms is much larger than the maximum, but fixed, budget $T$ and is thus effectively infinite.
 In such situations, the sample complexity depends on $\epsilon, \delta$ and the so-called reservoir distribution $\nu$ from which the means of the arms are drawn i.i.d. 
 While a substantial literature has developed around analyzing specific cases of $\nu$ such as the beta distribution, our algorithm makes no assumption about the form of $\nu$. It takes a surprising approach that empirically matches or outperforms all state-of-the-art algorithms. 
-Our algorithm is based on successive halving with the surprising exception that arms start to be discarded after just a single pull. We present exhaustive experiments in this chapter. We are currently working on proving the correctness of this algorithm.
+Our algorithm is based on successive halving with the surprising exception that arms start to be discarded after just a single pull. We present exhaustive experiments in this chapter. We are currently working on proving the correctness of this algorithm, but here we provide a conjecture based on partial theoretical work. 
 %\end{abstract}
 
 %\begin{keywords}
@@ -96,6 +96,8 @@ Our algorithm is based on successive halving with the surprising exception that 
 \input{fixedbudget/intro}
 \input{fixedbudget/analysis}
 \input{fixedbudget/experiments}
+\input{fixedbudget/conclusion}
+
 \clearpage
 %\clearpage
 %\appendix

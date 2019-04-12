@@ -25,7 +25,7 @@ A decision tree $h_{\textit{Tree}}(x)$ is trained, top to bottom, by
 ``splitting'' a node, i.e. selecting a stump $h(x)$ that optimizes
 some function such as error rate, information gain, or GINI impurity.  
 While this chapter focuses on selecting stumps based on
-error rate, we intend to extend our work to other measures.
+error rate, we intend to extend our work to other measures in future work.
 Our algorithm \texttt{Adaptive-Pruning Stump} (Algorithm~\ref{adaptive-pruning-stump}), a subroutine of \texttt{Adaptive-Pruning Boost} (Algorithm~\ref{boosting}), trains a decision stump $h(x)$ with
 fewer total example assessments than its analog, the subroutine of the-state-of-the-art algorithm
 \texttt{Quick Boost}, does. Note that \texttt{Adaptive-Pruning Stump} used iteratively can train a decision tree, but for simplicity we assume our weak learners are binary decision stumps.

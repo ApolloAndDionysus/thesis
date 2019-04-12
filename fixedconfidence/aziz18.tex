@@ -602,7 +602,7 @@ Bandit models were introduced by
 There has been recent interest in
 pure-exploration problems
 %, also known as best arm(s) identification problems
-\citep{EvenDaral06,Bubeck10BestArm}; for which good algorithms
+\citep{EvenDaral06,DBLP:conf/colt/AudibertBM10}; for which good algorithms
 are expected to differ from those for the classic
 regret minimization objective
 \citep{Bubeckal11,ESAIM17}.
@@ -1386,8 +1386,9 @@ criteria.
 ``Errors'' indicates the fraction of runs where the $\alpha$
 objective was not achieved; it should be below $\delta$.
 The budget $T$ is impacted roughly linearly by $1/\alpha$ and quadratically 
-by $1/\epsilon$; the same regret is achieved with different budgets based
-on parameter selection.
+by $1/\epsilon$.
+%; the same regret is achieved with different budgets based
+%on parameter selection.
 }
 \label{tbl-results-new}
 \vskip 0.15in
@@ -1498,7 +1499,7 @@ Lemma~\ref{main-lb-lemma} that are stated below and proved in the next two secti
 
 All the regret or sample complexity lower bounds in bandit models rely on
 change of distributions arguments (see, e.g.
-\cite{LaiRobbins85bandits,BurnKat96,Bubeck10BestArm}). A change of distribution
+\cite{LaiRobbins85bandits,BurnKat96,DBLP:conf/colt/AudibertBM10}). A change of distribution
 relates the probability of an event under a given bandit model to the
 probability of that event under an alternative bandit model, that is ``not too
 far'' from the initial model but under which the performance of the algorithm

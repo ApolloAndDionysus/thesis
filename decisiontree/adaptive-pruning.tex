@@ -77,36 +77,36 @@ It also has methods $LB()$ and $UB()$, which report the $L_m$ and $U_m$ for the
 single hypothesis with smallest error $E_m$ on the $m$ examples seen so far,
 and $bestStump()$, which returns the hypothesis with smallest error $E_m$.
 
-\texttt{Adaptive-Pruning Stump} proceeds until there is some feature $k^*$ whose upper bound
-is below the lower bounds for all other features.
-We then know that the best hypothesis uses feature $k^*$.
-We assess any remaining unseen examples
-for feature $k^*$ in order to identify the best threshold and polarity
-and to calculate $E^{k^*}_n$.
-Thus, our algorithm always finds the exact greedy-optimal hypothesis.
 
-In order to efficiently compare two features $i$ and $j$ to decide whether
-to prune feature $i$,
-we want to ``add'' the minimum weight to these arms to
-possibly obtain that $L_m^i > U_{m'}^j$.
-The most efficient way to do this is to test each feature against
-a batch of the heaviest unseen examples whose weight is at least
-the gap $U_{m'}^j - L_m^i$.
-This permits us to choose batch sizes adaptively, based on the minimum weight
-needed to prune a feature given the current boosting weights and the
-current uncertainty intervals for each arm.
-We note that our ``weight order'' lower bound on the sample complexity of the
-problem in the next section is also calculated based on this insight.
-This is in contrast to \texttt{Quick Boost}, which accepts parameters to
-specify the total number of batches and the weight to use for initial estimates;
-the remaining weight is divided evenly among the batches.
-When the number of batches chosen is too large, the run time of a training
-round approaches $O(n^2)$; when it is too small, the run time approaches
-that of assessing all $n$ examples.
+%\begin{wrapfigure}{R}{0.48\textwidth}
+\begin{figure}
+\centering
+\fbox{
+\begin{minipage}[t]{0.95\textwidth}
+\begin{algorithm}[H]
+\caption{\texttt{Adaptive-Pruning Boost}}\label{boosting}
+\begin{algorithmic}
+   \STATE {\bfseries Input:} Instances \{$x_1, \dots, x_n$\}, Labels \{$y_1, \dots, y_n$\}
+   \STATE {\bfseries Output:} $\mathcal{H}_T(x)$
+   \STATE {\bfseries Initialize Weights:} $\{w_{1},\dots,w_{n}\}$   \FOR{$t=1$ {\bfseries to} $T$}
+   \STATE Train Decision Tree $h_{Tree}(x)$ one node at a time by calling \texttt{Adaptive-Pruning Stump}
+   \STATE Choose $\alpha_t$ and update $\mathcal{H}_t(x)$
+   \STATE Update and Sort (in descending order) $w$
+   \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}
+%\vspace{-6em}
+}
+%\end{wrapfigure}
+\end{figure}
 
-\begin{wrapfigure}{R}{0.5\textwidth}
-\vspace{-2.5em}
-\begin{minipage}[t]{0.5\textwidth}
+%\begin{wrapfigure}{R}{0.48\textwidth}
+\begin{figure}
+\centering
+\fbox{
+%\vspace{-2.5em}
+\begin{minipage}[t]{0.95\textwidth}
 \begin{algorithm}[H]
 \caption{\texttt{Adaptive-Pruning Stump}}\label{adaptive-pruning-stump}
 \begin{algorithmic}
@@ -136,23 +136,38 @@ that of assessing all $n$ examples.
 \end{algorithmic}
 \end{algorithm}
 \end{minipage}
-%
-\begin{minipage}[t]{0.5\textwidth}
-\begin{algorithm}[H]
-\caption{\texttt{Adaptive-Pruning Boost}}\label{boosting}
-\begin{algorithmic}
-   \STATE {\bfseries Input:} Instances \{$x_1, \dots, x_n$\}, Labels \{$y_1, \dots, y_n$\}
-   \STATE {\bfseries Output:} $\mathcal{H}_T(x)$
-   \STATE {\bfseries Initialize Weights:} $\{w_{1},\dots,w_{n}\}$   \FOR{$t=1$ {\bfseries to} $T$}
-   \STATE Train Decision Tree $h_{Tree}(x)$ one node at a time by calling \texttt{Adaptive-Pruning Stump}
-   \STATE Choose $\alpha_t$ and update $\mathcal{H}_t(x)$
-   \STATE Update and Sort (in descending order) $w$
-   \ENDFOR
-\end{algorithmic}
-\end{algorithm}
-\end{minipage}
-\vspace{-6em}
-\end{wrapfigure}
+}
+%\end{wrapfigure}
+\end{figure}
+
+
+
+\texttt{Adaptive-Pruning Stump} proceeds until there is some feature $k^*$ whose upper bound
+is below the lower bounds for all other features.
+We then know that the best hypothesis uses feature $k^*$.
+We assess any remaining unseen examples
+for feature $k^*$ in order to identify the best threshold and polarity
+and to calculate $E^{k^*}_n$.
+Thus, our algorithm always finds the exact greedy-optimal hypothesis.
+
+In order to efficiently compare two features $i$ and $j$ to decide whether
+to prune feature $i$,
+we want to ``add'' the minimum weight to these arms to
+possibly obtain that $L_m^i > U_{m'}^j$.
+The most efficient way to do this is to test each feature against
+a batch of the heaviest unseen examples whose weight is at least
+the gap $U_{m'}^j - L_m^i$.
+This permits us to choose batch sizes adaptively, based on the minimum weight
+needed to prune a feature given the current boosting weights and the
+current uncertainty intervals for each arm.
+We note that our ``weight order'' lower bound on the sample complexity of the
+problem in the next section is also calculated based on this insight.
+This is in contrast to \texttt{Quick Boost}, which accepts parameters to
+specify the total number of batches and the weight to use for initial estimates;
+the remaining weight is divided evenly among the batches.
+When the number of batches chosen is too large, the run time of a training
+round approaches $O(n^2)$; when it is too small, the run time approaches
+that of assessing all $n$ examples.
 
 At each round, \texttt{Adaptive-Pruning Boost} trains a decision tree
 in Algorithm~\ref{boosting} by calling the subroutine
@@ -178,3 +193,4 @@ single heap, and that in many iterations of the \texttt{while} loop we can
 update these variables from the heap in constant time
 (e.g. when $b$ has not changed, when $a$ and $b$ are simply swapped,
 or when $b$ can be pruned).
+
