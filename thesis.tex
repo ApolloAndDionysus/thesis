@@ -21,7 +21,8 @@
         \vspace{1.5cm}
  
         \textbf{Maryam Aziz}
- 
+
+        \huge 
         \vfill
  
         In partial fulfillment of the requirements for the degree of \\
@@ -32,10 +33,18 @@
         %\includegraphics[width=0.4\textwidth]{university}
  
         \Large
+
         Khoury College of Computer Sciences\\
-        Northeastern University\\
+        Northeastern University,
         Boston, MA\\
-        2019
+        2019\\
+
+        {\bfseries Committee:}\\
+
+    Javed Aslam (Advisor), Northeastern University\\
+    Jonathan Ullman, Northeastern University\\
+    Byron Wallace, Northeastern University\\
+    Emilie Kaufmann, Inria, Lille, France\\
  
     \end{center}
 \end{titlepage}
@@ -54,9 +63,9 @@
    %\large
 \noindent
     \textbf{Abstract} \\
-How would one go about choosing a near-best option from an effectively infinite set in finite time, with imperfect knowledge of the quality of the options? Such problems arise in computer science (e.g. online learning, reinforcement learning, and recommender systems) and beyond. Consider drug testing, for example. One may have access to many candidate drugs (“arms”) but only resources to perform a limited number of tests, and yet one's goal is to identify a “near-optimal” drug within the budget available. Such problems are well-modeled by variants of the classical multi-armed bandit problem.
+How would one go about choosing a near-best option from an effectively infinite set in finite time, with imperfect knowledge of the quality of the options? Such problems arise in computer science (e.g. online learning, reinforcement learning, and recommender systems) and beyond. Consider drug testing, for example. One may have access to many candidate drugs (``arms'') but only resources to perform a limited number of tests, and yet one's goal is to identify a ``near-optimal'' drug within the budget available. Such problems are well-modeled by variants of the classical multi-armed bandit problem.
 
-We focus on the pure exploration version of the infinitely-armed bandit problem, wherein one seeks one of the best arms without penalty for trying sub-optimal arms along the way. The challenge is to quickly identify an arm with “near best” mean reward by repeatedly testing arms in some intelligent manner. We provide good general strategies to solve this problem in both the fixed budget setting, wherein one attempts to maximize performance with a certain number of tests, and the fixed confidence setting, wherein one attempts to minimize the number of tests needed to meet a certain performance target.
+We focus on the pure exploration version of the infinitely-armed bandit problem, wherein one seeks one of the best arms without penalty for trying sub-optimal arms along the way. The challenge is to quickly identify an arm with ``near best'' mean reward by repeatedly testing arms in some intelligent manner. We provide good general strategies to solve this problem in both the fixed budget setting, wherein one attempts to maximize performance with a certain number of tests, and the fixed confidence setting, wherein one attempts to minimize the number of tests needed to meet a certain performance target.
 
 We also report two real-world applications. The first aims to train greedy-optimal boosted decision trees faster than state-of-the-art algorithms using a novel bandit-inspired algorithm. Our algorithm minimizes the number of training examples used to measure each possible decision tree split while ensuring that we identify the split which would score the best were all examples used. We show that our algorithm empirically almost matches a lower bound on algorithms of its class, and approaches a more general lower bound on the number of examples needed for any class of algorithms.
 
@@ -81,7 +90,7 @@ I would like to thank Javed Aslam, my advisor, for helping to bring out the best
 
 \fancyhead{}
 \fancyhead[LO,CE]{\ifthenelse{\equal{\thesection}{0}}{}{Chapter \thesection}}
-\fancyhead[RO,LE]{On Multi-Armed Bandit Theory and Applications}
+\fancyhead[RO,LE]{On Multi-Armed Bandits Theory and Applications}
 \fancyfoot{}
 \fancyfoot[LE,RO]{\thepage}
 \fancyfoot[CO,RE]{Maryam Aziz}
